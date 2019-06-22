@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GastroTransfer.Models;
+using GastroTransfer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +22,26 @@ namespace GastroTransfer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Config config { get; set; }
+        private ConfigService configService { get; set; } 
         public MainWindow()
         {
             InitializeComponent();
+            configService = new ConfigService();
+            config = configService.GetConfig();
+            if(config == null)
+            {
+                configService.InitializeConfig();
+            }
+            
         }
 
         private void GetButtons()
+        {
+
+        }
+
+        private void GetData()
         {
 
         }

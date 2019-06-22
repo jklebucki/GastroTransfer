@@ -5,8 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GastroTransfer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Gastro - transfer" Height="600" Width="1000" WindowState="Maximized"> <!--WindowStyle="None">-->
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="98*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="90*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            <Viewbox>
+                <Viewbox.LayoutTransform>
+                    <ScaleTransform CenterX="50" ScaleX="2" />
+                </Viewbox.LayoutTransform>
+                <TextBlock Text="SYSTEM ROZLICZENIA PRODUKCJI"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Viewbox>
+        </DockPanel>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="85*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0" Grid.RowSpan="2" Margin="5">Button 3</Button>
+            <WrapPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                <Button Height="50" Width="250" Margin="5" >Button 1</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 2</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 3</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 4</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 1</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 2</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 3</Button>
+                <Button Height="50" Width="250" Margin="5" >Button 4</Button>
+            </WrapPanel>
+            <ScrollViewer Grid.Column="1" Grid.Row="1">
+                <WrapPanel Orientation="Horizontal">
+                    <Button Height="150" Width="250" Margin="5" >Button 1</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 2</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 3</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 4</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 5</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 6</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 7</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 8</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 9</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 10</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 11</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 12</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 13</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 14</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 15</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 16</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 17</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 18</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 19</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 20</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 21</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 22</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 23</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 24</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 25</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 26</Button>
+                    <Button Height="150" Width="250" Margin="5" >Button 27</Button>
+                </WrapPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>
