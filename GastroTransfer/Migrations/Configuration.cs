@@ -10,6 +10,7 @@ namespace GastroTransfer.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "GastroTransfer.AppDbContext";
         }
 
         protected override void Seed(GastroTransfer.Data.AppDbContext context)

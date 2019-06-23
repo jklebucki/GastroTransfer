@@ -1,5 +1,4 @@
-﻿using GastroTransfer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
-    interface IDbService
+    interface ICryptoService
     {
-        bool CheckConnection();
-        string GetConnectionString();
-
+        string EncodePassword(string plainPassword);
+        string DecodePassword(string hashedPassword);
     }
 }

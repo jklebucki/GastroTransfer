@@ -68,7 +68,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\DbContextFactory.cs" />
+    <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
+    <Compile Include="Services\ICryptoService.cs" />
     <Compile Include="Services\IDbService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

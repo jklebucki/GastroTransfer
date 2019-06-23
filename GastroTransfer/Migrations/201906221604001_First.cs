@@ -16,7 +16,7 @@ namespace GastroTransfer.Migrations
                         Group = c.String(),
                         IsActive = c.Boolean(nullable: false),
                         UnitOfMesure = c.String(),
-                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 6),
+                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4),
                         ExternalId = c.Int(),
                         ExternalIndex = c.String(),
                         ExternalName = c.String(),
@@ -29,7 +29,7 @@ namespace GastroTransfer.Migrations
                 c => new
                     {
                         TransferredItemId = c.Int(nullable: false, identity: true),
-                        Quantity = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        Quantity = c.Decimal(nullable: false, precision: 18, scale: 4),
                         TransferType = c.Int(nullable: false),
                         IsSentToExternalSystem = c.Boolean(nullable: false),
                         Registered = c.DateTime(nullable: false),

@@ -10,9 +10,9 @@ namespace GastroTransfer.Data
 {
     class AppDbContext : DbContext
     {
-        public AppDbContext() : base("Server=.;Database=GastroTransfer;Trusted_Connection=True;")
+        public AppDbContext(string connectionString) : base(connectionString)//"Server=.;Database=GastroTransfer;Trusted_Connection=True;")
         {
-
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
         }
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
@@ -20,6 +20,7 @@ namespace GastroTransfer.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProducedItem>().ToTable("ProducedItems", schemaName: "PSP");
             modelBuilder.Entity<TransferredItem>().ToTable("TransferredItems", schemaName: "PSP");
             modelBuilder.Entity<ProducedItem>()

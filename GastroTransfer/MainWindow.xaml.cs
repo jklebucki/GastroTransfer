@@ -1,7 +1,10 @@
-﻿using GastroTransfer.Models;
+﻿using GastroTransfer.Data;
+using GastroTransfer.Migrations;
+using GastroTransfer.Models;
 using GastroTransfer.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +27,32 @@ namespace GastroTransfer
     {
         private Config config { get; set; }
         private ConfigService configService { get; set; } 
+
+        private AppDbContext appDbContext { get; set; }
         public MainWindow()
         {
-            InitializeComponent();
-            configService = new ConfigService();
+            configService = new ConfigService(new CryptoService());
             config = configService.GetConfig();
-            if(config == null)
+            if (config == null)
             {
                 configService.InitializeConfig();
+                config = configService.GetConfig();
             }
-            
+
+            DbService dbService = new DbService(config);
+            appDbContext = new AppDbContext(dbService.GetConnectionString());
+            var dbInit = appDbContext.ProducedItems.FirstOrDefault();
+
+            if (dbService.CheckConnection())
+            {
+                MessageBox.Show("Połączenie działa!");
+            }
+            else
+            {
+                MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
+            }
+
+            InitializeComponent();
         }
 
         private void GetButtons()
