@@ -17,6 +17,7 @@ namespace GastroTransfer.Data
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
         public DbSet<TransferredItem> TransferredItems { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,5 +1,5 @@
 ﻿using GastroTransfer.Data;
-using GastroTransfer.Migrations;
+//using GastroTransfer.Migrations;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using System;

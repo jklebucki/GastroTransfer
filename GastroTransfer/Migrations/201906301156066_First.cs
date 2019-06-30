@@ -16,7 +16,7 @@ namespace GastroTransfer.Migrations
                         Group = c.String(),
                         IsActive = c.Boolean(nullable: false),
                         UnitOfMesure = c.String(),
-                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4),
+                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4, defaultValue: 1),
                         ExternalId = c.Int(),
                         ExternalIndex = c.String(),
                         ExternalName = c.String(),
