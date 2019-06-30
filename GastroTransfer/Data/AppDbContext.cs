@@ -10,7 +10,7 @@ namespace GastroTransfer.Data
 {
     class AppDbContext : DbContext
     {
-        public AppDbContext(string connectionString) : base(connectionString)//"Server=.;Database=GastroTransfer;Trusted_Connection=True;")
+        public AppDbContext(string connectionString) : base(connectionString)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
         }

@@ -36,11 +36,19 @@ namespace GastroTransfer.Services
 
         public string GetConnectionString()
         {
+            string connectionString = "";
             if (config.IsTrustedConnection)
             {
-                return "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";Trusted_Connection=True;";
+                connectionString =  "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";Trusted_Connection=True;";
+            } else
+            {
+                connectionString = "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";User id=" + config.UserName + ";Password=" + config.Password + ";";
             }
-            return "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";User id=" + config.UserName + ";Password=" +config.Password +";";
+
+            if (!string.IsNullOrEmpty(config.AdditionalConnectionStringDirective))
+                connectionString += config.AdditionalConnectionStringDirective;
+
+            return connectionString;
         }
     }
 }

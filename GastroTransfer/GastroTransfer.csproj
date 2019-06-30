@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DbContextFactory.cs" />
+    <Compile Include="Models\ProductGroup.cs" />
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
     <Compile Include="Services\ICryptoService.cs" />

@@ -16,7 +16,7 @@ namespace GastroTransfer.Data
             var config = configService.GetConfig();
             DbService dbService = new DbService(config);
 
-            return new AppDbContext(dbService.GetConnectionString());//"Server=.;Database=GastroTransfer;Trusted_Connection=True;");
+            return new AppDbContext(dbService.GetConnectionString());
         }
     }
 }
