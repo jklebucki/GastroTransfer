@@ -21,5 +21,8 @@ namespace GastroTransfer.Models
         public string ExternalIndex { get; set; }
         public string ExternalName { get; set; }
         public string ExternalUnitOfMesure { get; set; }
+        public int ProductGroupID { get; set; }
+        public ProductGroup ProductGroup { get; set; }
+
     }
 }

@@ -69,6 +69,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Data\DbContextFactory.cs" />
+    <Compile Include="Migrations\201906301156066_First.cs" />
+    <Compile Include="Migrations\201906301156066_First.Designer.cs">
+      <DependentUpon>201906301156066_First.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductGroup.cs" />
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
@@ -89,10 +93,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201906221604001_First.cs" />
-    <Compile Include="Migrations\201906221604001_First.Designer.cs">
-      <DependentUpon>201906221604001_First.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Services\ConfigService.cs" />
@@ -112,8 +112,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201906221604001_First.resx">
-      <DependentUpon>201906221604001_First.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906301156066_First.resx">
+      <DependentUpon>201906301156066_First.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

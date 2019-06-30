@@ -21,8 +21,20 @@ namespace GastroTransfer.Migrations
                         ExternalIndex = c.String(),
                         ExternalName = c.String(),
                         ExternalUnitOfMesure = c.String(),
+                        ProductGroupID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ProducedItemId);
+                .PrimaryKey(t => t.ProducedItemId)
+                .ForeignKey("dbo.ProductGroups", t => t.ProductGroupID, cascadeDelete: true)
+                .Index(t => t.ProductGroupID);
+            
+            CreateTable(
+                "dbo.ProductGroups",
+                c => new
+                    {
+                        ProductGroupId = c.Int(nullable: false, identity: true),
+                        GroupName = c.String(),
+                    })
+                .PrimaryKey(t => t.ProductGroupId);
             
             CreateTable(
                 "PSP.TransferredItems",
@@ -42,7 +54,10 @@ namespace GastroTransfer.Migrations
         
         public override void Down()
         {
+            DropForeignKey("PSP.ProducedItems", "ProductGroupID", "dbo.ProductGroups");
+            DropIndex("PSP.ProducedItems", new[] { "ProductGroupID" });
             DropTable("PSP.TransferredItems");
+            DropTable("dbo.ProductGroups");
             DropTable("PSP.ProducedItems");
         }
     }
