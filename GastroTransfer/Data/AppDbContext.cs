@@ -10,7 +10,7 @@ namespace GastroTransfer.Data
 {
     class AppDbContext : DbContext
     {
-        public AppDbContext(string connectionString) : base(connectionString)//"Server=.;Database=GastroTransfer;Trusted_Connection=True;")
+        public AppDbContext(string connectionString) : base(connectionString)
         {
             Database.SetInitializer<AppDbContext>(new CreateDatabaseIfNotExists<AppDbContext>());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
@@ -18,6 +18,7 @@ namespace GastroTransfer.Data
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
         public DbSet<TransferredItem> TransferredItems { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

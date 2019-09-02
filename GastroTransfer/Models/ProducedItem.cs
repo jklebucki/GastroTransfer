@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace GastroTransfer.Models
 {
     /// <summary>
@@ -21,5 +16,8 @@ namespace GastroTransfer.Models
         public string ExternalIndex { get; set; }
         public string ExternalName { get; set; }
         public string ExternalUnitOfMesure { get; set; }
+        public int ProductGroupID { get; set; }
+        public ProductGroup ProductGroup { get; set; }
+
     }
 }

@@ -13,7 +13,7 @@ namespace GastroTransfer.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201906221604001_First"; }
+            get { return "201906301156066_First"; }
         }
         
         string IMigrationMetadata.Source
