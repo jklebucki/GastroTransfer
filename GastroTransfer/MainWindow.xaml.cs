@@ -1,6 +1,7 @@
 ﻿using GastroTransfer.Data;
 //using GastroTransfer.Migrations;
 using GastroTransfer.Models;
+using GastroTransfer.Pages;
 using GastroTransfer.Services;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,12 @@ namespace GastroTransfer
         private void GetData()
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigPage configPage = new ConfigPage();
+            configPage.ShowDialog();
         }
     }
 }

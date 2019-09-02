@@ -47,7 +47,7 @@
             </WrapPanel>
             <ScrollViewer Grid.Column="1" Grid.Row="1">
                 <WrapPanel Orientation="Horizontal">
-                    <Button Height="150" Width="250" Margin="5" >Button 1</Button>
+                    <Button Height="150" Width="250" Margin="5" Click="Button_Click" >Button 1</Button>
                     <Button Height="150" Width="250" Margin="5" >Button 2</Button>
                     <Button Height="150" Width="250" Margin="5" >Button 3</Button>
                     <Button Height="150" Width="250" Margin="5" >Button 4</Button>

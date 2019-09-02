@@ -12,7 +12,8 @@ namespace GastroTransfer.Data
     {
         public AppDbContext(string connectionString) : base(connectionString)
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
+            Database.SetInitializer(new DbInitializer());
         }
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
@@ -23,6 +24,7 @@ namespace GastroTransfer.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProducedItem>().ToTable("ProducedItems", schemaName: "PSP");
+            modelBuilder.Entity<ProductGroup>().ToTable("ProductGroups", schemaName: "PSP");
             modelBuilder.Entity<TransferredItem>().ToTable("TransferredItems", schemaName: "PSP");
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ConversionRate).HasPrecision(18, 4);

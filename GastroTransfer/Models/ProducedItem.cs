@@ -8,7 +8,6 @@ namespace GastroTransfer.Models
     {
         public int ProducedItemId { get; set; }
         public string Name { get; set; }
-        public string Group { get; set; }
         public bool IsActive { get; set; }
         public string UnitOfMesure { get; set; }
         public decimal ConversionRate { get; set; }

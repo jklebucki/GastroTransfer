@@ -13,7 +13,6 @@ namespace GastroTransfer.Migrations
                     {
                         ProducedItemId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Group = c.String(),
                         IsActive = c.Boolean(nullable: false),
                         UnitOfMesure = c.String(),
                         ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4, defaultValue: 1),
@@ -24,11 +23,11 @@ namespace GastroTransfer.Migrations
                         ProductGroupID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProducedItemId)
-                .ForeignKey("dbo.ProductGroups", t => t.ProductGroupID, cascadeDelete: true)
+                .ForeignKey("PSP.ProductGroups", t => t.ProductGroupID, cascadeDelete: true)
                 .Index(t => t.ProductGroupID);
             
             CreateTable(
-                "dbo.ProductGroups",
+                "PSP.ProductGroups",
                 c => new
                     {
                         ProductGroupId = c.Int(nullable: false, identity: true),
@@ -54,10 +53,10 @@ namespace GastroTransfer.Migrations
         
         public override void Down()
         {
-            DropForeignKey("PSP.ProducedItems", "ProductGroupID", "dbo.ProductGroups");
+            DropForeignKey("PSP.ProducedItems", "ProductGroupID", "PSP.ProductGroups");
             DropIndex("PSP.ProducedItems", new[] { "ProductGroupID" });
             DropTable("PSP.TransferredItems");
-            DropTable("dbo.ProductGroups");
+            DropTable("PSP.ProductGroups");
             DropTable("PSP.ProducedItems");
         }
     }
