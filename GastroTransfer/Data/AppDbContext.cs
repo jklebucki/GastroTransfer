@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GastroTransfer.Data
 {
-    class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(string connectionString) : base(connectionString)
         {

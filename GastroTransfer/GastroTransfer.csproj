@@ -80,15 +80,15 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductGroup.cs" />
-    <Compile Include="Pages\ConfigPage.xaml.cs">
-      <DependentUpon>ConfigPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
     <Compile Include="Services\ICryptoService.cs" />
     <Compile Include="Services\IDbService.cs" />
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Views\ConfigWindow.xaml.cs">
+      <DependentUpon>ConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -102,7 +102,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\ConfigPage.xaml">
+    <Page Include="Views\ConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,6 +145,7 @@
   <ItemGroup>
     <Folder Include="ViewModels\Dialogs\" />
     <Folder Include="Views\Dialogs\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,8 +1,7 @@
 ﻿using GastroTransfer.Data;
-//using GastroTransfer.Migrations;
 using GastroTransfer.Models;
-using GastroTransfer.Pages;
 using GastroTransfer.Services;
+using GastroTransfer.Views;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -50,14 +49,12 @@ namespace GastroTransfer
 
             //check or initialize database
             dbService = new DbService(config);
-            appDbContext = new AppDbContext(dbService.GetConnectionString());
-            var dbInit = appDbContext.ProducedItems.FirstOrDefault();
 
-            while (!dbService.CheckConnection())
-            {
-                //open config form, after 
-                MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
-            }
+            //while (!dbService.CheckConnection())
+            //{
+            //    //open config form, after 
+            //    MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
+            //}
         }
 
         private void GetButtons()
@@ -73,7 +70,7 @@ namespace GastroTransfer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ConfigPage configPage = new ConfigPage();
+            ConfigWindow configPage = new ConfigWindow();
             configPage.ShowDialog();
         }
     }

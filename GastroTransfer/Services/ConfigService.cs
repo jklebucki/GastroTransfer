@@ -44,6 +44,7 @@ namespace GastroTransfer.Services
             {
                 try
                 {
+                    config.Password = cryptoService.EncodePassword(config.Password);
                     sw.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
                     return true;
                 }

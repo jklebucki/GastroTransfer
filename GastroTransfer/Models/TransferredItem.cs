@@ -2,7 +2,7 @@
 
 namespace GastroTransfer.Models
 {
-    class TransferredItem
+    public class TransferredItem
     {
         public int TransferredItemId { get; set; }
         public decimal Quantity { get; set; }

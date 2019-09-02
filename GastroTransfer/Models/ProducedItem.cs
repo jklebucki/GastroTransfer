@@ -4,7 +4,7 @@ namespace GastroTransfer.Models
     /// <summary>
     /// Positions to create buttons
     /// </summary>
-    class ProducedItem
+    public class ProducedItem
     {
         public int ProducedItemId { get; set; }
         public string Name { get; set; }

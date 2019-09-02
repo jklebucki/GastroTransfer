@@ -24,6 +24,7 @@ namespace GastroTransfer.Services
             try
             {
                 dbContext.ProducedItems.Add(producedItem);
+                dbContext.SaveChanges();
                 return true;
             }
             catch (DbUpdateException ex)
@@ -54,6 +55,7 @@ namespace GastroTransfer.Services
             try
             {
                 dbContext.ProducedItems.Remove(producedItem);
+                dbContext.SaveChanges();
                 return true;
             }
             catch (DbUpdateException ex)

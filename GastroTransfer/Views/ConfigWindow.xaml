@@ -1,0 +1,64 @@
+﻿<Window x:Class="GastroTransfer.Views.ConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GastroTransfer.Views"
+        mc:Ignorable="d"
+        Title="ConfigWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
+            <TextBlock Text="Adres serwera" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <TextBox x:Name="ServerAddress"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="100"></TextBox>
+        </Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
+            <TextBlock Text="Baza danych" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <TextBox x:Name="DatabaseName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="100"></TextBox>
+        </Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
+            <TextBlock Text="Użytkownik" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <TextBox x:Name="UserName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="100"></TextBox>
+        </Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="4" Stretch="Uniform" >
+            <TextBlock Text="Hasło" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="4" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <TextBox x:Name="Password"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="100"></TextBox>
+        </Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="5" Stretch="Uniform" >
+            <TextBlock Text="Trusted connecton" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="5">
+            <CheckBox x:Name="IsTrustedConnection" />
+        </Viewbox>
+        <Viewbox Grid.Column="0" Grid.Row="6" Stretch="Uniform" >
+            <TextBlock Text="Dodatkowe dyrektywy" FontSize="10" Margin="5" />
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="6" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <TextBox x:Name="AdditionalConnectionStringDirective"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="100"></TextBox>
+        </Viewbox>
+        <Viewbox Grid.Column="1" Grid.Row="7" Stretch="Uniform" HorizontalAlignment="Stretch">
+            <Button x:Name="SaveConfig" Click="SaveConfig_Click" Width="100" Margin="2">Zapisz</Button>
+        </Viewbox>
+    </Grid>
+</Window>
