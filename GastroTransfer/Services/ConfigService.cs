@@ -65,7 +65,7 @@ namespace GastroTransfer.Services
                         ServerAddress = ".",
                         DatabaseName = "GastroTransfer",
                         UserName = "sa",
-                        Password = cryptoService.EncodePassword("#sa2015!"),
+                        Password = cryptoService.EncodePassword("#Password123!"),
                         IsTrustedConnection = false
                     }, Formatting.Indented));
                     return true;

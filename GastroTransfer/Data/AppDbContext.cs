@@ -12,8 +12,8 @@ namespace GastroTransfer.Data
     {
         public AppDbContext(string connectionString) : base(connectionString)
         {
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
-            Database.SetInitializer(new DbInitializer());
+            Database.SetInitializer<AppDbContext>(new CreateDatabaseIfNotExists<AppDbContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, GastroTransfer.Migrations.Configuration>());
         }
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
