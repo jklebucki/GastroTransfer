@@ -26,7 +26,7 @@ namespace GastroTransfer
     public partial class MainWindow : Window
     {
         private Config config { get; set; }
-        private ConfigService configService { get; set; } 
+        private ConfigService configService { get; set; }
 
         private AppDbContext appDbContext { get; set; }
         public MainWindow()
@@ -43,11 +43,7 @@ namespace GastroTransfer
             appDbContext = new AppDbContext(dbService.GetConnectionString());
             var dbInit = appDbContext.ProducedItems.FirstOrDefault();
 
-            if (dbService.CheckConnection())
-            {
-                MessageBox.Show("Połączenie działa!");
-            }
-            else
+            if (!dbService.CheckConnection())
             {
                 MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
             }
