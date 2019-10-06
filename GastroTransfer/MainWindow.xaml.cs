@@ -34,6 +34,55 @@ namespace GastroTransfer
         {
             InitializeSystem();
             InitializeComponent();
+            AddButtons(new List<ProducedItem>()
+            {
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Schab w sosie gzybowym",
+                    ProducedItemId = 1,
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Karkówka z grilla",
+                    ProducedItemId = 2,
+
+                }
+            });
+            AddGroupButtons(new List<ProducedItem>()
+            {
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Zupy",
+                    ProducedItemId = 1,
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Dania",
+                    ProducedItemId = 2,
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Robaki",
+                    ProducedItemId = 3,
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Glisty",
+                    ProducedItemId = 4,
+
+                }
+            });
+
         }
 
         private void InitializeSystem()
@@ -72,6 +121,93 @@ namespace GastroTransfer
         {
             ConfigWindow configPage = new ConfigWindow();
             configPage.ShowDialog();
+        }
+
+        private void Button_Click_Test(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)sender;
+            MessageBox.Show(btn.Name.Split('_')[1]);
+        }
+
+        private void AddButtons(List<ProducedItem> producedItems)
+        {
+            foreach (var item in producedItems)
+            {
+                Viewbox box = new Viewbox
+                {
+                    Stretch = Stretch.Uniform,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = 240,
+                };
+
+                TextBlock text = new TextBlock
+                {
+                    Text = $"{item.Name}",
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    TextAlignment = TextAlignment.Center,
+                    Width = 240,
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = new Thickness(5, 5, 5, 5)
+                };
+                box.Child = text;
+
+                Button button = new Button()
+                {
+                    Name = $"N_{item.ProducedItemId}",
+                    Content = box,
+                    Tag = item.ProductGroup,
+                    Height = 150,
+                    Width = 250,
+                    Margin = new Thickness(5, 5, 5, 5),
+                    FontSize = 24,
+                    Style = this.FindResource("RoundCorner") as Style
+                };
+                button.Click += new RoutedEventHandler(Button_Click_Test);
+
+                this.WrapButtons.Children.Add(button);
+            }
+        }
+        private void AddGroupButtons(List<ProducedItem> producedItems)
+        {
+            foreach (var item in producedItems)
+            {
+                Viewbox box = new Viewbox
+                {
+                    Stretch = Stretch.Uniform,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = 240,
+                };
+
+                TextBlock text = new TextBlock
+                {
+                    Text = $"{item.Name}",
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    TextAlignment = TextAlignment.Center,
+                    Width = 240,
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = new Thickness(5, 5, 5, 5)
+                };
+                box.Child = text;
+
+                Button button = new Button()
+                {
+                    Name = $"N_{item.ProducedItemId}",
+                    Content = box,
+                    Tag = item.ProductGroup,
+                    Height = 50,
+                    Width = 250,
+                    Margin = new Thickness(5, 5, 5, 5),
+                    FontSize = 24,
+                    Style = this.FindResource("RoundCorner") as Style
+                };
+                button.Click += new RoutedEventHandler(Button_Click_Test);
+
+                this.GroupButtons.Children.Add(button);
+            }
         }
     }
 }

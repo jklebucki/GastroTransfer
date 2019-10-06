@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:GastroTransfer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+       
     </Application.Resources>
+    
 </Application>
