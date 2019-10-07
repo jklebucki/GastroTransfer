@@ -29,18 +29,19 @@ namespace GastroTransfer
         private ConfigService configService { get; set; }
         private AppDbContext appDbContext { get; set; }
         private DbService dbService { get; set; }
+        private List<ProducedItem> producedItems { get; set; }
+        private List<ProductGroup> productGroups { get; set; }
 
         public MainWindow()
         {
-            InitializeSystem();
-            InitializeComponent();
-            AddButtons(new List<ProducedItem>()
+            producedItems = new List<ProducedItem>()
             {
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Schab w sosie gzybowym",
                     ProducedItemId = 1,
+                    ProductGroupId = 2
 
                 },
                 new ProducedItem
@@ -48,41 +49,77 @@ namespace GastroTransfer
                     IsActive = true,
                     Name = "Karkówka z grilla",
                     ProducedItemId = 2,
-
-                }
-            });
-            AddGroupButtons(new List<ProducedItem>()
-            {
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Zupy",
-                    ProducedItemId = 1,
+                    ProductGroupId = 2
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
-                    Name = "Dania",
-                    ProducedItemId = 2,
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Robaki",
+                    Name = "Flaki",
                     ProducedItemId = 3,
+                    ProductGroupId = 3
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
-                    Name = "Glisty",
+                    Name = "Zupa gulaszowa",
                     ProducedItemId = 4,
+                    ProductGroupId = 3
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Żurek",
+                    ProducedItemId = 5,
+                    ProductGroupId = 3
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Zupa grochowa",
+                    ProducedItemId = 6,
+                    ProductGroupId = 3
 
                 }
-            });
+            };
 
+            productGroups = new List<ProductGroup>()
+            {
+                new ProductGroup
+                {
+                    GroupName = "Wszystkie",
+                    ProductGroupId = 1,
+
+                },
+                new ProductGroup
+                {
+                    GroupName = "Zupy",
+                    ProductGroupId = 3,
+
+                },
+                new ProductGroup
+                {
+                    GroupName = "Dania",
+                    ProductGroupId = 2,
+
+                },
+                new ProductGroup
+                {
+                    GroupName= "Śniadania",
+                    ProductGroupId = 4,
+
+                }
+            };
+
+            producedItems = producedItems.OrderBy(x => x.Name).ToList();
+            InitializeSystem();
+            InitializeComponent();
+            GetData();
+            AddButtons(producedItems);
+            AddGroupButtons(productGroups);
         }
 
         private void InitializeSystem()
@@ -95,25 +132,23 @@ namespace GastroTransfer
                 configService.InitializeConfig();
                 config = configService.GetConfig();
             }
-
-            //check or initialize database
-            dbService = new DbService(config);
-
-            //while (!dbService.CheckConnection())
-            //{
-            //    //open config form, after 
-            //    MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
-            //}
-        }
-
-        private void GetButtons()
-        {
-
-
         }
 
         private void GetData()
         {
+            //check or initialize database
+            dbService = new DbService(config);
+
+            if (!dbService.CheckConnection())
+            {
+                MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
+            }
+            appDbContext = new AppDbContext(dbService.GetConnectionString());
+            //appDbContext.ProducedItems.AddRange(producedItems);
+            //appDbContext.ProductGroups.AddRange(productGroups);
+            //appDbContext.SaveChanges();
+            producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).ToList();
+            productGroups = appDbContext.ProductGroups.ToList();
 
         }
 
@@ -129,8 +164,20 @@ namespace GastroTransfer
             MessageBox.Show(btn.Name.Split('_')[1]);
         }
 
+        private void Button_Click_Filter(object sender, RoutedEventArgs e)
+        {
+            var btn = (Button)sender;
+            var groupId = int.Parse(btn.Name.Split('_')[1]);
+            var items = producedItems.Where(x => x.ProductGroupId == groupId).ToList();
+            if (groupId == 1)
+                AddButtons(producedItems);
+            else
+                AddButtons(items);
+        }
+
         private void AddButtons(List<ProducedItem> producedItems)
         {
+            this.WrapButtons.Children.Clear();
             foreach (var item in producedItems)
             {
                 Viewbox box = new Viewbox
@@ -157,7 +204,7 @@ namespace GastroTransfer
                 {
                     Name = $"N_{item.ProducedItemId}",
                     Content = box,
-                    Tag = item.ProductGroup,
+                    Tag = item.ProductGroupId,
                     Height = 150,
                     Width = 250,
                     Margin = new Thickness(5, 5, 5, 5),
@@ -169,9 +216,10 @@ namespace GastroTransfer
                 this.WrapButtons.Children.Add(button);
             }
         }
-        private void AddGroupButtons(List<ProducedItem> producedItems)
+        private void AddGroupButtons(List<ProductGroup> productGroups)
         {
-            foreach (var item in producedItems)
+            this.GroupButtons.Children.Clear();
+            foreach (var item in productGroups)
             {
                 Viewbox box = new Viewbox
                 {
@@ -183,7 +231,7 @@ namespace GastroTransfer
 
                 TextBlock text = new TextBlock
                 {
-                    Text = $"{item.Name}",
+                    Text = $"{item.GroupName}",
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     TextAlignment = TextAlignment.Center,
@@ -195,16 +243,16 @@ namespace GastroTransfer
 
                 Button button = new Button()
                 {
-                    Name = $"N_{item.ProducedItemId}",
+                    Name = $"N_{item.ProductGroupId}",
                     Content = box,
-                    Tag = item.ProductGroup,
+                    Tag = item.GroupName,
                     Height = 50,
                     Width = 250,
                     Margin = new Thickness(5, 5, 5, 5),
                     FontSize = 24,
                     Style = this.FindResource("RoundCorner") as Style
                 };
-                button.Click += new RoutedEventHandler(Button_Click_Test);
+                button.Click += new RoutedEventHandler(Button_Click_Filter);
 
                 this.GroupButtons.Children.Add(button);
             }
