@@ -1,0 +1,116 @@
+﻿<Window x:Class="GastroTransfer.Views.Dialogs.MeasurementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GastroTransfer.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="MeasurementWindow" Height="600" Width="800"
+        ResizeMode="NoResize" WindowStyle="None">
+    <Window.Resources>
+        <RoutedUICommand x:Key="cmd1" Text="1"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd2" Text="2"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd3" Text="3"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd4" Text="4"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd5" Text="5"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd6" Text="6"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd7" Text="7"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd8" Text="8"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd9" Text="9"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmd0" Text="0"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmdDecimal" Text="."></RoutedUICommand>
+        <RoutedUICommand x:Key="cmdBack" Text="←"></RoutedUICommand>
+        <RoutedUICommand x:Key="cmdReturn" Text="ENTER"></RoutedUICommand>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource cmd1}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd2}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd3}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd4}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd5}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd6}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd7}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd8}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd9}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmd0}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmdDecimal}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmdBack}" Executed="keyboardEvent"></CommandBinding>
+        <CommandBinding Command="{StaticResource cmdReturn}" Executed="keyboardEvent"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding  Key="D1" Command="{StaticResource cmd1}"></KeyBinding>
+        <KeyBinding  Key="D2" Command="{StaticResource cmd2}"></KeyBinding>
+        <KeyBinding  Key="D3" Command="{StaticResource cmd3}"></KeyBinding>
+        <KeyBinding  Key="D4" Command="{StaticResource cmd4}"></KeyBinding>
+        <KeyBinding  Key="D5" Command="{StaticResource cmd5}"></KeyBinding>
+        <KeyBinding  Key="D6" Command="{StaticResource cmd6}"></KeyBinding>
+        <KeyBinding  Key="D7" Command="{StaticResource cmd7}"></KeyBinding>
+        <KeyBinding  Key="D8" Command="{StaticResource cmd8}"></KeyBinding>
+        <KeyBinding  Key="D9" Command="{StaticResource cmd9}"></KeyBinding>
+        <KeyBinding  Key="D0" Command="{StaticResource cmd0}"></KeyBinding>
+        <KeyBinding  Key="OemComma" Command="{StaticResource cmdDecimal}"></KeyBinding>
+        <KeyBinding  Key="OemPeriod" Command="{StaticResource cmdDecimal}"></KeyBinding>
+        <KeyBinding  Key="NumPad1" Command="{StaticResource cmd1}"></KeyBinding>
+        <KeyBinding  Key="NumPad2" Command="{StaticResource cmd2}"></KeyBinding>
+        <KeyBinding  Key="NumPad3" Command="{StaticResource cmd3}"></KeyBinding>
+        <KeyBinding  Key="NumPad4" Command="{StaticResource cmd4}"></KeyBinding>
+        <KeyBinding  Key="NumPad5" Command="{StaticResource cmd5}"></KeyBinding>
+        <KeyBinding  Key="NumPad6" Command="{StaticResource cmd6}"></KeyBinding>
+        <KeyBinding  Key="NumPad7" Command="{StaticResource cmd7}"></KeyBinding>
+        <KeyBinding  Key="NumPad8" Command="{StaticResource cmd8}"></KeyBinding>
+        <KeyBinding  Key="NumPad9" Command="{StaticResource cmd9}"></KeyBinding>
+        <KeyBinding  Key="NumPad0" Command="{StaticResource cmd0}"></KeyBinding>
+        <KeyBinding  Key="Decimal" Command="{StaticResource cmdDecimal}"></KeyBinding>
+        <KeyBinding  Key="Backspace" Command="{StaticResource cmdBack}"></KeyBinding>
+        <KeyBinding  Key="Return" Command="{StaticResource cmdReturn}"></KeyBinding>
+    </Window.InputBindings>
+    <Border BorderThickness="2" BorderBrush="Black" CornerRadius="1,1,1,1">
+        <Grid Background="#BBDEFB">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="80*" />
+                <RowDefinition Height="15*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="2" BorderBrush="Black" CornerRadius="2,2,2,2" Margin="2">
+                <Viewbox  Stretch="Uniform" HorizontalAlignment="Stretch">
+                    <TextBlock x:Name="ProductName" Text="" HorizontalAlignment="Stretch" Margin="1" FontWeight="Bold" Foreground="Blue"/>
+                </Viewbox>
+            </Border>
+            <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
+                <TextBox x:Name="QuantityTextBox"  Text="" HorizontalAlignment="Stretch" Margin="1" Width="100" KeyDown="QuantityTextBox_KeyDown"></TextBox>
+            </Viewbox>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Button Grid.Column="0" Grid.Row="0" x:Name="NumericButtonSeven" Content="7"  Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="1" Grid.Row="0" x:Name="NumericButtonEight" Content="8" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="2" Grid.Row="0" x:Name="NumericButtonNine" Content="9" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="0" Grid.Row="1" x:Name="NumericButtonFour" Content="4" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="1" Grid.Row="1" x:Name="NumericButtonFive" Content="5" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="2" Grid.Row="1" x:Name="NumericButtonSix" Content="6" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="0" Grid.Row="2" x:Name="NumericButtonOne" Content="1" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="1" Grid.Row="2" x:Name="NumericButtonTwo" Content="2" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="2" Grid.Row="2" x:Name="NumericButtonThree" Content="3" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="0" Grid.Row="3" x:Name="NumericButtonZero" Content="0" Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="1" Grid.Row="3" x:Name="NumericButtonPoint" Content="." Click="NumericButton_Click" Margin="2" FontSize="26"/>
+                <Button Grid.Column="2" Grid.Row="3" x:Name="NumericButtonBack" Content="←" Click="NumericButton_Click" Margin="2" FontSize="28" FontWeight="Bold"/>
+            </Grid>
+            <Button Grid.Column="0" Grid.Row="3" x:Name="Cancel" Content="Anuluj"  Click="Cancel_Click" Margin="2" FontSize="24" Foreground="Red"/>
+            <Button Grid.Column="1" Grid.Row="3" x:Name="Confirm" Content="Zatwierdź" Click="Confirm_Click" Margin="2" FontSize="24" Foreground="DarkGreen"/>
+        </Grid>
+    </Border>
+</Window>

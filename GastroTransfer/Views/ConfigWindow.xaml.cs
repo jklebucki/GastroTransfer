@@ -25,6 +25,9 @@ namespace GastroTransfer.Views
         private ConfigService configService;
         public ConfigWindow()
         {
+            Owner = Application.Current.MainWindow;
+            Icon = null;
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
             configService = new ConfigService(new CryptoService());
             InitializeComponent();
             Loaded += WindowLoaded;
@@ -37,7 +40,7 @@ namespace GastroTransfer.Views
             ServerAddress.Text = config.ServerAddress;
             DatabaseName.Text = config.DatabaseName;
             UserName.Text = config.UserName;
-            Password.Text = config.Password;
+            Password.Password = config.Password;
             IsTrustedConnection.IsChecked = config.IsTrustedConnection;
             AdditionalConnectionStringDirective.Text = config.AdditionalConnectionStringDirective;
         }
@@ -49,7 +52,7 @@ namespace GastroTransfer.Views
                 ServerAddress = ServerAddress.Text,
                 DatabaseName = DatabaseName.Text,
                 UserName = UserName.Text,
-                Password = Password.Text,
+                Password = Password.Password,
                 IsTrustedConnection = (bool)IsTrustedConnection.IsChecked,
                 AdditionalConnectionStringDirective = AdditionalConnectionStringDirective.Text
             });
@@ -61,6 +64,11 @@ namespace GastroTransfer.Views
                 if (choice == MessageBoxResult.OK)
                     Close();
             }
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

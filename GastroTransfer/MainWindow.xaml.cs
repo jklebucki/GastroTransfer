@@ -2,21 +2,15 @@
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views;
-using System;
+using GastroTransfer.Views.Dialogs;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GastroTransfer
 {
@@ -31,95 +25,36 @@ namespace GastroTransfer
         private DbService dbService { get; set; }
         private List<ProducedItem> producedItems { get; set; }
         private List<ProductGroup> productGroups { get; set; }
+        private List<ProductionViewModel> productionView { get; set; }
 
         public MainWindow()
         {
-            producedItems = new List<ProducedItem>()
-            {
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Schab w sosie gzybowym",
-                    ProducedItemId = 1,
-                    ProductGroupId = 2
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Karkówka z grilla",
-                    ProducedItemId = 2,
-                    ProductGroupId = 2
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Flaki",
-                    ProducedItemId = 3,
-                    ProductGroupId = 3
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Zupa gulaszowa",
-                    ProducedItemId = 4,
-                    ProductGroupId = 3
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Żurek",
-                    ProducedItemId = 5,
-                    ProductGroupId = 3
-
-                },
-                new ProducedItem
-                {
-                    IsActive = true,
-                    Name = "Zupa grochowa",
-                    ProducedItemId = 6,
-                    ProductGroupId = 3
-
-                }
-            };
-
-            productGroups = new List<ProductGroup>()
-            {
-                new ProductGroup
-                {
-                    GroupName = "Wszystkie",
-                    ProductGroupId = 1,
-
-                },
-                new ProductGroup
-                {
-                    GroupName = "Zupy",
-                    ProductGroupId = 3,
-
-                },
-                new ProductGroup
-                {
-                    GroupName = "Dania",
-                    ProductGroupId = 2,
-
-                },
-                new ProductGroup
-                {
-                    GroupName= "Śniadania",
-                    ProductGroupId = 4,
-
-                }
-            };
-
+            var cultureInfo = new CultureInfo("pl-PL");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
+                XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            //Test data
+            producedItems = ConstData.producedItems;
+            productGroups = ConstData.productGroups;
             producedItems = producedItems.OrderBy(x => x.Name).ToList();
+
             InitializeSystem();
             InitializeComponent();
             GetData();
+            productionView = new List<ProductionViewModel>();
+            PositionsListGrid.DataContext = productionView;
+            PositionsListGrid.ItemsSource = productionView;
+            float scale = (float)SystemParameters.PrimaryScreenWidth / 1920f;
+            ProductName.FontSize = 22 * scale;
+            UnitOfMesure.FontSize = 22 * scale;
+            Quantity.FontSize = 22 * scale;
+
             AddButtons(producedItems);
             AddGroupButtons(productGroups);
+            BackButton.Style = this.FindResource("RoundCorner") as Style;
+            ConfigButton.Style = this.FindResource("RoundCorner") as Style;
+
         }
 
         private void InitializeSystem()
@@ -142,26 +77,67 @@ namespace GastroTransfer
             if (!dbService.CheckConnection())
             {
                 MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
+                var configWindow = new ConfigWindow();
+                configWindow.ShowDialog();
             }
             appDbContext = new AppDbContext(dbService.GetConnectionString());
-            //appDbContext.ProducedItems.AddRange(producedItems);
-            //appDbContext.ProductGroups.AddRange(productGroups);
-            //appDbContext.SaveChanges();
+            if (appDbContext.ProductGroups.Count() == 0)
+            {
+                appDbContext.ProducedItems.AddRange(producedItems);
+                appDbContext.ProductGroups.AddRange(productGroups);
+                appDbContext.SaveChanges();
+            }
             producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).ToList();
             productGroups = appDbContext.ProductGroups.ToList();
-
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Config_Click(object sender, RoutedEventArgs e)
         {
             ConfigWindow configPage = new ConfigWindow();
             configPage.ShowDialog();
         }
 
-        private void Button_Click_Test(object sender, RoutedEventArgs e)
+        private void Production_Button_Click(object sender, RoutedEventArgs e)
         {
             var btn = (Button)sender;
-            MessageBox.Show(btn.Name.Split('_')[1]);
+            var productId = int.Parse(btn.Name.Split('_')[1]);
+            var item = producedItems.FirstOrDefault(x => x.ProducedItemId == productId);
+            var measurementWindow = new MeasurementWindow(this.FindResource("RoundCorner") as Style, item.Name);
+            measurementWindow.ShowDialog();
+            if (!measurementWindow.IsCanceled)
+            {
+                productionView.Add(
+                    new ProductionViewModel
+                    {
+                        ProducedItem = item,
+                        TransferredItem = new TransferredItem
+                        {
+                            Quantity = measurementWindow.Quantity
+                        }
+                    });
+                PositionsListGrid.Items.Refresh();
+                PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
+                PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+            }
+        }
+
+        private void CurrencyListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            if (productionView.Count > 0)
+            {
+                productionView.Remove(productionView.Last());
+                if (productionView.Count > 0)
+                {
+                    PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
+                    PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                }
+            }
+            PositionsListGrid.Items.Refresh();
         }
 
         private void Button_Click_Filter(object sender, RoutedEventArgs e)
@@ -211,11 +187,12 @@ namespace GastroTransfer
                     FontSize = 24,
                     Style = this.FindResource("RoundCorner") as Style
                 };
-                button.Click += new RoutedEventHandler(Button_Click_Test);
+                button.Click += new RoutedEventHandler(Production_Button_Click);
 
                 this.WrapButtons.Children.Add(button);
             }
         }
+
         private void AddGroupButtons(List<ProductGroup> productGroups)
         {
             this.GroupButtons.Children.Clear();

@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\ConstData.cs" />
     <Compile Include="Data\DbContextFactory.cs" />
     <Compile Include="Data\DbInitializer.cs" />
     <Compile Include="Migrations\201906301156066_First.cs" />
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ProductGroup.cs" />
+    <Compile Include="Models\ProductionViewModel.cs" />
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
     <Compile Include="Services\ICryptoService.cs" />
@@ -88,6 +90,9 @@
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Views\ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MeasurementWindow.xaml.cs">
+      <DependentUpon>MeasurementWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +108,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MeasurementWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\Dialogs\" />
-    <Folder Include="Views\Dialogs\" />
     <Folder Include="Views\Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,6 +5,7 @@ namespace GastroTransfer.Models
     public class TransferredItem
     {
         public int TransferredItemId { get; set; }
+        public int ProducedItemId { get; set; }
         public decimal Quantity { get; set; }
         public int TransferType { get; set; }
         public bool IsSentToExternalSystem { get; set; }
