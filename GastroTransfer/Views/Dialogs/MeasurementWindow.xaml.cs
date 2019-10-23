@@ -1,17 +1,12 @@
-﻿using GastroTransfer.Data;
+﻿using AngelProtocol;
+using GastroTransfer.Data;
+using GastroTransfer.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GastroTransfer.Views.Dialogs
 {
@@ -23,7 +18,7 @@ namespace GastroTransfer.Views.Dialogs
         public decimal Quantity { get; protected set; }
         public bool IsCanceled { get; protected set; }
 
-        public MeasurementWindow(Style buttonStyle, string productName)
+        public MeasurementWindow(Style buttonStyle, string productName, Config config)
         {
             Owner = Application.Current.MainWindow;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -32,6 +27,16 @@ namespace GastroTransfer.Views.Dialogs
             Quantity = 0;
             QuantityTextBox.Text = "0";
             ProductName.Text = productName;
+            WeightCommonInterface weight = new WeightCommonInterface(new ComPortSettings
+            {
+                BaudRate = config.WeightComBaudRate,
+                PortName = config.WeightComPortName,
+                StopBits = config.WeightComStopBits,
+                DataBits = config.WeightComDataBits,
+                Parity = config.WeightComParity
+            });
+            if (config.WeightComIsConnected)
+                QuantityTextBox.Text = weight.GetWeihgt().ToString();
         }
 
         private void keyboardEvent(object sender, ExecutedRoutedEventArgs e)

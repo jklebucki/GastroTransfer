@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GastroTransfer.Views.Dialogs"
         mc:Ignorable="d"
-        Title="MeasurementWindow" Height="600" Width="800"
+        Title="MeasurementWindow" Height="600" Width="600"
         ResizeMode="NoResize" WindowStyle="None">
     <Window.Resources>
         <RoutedUICommand x:Key="cmd1" Text="1"></RoutedUICommand>
@@ -71,7 +71,7 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*" />
+                <RowDefinition Height="12*" />
                 <RowDefinition Height="20*" />
                 <RowDefinition Height="80*" />
                 <RowDefinition Height="15*" />
@@ -82,7 +82,7 @@
                 </Viewbox>
             </Border>
             <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="QuantityTextBox"  Text="" HorizontalAlignment="Stretch" Margin="1" Width="100" KeyDown="QuantityTextBox_KeyDown"></TextBox>
+                <TextBox x:Name="QuantityTextBox"  Text="" HorizontalContentAlignment="Right" HorizontalAlignment="Stretch" Margin="1" Width="100" KeyDown="QuantityTextBox_KeyDown"></TextBox>
             </Viewbox>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.ColumnDefinitions>

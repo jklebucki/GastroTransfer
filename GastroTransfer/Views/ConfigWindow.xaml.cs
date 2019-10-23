@@ -1,19 +1,9 @@
-﻿using GastroTransfer.Data;
-using GastroTransfer.Models;
+﻿using GastroTransfer.Models;
 using GastroTransfer.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace GastroTransfer.Views
 {
@@ -23,19 +13,37 @@ namespace GastroTransfer.Views
     public partial class ConfigWindow : Window
     {
         private ConfigService configService;
-        public ConfigWindow()
+        private string[] ports { get; set; }
+        public bool IsSaved { get; protected set; }
+        public ConfigWindow(Style style)
         {
-            Owner = Application.Current.MainWindow;
+            IsSaved = false;
+            try
+            {
+                Owner = Application.Current.MainWindow;
+                ports = System.IO.Ports.SerialPort.GetPortNames();
+            }
+            catch (Exception)
+            {
+                //Ignore
+            }
+
             Icon = null;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             configService = new ConfigService(new CryptoService());
             InitializeComponent();
+            Close.Style = style;
+            SaveConfig.Style = style;
             Loaded += WindowLoaded;
         }
 
         private void WindowLoaded(object sender, RoutedEventArgs args)
         {
-
+            var stopBits = Enum.GetValues(typeof(System.IO.Ports.StopBits)).OfType<System.IO.Ports.StopBits>().ToList();
+            stopBits.RemoveAt(0);
+            WeightComPortName.ItemsSource = ports;
+            WeightComStopBits.ItemsSource = stopBits;
+            WeightComParity.ItemsSource = Enum.GetValues(typeof(System.IO.Ports.Parity));
             var config = configService.GetConfig();
             ServerAddress.Text = config.ServerAddress;
             DatabaseName.Text = config.DatabaseName;
@@ -43,29 +51,58 @@ namespace GastroTransfer.Views
             Password.Password = config.Password;
             IsTrustedConnection.IsChecked = config.IsTrustedConnection;
             AdditionalConnectionStringDirective.Text = config.AdditionalConnectionStringDirective;
+            WeightComPortName.Text = config.WeightComPortName;
+            WeightComBoudRate.Text = config.WeightComBaudRate.ToString();
+            WeightComIsConnected.IsChecked = config.WeightComIsConnected;
+            WeightComDataBits.Text = config.WeightComDataBits.ToString();
+            WeightComStopBits.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.StopBits)).GetValue(config.WeightComStopBits);
+            WeightComParity.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.Parity)).GetValue(config.WeightComParity);
         }
 
         private void SaveConfig_Click(object sender, RoutedEventArgs e)
         {
-            var isSaved = configService.SaveConfig(new Config
+            var cfg = new Config();
+            try
             {
-                ServerAddress = ServerAddress.Text,
-                DatabaseName = DatabaseName.Text,
-                UserName = UserName.Text,
-                Password = Password.Password,
-                IsTrustedConnection = (bool)IsTrustedConnection.IsChecked,
-                AdditionalConnectionStringDirective = AdditionalConnectionStringDirective.Text
-            });
-            if (isSaved)
-                Close();
-            else
-            {
-                var choice = MessageBox.Show("Błąd zapisu konfiguracji", "Błąd", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                if (choice == MessageBoxResult.OK)
+                cfg = new Config
+                {
+                    ServerAddress = ServerAddress.Text,
+                    DatabaseName = DatabaseName.Text,
+                    UserName = UserName.Text,
+                    Password = Password.Password,
+                    IsTrustedConnection = (bool)IsTrustedConnection.IsChecked,
+                    AdditionalConnectionStringDirective = AdditionalConnectionStringDirective.Text,
+                    WeightComIsConnected = (bool)WeightComIsConnected.IsChecked,
+                    WeightComPortName = WeightComPortName.Text,
+                    WeightComBaudRate = int.Parse(WeightComBoudRate.Text),
+                    WeightComDataBits = int.Parse(WeightComDataBits.Text),
+                    WeightComStopBits = (int)(System.IO.Ports.StopBits)WeightComStopBits.SelectedItem,
+                    WeightComParity = (int)(System.IO.Ports.Parity)WeightComParity.SelectedItem
+                };
+                var isSaved = configService.SaveConfig(cfg);
+                if (isSaved)
+                {
+                    IsSaved = true;
                     Close();
+                }
+                else
+                {
+                    ShowErrorMsg(configService.Message);
+                }
             }
+            catch (Exception ex)
+            {
+                ShowErrorMsg(ex.Message);
+            }
+
         }
 
+        private void ShowErrorMsg(string message)
+        {
+            var choice = MessageBox.Show($"Błąd zapisu konfiguracji\n{message}\n\nAnuluj żeby wrócić do edycji.", "Błąd", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            if (choice == MessageBoxResult.OK)
+                Close();
+        }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();

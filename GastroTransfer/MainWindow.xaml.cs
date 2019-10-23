@@ -3,6 +3,7 @@ using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views;
 using GastroTransfer.Views.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace GastroTransfer
             AddGroupButtons(productGroups);
             BackButton.Style = this.FindResource("RoundCorner") as Style;
             ConfigButton.Style = this.FindResource("RoundCorner") as Style;
+            CloseButton.Style = this.FindResource("RoundCorner") as Style;
 
         }
 
@@ -74,11 +76,13 @@ namespace GastroTransfer
             //check or initialize database
             dbService = new DbService(config);
 
-            if (!dbService.CheckConnection())
+            while (!dbService.CheckConnection())
             {
                 MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
-                var configWindow = new ConfigWindow();
+                var configWindow = new ConfigWindow(this.FindResource("RoundCorner") as Style);
                 configWindow.ShowDialog();
+                config = configService.GetConfig();
+                dbService = new DbService(config);
             }
             appDbContext = new AppDbContext(dbService.GetConnectionString());
             if (appDbContext.ProductGroups.Count() == 0)
@@ -93,8 +97,12 @@ namespace GastroTransfer
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
-            ConfigWindow configPage = new ConfigWindow();
+            ConfigWindow configPage = new ConfigWindow(this.FindResource("RoundCorner") as Style);
             configPage.ShowDialog();
+            if (configPage.IsSaved)
+            {
+                config = configService.GetConfig();
+            }
         }
 
         private void Production_Button_Click(object sender, RoutedEventArgs e)
@@ -102,7 +110,7 @@ namespace GastroTransfer
             var btn = (Button)sender;
             var productId = int.Parse(btn.Name.Split('_')[1]);
             var item = producedItems.FirstOrDefault(x => x.ProducedItemId == productId);
-            var measurementWindow = new MeasurementWindow(this.FindResource("RoundCorner") as Style, item.Name);
+            var measurementWindow = new MeasurementWindow(this.FindResource("RoundCorner") as Style, item.Name, config);
             measurementWindow.ShowDialog();
             if (!measurementWindow.IsCanceled)
             {
@@ -112,7 +120,8 @@ namespace GastroTransfer
                         ProducedItem = item,
                         TransferredItem = new TransferredItem
                         {
-                            Quantity = measurementWindow.Quantity
+                            Quantity = measurementWindow.Quantity,
+                            Registered = DateTime.Now
                         }
                     });
                 PositionsListGrid.Items.Refresh();
@@ -233,6 +242,11 @@ namespace GastroTransfer
 
                 this.GroupButtons.Children.Add(button);
             }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

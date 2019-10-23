@@ -28,48 +28,80 @@ namespace GastroTransfer.Data
                 {
                     IsActive = true,
                     Name = "Schab w sosie grzybowym",
+                    UnitOfMesure = "kg",
                     ProducedItemId = 1,
-                    ProductGroupId = 2
+                    ProductGroupId = 2,
+                    ConversionRate = 0
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Karkówka z grilla",
+                    UnitOfMesure = "kg",
                     ProducedItemId = 2,
-                    ProductGroupId = 2
+                    ProductGroupId = 2,
+                    ConversionRate = 0
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Wątróbka drobiowa z cebulką",
+                    UnitOfMesure = "kg",
+                    ProducedItemId = 3,
+                    ProductGroupId = 2,
+                    ConversionRate = 0
+
+                },
+                new ProducedItem
+                {
+                    IsActive = true,
+                    Name = "Pulpety",
+                    UnitOfMesure = "kg",
+                    ProducedItemId = 4,
+                    ProductGroupId = 2,
+                    ConversionRate = 0
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Flaki",
-                    ProducedItemId = 3,
-                    ProductGroupId = 3
+                    UnitOfMesure = "l",
+                    ProducedItemId = 5,
+                    ProductGroupId = 3,
+                    ConversionRate = 0
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Zupa gulaszowa",
-                    ProducedItemId = 4,
-                    ProductGroupId = 3
+                    UnitOfMesure = "l",
+                    ProducedItemId = 6,
+                    ProductGroupId = 3,
+                    ConversionRate = 0
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Żurek",
-                    ProducedItemId = 5,
-                    ProductGroupId = 3
+                    UnitOfMesure = "l",
+                    ProducedItemId = 7,
+                    ProductGroupId = 3,
+                    ConversionRate = 0
 
                 },
                 new ProducedItem
                 {
                     IsActive = true,
                     Name = "Zupa grochowa",
-                    ProducedItemId = 6,
-                    ProductGroupId = 3
+                    UnitOfMesure = "l",
+                    ProducedItemId = 8,
+                    ProductGroupId = 3,
+                    ConversionRate = 0
 
                 }
         };

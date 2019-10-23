@@ -13,6 +13,8 @@ namespace GastroTransfer.Services
     {
         public string ConfigPath { get; protected set; }
         private ICryptoService cryptoService { get; set; }
+        public string Message { get; protected set; }
+
         public ConfigService(ICryptoService cryptoService)
         {
             ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
@@ -31,11 +33,11 @@ namespace GastroTransfer.Services
                     return config;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Message = ex.Message;
                 return null;
             }
-
         }
 
         public bool SaveConfig(Config config)
@@ -48,8 +50,9 @@ namespace GastroTransfer.Services
                     sw.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Message = ex.Message;
                     return false;
                 }
             }
@@ -71,8 +74,9 @@ namespace GastroTransfer.Services
                     }, Formatting.Indented));
                     return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Message = ex.Message;
                     return false;
                 }
             }

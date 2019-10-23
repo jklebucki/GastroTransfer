@@ -283,6 +283,7 @@
             <WrapPanel Name="ButtomButtons" Orientation="Horizontal">
                 <Button x:Name="BackButton" Content="Usuń ostatni" Width="150" Height="80" Margin="8" FontSize="20" Click="Back_Click"/>
                 <Button x:Name="ConfigButton" Content="Kofiguracja" Width="150" Height="80" Margin="8" FontSize="20" Click="Config_Click"/>
+                <Button x:Name="CloseButton" Content="Zamknij" Width="150" Height="80" Margin="8" FontSize="20" Click="CloseButton_Click"/>
             </WrapPanel>
         </Border>
 

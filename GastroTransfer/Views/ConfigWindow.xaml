@@ -6,67 +6,163 @@
         xmlns:local="clr-namespace:GastroTransfer.Views"
         mc:Ignorable="d"
         Title="Konfiguracja połączenia z bazą danych" 
-        Height="450" Width="800"
+        Height="600" Width="800"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize" WindowStyle="None">
-    <Border BorderThickness="2" BorderBrush="Black" CornerRadius="1,1,1,1">
-        <Grid Background="#BBDEFB">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+        ResizeMode="NoResize" WindowStyle="None"
+        Background="#BBDEFB">
+    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
-                <TextBlock Text="Adres serwera" FontSize="10" Margin="5" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Viewbox Grid.ColumnSpan="2" Grid.Row="0" Stretch="Uniform" >
+                <TextBlock Text="Konfiguracja systemu" FontSize="10" Margin="5" FontWeight="Bold"/>
             </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="ServerAddress"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
-                <TextBlock Text="Baza danych" FontSize="10" Margin="5" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="DatabaseName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
-                <TextBlock Text="Użytkownik" FontSize="10" Margin="5" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="UserName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="4" Stretch="Uniform" >
-                <TextBlock Text="Hasło" FontSize="10" Margin="5" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="4" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <PasswordBox x:Name="Password"  HorizontalAlignment="Stretch" Margin="5" Width="200"></PasswordBox>
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="5" Stretch="Uniform" >
-                <TextBlock Text="Trusted connecton" FontSize="10" Margin="5" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="10">
-                <CheckBox x:Name="IsTrustedConnection" />
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="6" Stretch="Uniform" >
-                <TextBlock Text="Dodatkowe dyrektywy" FontSize="10" Margin="5" />
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="6" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="AdditionalConnectionStringDirective"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
-            </Viewbox>
-            <Viewbox Grid.Column="0" Grid.Row="7" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <Button x:Name="Close" Click="Close_Click" Width="200" Margin="2">Anuluj</Button>
-            </Viewbox>
-            <Viewbox Grid.Column="1" Grid.Row="7" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <Button x:Name="SaveConfig" Click="SaveConfig_Click" Width="200" Margin="2">Zapisz</Button>
-            </Viewbox>
+            <GroupBox Grid.ColumnSpan="2" Grid.Row="1" Margin="5" BorderBrush="Black" FontSize="16">
+                <GroupBox.Header>
+                    Konfiguracja serwera SQL
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0" Stretch="Uniform" >
+                        <TextBlock Text="Adres serwera" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="ServerAddress"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
+                        <TextBlock Text="Baza danych" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="DatabaseName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
+                        <TextBlock Text="Użytkownik" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="UserName"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
+                        <TextBlock Text="Hasło" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <PasswordBox x:Name="Password"  HorizontalAlignment="Stretch" Margin="5" Width="200"></PasswordBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="4" Stretch="Uniform" >
+                        <TextBlock Text="Trusted connecton" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="4" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="10">
+                        <CheckBox x:Name="IsTrustedConnection" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="5" Stretch="Uniform" >
+                        <TextBlock Text="Dodatkowe dyrektywy" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="AdditionalConnectionStringDirective"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="200"></TextBox>
+                    </Viewbox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.ColumnSpan="2" Grid.Row="2" Margin="5" BorderBrush="Black" FontSize="18">
+                <GroupBox.Header>
+                    Konfiguracja wagi
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0" Stretch="Uniform" >
+                        <TextBlock Text="Waga podłączona (Angel AP-1)" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="10">
+                        <CheckBox x:Name="WeightComIsConnected" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
+                        <TextBlock Text="Port COM" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="WeightComPortName" IsEditable="False" HorizontalAlignment="Stretch" Margin="5" Width="200">
+                        </ComboBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
+                        <TextBlock Text="Boud rate" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="WeightComBoudRate" IsEditable="False" HorizontalAlignment="Stretch" Margin="5" Width="200">
+                            <ComboBoxItem>115200</ComboBoxItem>
+                            <ComboBoxItem>57600</ComboBoxItem>
+                            <ComboBoxItem>38400</ComboBoxItem>
+                            <ComboBoxItem>19200</ComboBoxItem>
+                            <ComboBoxItem>14400</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">9600</ComboBoxItem>
+                            <ComboBoxItem>4800</ComboBoxItem>
+                        </ComboBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
+                        <TextBlock Text="Data Bits" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="WeightComDataBits" IsEditable="False" HorizontalAlignment="Stretch" Margin="5" Width="200">
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">8</ComboBoxItem>
+                        </ComboBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="4" Stretch="Uniform" >
+                        <TextBlock Text="Stop Bits" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="4" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="WeightComStopBits" IsEditable="False" HorizontalAlignment="Stretch" Margin="5" Width="200">
+                        </ComboBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="5" Stretch="Uniform" >
+                        <TextBlock Text="Parity" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="5" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="WeightComParity" IsEditable="False" HorizontalAlignment="Stretch" Margin="5" Width="200">
+                        </ComboBox>
+                    </Viewbox>
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Grid.Row="0" x:Name="Close" Click="Close_Click" Margin="2" FontSize="18" Foreground="Red">Anuluj</Button>
+                <Button Grid.Column="4" Grid.Row="0" x:Name="SaveConfig" Click="SaveConfig_Click"  FontSize="18" Margin="2" Foreground="DarkGreen">Zapisz</Button>
+            </Grid>
         </Grid>
     </Border>
 </Window>
