@@ -160,8 +160,8 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Grid.Row="0" x:Name="Close" Click="Close_Click" Margin="2" FontSize="18" Foreground="Red">Anuluj</Button>
-                <Button Grid.Column="4" Grid.Row="0" x:Name="SaveConfig" Click="SaveConfig_Click"  FontSize="18" Margin="2" Foreground="DarkGreen">Zapisz</Button>
+                <Button Grid.Column="1" Grid.Row="0" x:Name="CloseButton" Click="CloseButton_Click" Margin="2" FontSize="18" Foreground="Red">Anuluj</Button>
+                <Button Grid.Column="4" Grid.Row="0" x:Name="SaveConfigButton" Click="SaveConfigButton_Click"  FontSize="18" Margin="2" Foreground="DarkGreen">Zapisz</Button>
             </Grid>
         </Grid>
     </Border>

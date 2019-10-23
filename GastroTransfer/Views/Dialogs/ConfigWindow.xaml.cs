@@ -32,8 +32,8 @@ namespace GastroTransfer.Views.Dialogs
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             configService = new ConfigService(new CryptoService());
             InitializeComponent();
-            Close.Style = style;
-            SaveConfig.Style = style;
+            CloseButton.Style = style;
+            SaveConfigButton.Style = style;
             Loaded += WindowLoaded;
         }
 
@@ -59,7 +59,7 @@ namespace GastroTransfer.Views.Dialogs
             WeightComParity.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.Parity)).GetValue(config.WeightComParity);
         }
 
-        private void SaveConfig_Click(object sender, RoutedEventArgs e)
+        private void SaveConfigButton_Click(object sender, RoutedEventArgs e)
         {
             var cfg = new Config();
             try
@@ -103,7 +103,7 @@ namespace GastroTransfer.Views.Dialogs
             if (choice == MessageBoxResult.OK)
                 Close();
         }
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
