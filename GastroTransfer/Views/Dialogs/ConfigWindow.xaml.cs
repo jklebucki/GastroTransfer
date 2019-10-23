@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 
 
-namespace GastroTransfer.Views
+namespace GastroTransfer.Views.Dialogs
 {
     /// <summary>
     /// Logika interakcji dla klasy ConfigWindow.xaml

@@ -92,7 +92,7 @@
     <Compile Include="Services\IDbService.cs" />
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\ProductService.cs" />
-    <Compile Include="Views\ConfigWindow.xaml.cs">
+    <Compile Include="Views\Dialogs\ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\MeasurementWindow.xaml.cs">
@@ -111,7 +111,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ConfigWindow.xaml">
+    <Page Include="Views\Dialogs\ConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
