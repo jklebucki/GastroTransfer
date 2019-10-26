@@ -36,7 +36,7 @@ namespace GastroTransfer.Views.Dialogs
                 Parity = config.WeightComParity
             });
             if (config.WeightComIsConnected)
-                QuantityTextBox.Text = weight.GetWeihgt().ToString();
+                QuantityTextBox.Text = weight.GetWeihgtApProt().ToString();
         }
 
         private void keyboardEvent(object sender, ExecutedRoutedEventArgs e)

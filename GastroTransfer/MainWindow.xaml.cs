@@ -1,7 +1,6 @@
 ﻿using GastroTransfer.Data;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
-using GastroTransfer.Views;
 using GastroTransfer.Views.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -170,7 +169,7 @@ namespace GastroTransfer
                     Stretch = Stretch.Uniform,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 240,
+                    Width = 160,
                 };
 
                 TextBlock text = new TextBlock
@@ -179,7 +178,7 @@ namespace GastroTransfer
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     TextAlignment = TextAlignment.Center,
-                    Width = 240,
+                    Width = 160,
                     TextWrapping = TextWrapping.Wrap,
                     Margin = new Thickness(5, 5, 5, 5)
                 };
@@ -190,8 +189,8 @@ namespace GastroTransfer
                     Name = $"N_{item.ProducedItemId}",
                     Content = box,
                     Tag = item.ProductGroupId,
-                    Height = 150,
-                    Width = 250,
+                    Height = 90,
+                    Width = 180,
                     Margin = new Thickness(5, 5, 5, 5),
                     FontSize = 24,
                     Style = this.FindResource("RoundCorner") as Style
@@ -212,7 +211,7 @@ namespace GastroTransfer
                     Stretch = Stretch.Uniform,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 240,
+                    Width = 160,
                 };
 
                 TextBlock text = new TextBlock
@@ -221,7 +220,7 @@ namespace GastroTransfer
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     TextAlignment = TextAlignment.Center,
-                    Width = 240,
+                    Width = 160,
                     TextWrapping = TextWrapping.Wrap,
                     Margin = new Thickness(5, 5, 5, 5)
                 };
@@ -232,8 +231,8 @@ namespace GastroTransfer
                     Name = $"N_{item.ProductGroupId}",
                     Content = box,
                     Tag = item.GroupName,
-                    Height = 50,
-                    Width = 250,
+                    Height = 35,
+                    Width = 180,
                     Margin = new Thickness(5, 5, 5, 5),
                     FontSize = 24,
                     Style = this.FindResource("RoundCorner") as Style

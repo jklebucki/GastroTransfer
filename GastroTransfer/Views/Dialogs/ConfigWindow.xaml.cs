@@ -12,7 +12,7 @@ namespace GastroTransfer.Views.Dialogs
     /// </summary>
     public partial class ConfigWindow : Window
     {
-        private ConfigService configService;
+        private readonly ConfigService configService;
         private string[] ports { get; set; }
         public bool IsSaved { get; protected set; }
         public ConfigWindow(Style style)
