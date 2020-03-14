@@ -126,5 +126,13 @@ namespace GastroTransfer.Views.Dialogs
                 Cancel_Click(null, null);
             }
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                Confirm_Click(null, null);
+            }
+        }
     }
 }

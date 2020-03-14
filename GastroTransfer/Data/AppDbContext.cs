@@ -17,7 +17,7 @@ namespace GastroTransfer.Data
         }
 
         public DbSet<ProducedItem> ProducedItems { get; set; }
-        public DbSet<TransferredItem> TransferredItems { get; set; }
+        public DbSet<ProductionItem> TransferredItems { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -25,10 +25,10 @@ namespace GastroTransfer.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProducedItem>().ToTable("ProducedItems", schemaName: "PSP");
             modelBuilder.Entity<ProductGroup>().ToTable("ProductGroups", schemaName: "PSP");
-            modelBuilder.Entity<TransferredItem>().ToTable("TransferredItems", schemaName: "PSP");
+            modelBuilder.Entity<ProductionItem>().ToTable("Production", schemaName: "PSP");
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ConversionRate).HasPrecision(18, 4);
-            modelBuilder.Entity<TransferredItem>()
+            modelBuilder.Entity<ProductionItem>()
                 .Property(x => x.Quantity).HasPrecision(18, 4);
         }
     }

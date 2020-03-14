@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="ICWS" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="ICWS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="ICWS">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="PobierzProdukty">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestData" type="tns:PobierzProduktyRequestDataRequestObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzProduktyRequestDataRequestObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GrupaTowID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PobierzProduktyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzProduktyResult" type="tns:PobierzProduktyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzProduktyResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Produkty" type="tns:ArrayOfPobierzProduktyProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPobierzProduktyProduktObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Produkt" type="tns:PobierzProduktyProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PobierzProduktyProduktObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProduktID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Indeks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nazwa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NazwaSkrocona" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JM" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Dokladnosc" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Stan" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentProdukcji">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestData" type="tns:UtworzDokumentProdukcjiRequestDataRequestObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentProdukcjiRequestDataRequestObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TypDokumentuID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Produkty" type="tns:ArrayOfUtworzDokumentProdukcjiRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUtworzDokumentProdukcjiRequestProduktObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Produkt" type="tns:UtworzDokumentProdukcjiRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentProdukcjiRequestProduktObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProduktID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ilosc" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Cena" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentProdukcjiResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UtworzDokumentProdukcjiResult" type="tns:UtworzDokumentProdukcjiResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentProdukcjiResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Dokument" type="tns:UtworzDokumentProdukcjiDokumentObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentProdukcjiDokumentObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="KodBledu" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="OpisBledu" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentyPrzesunieciaMagazynowego">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestData" type="tns:UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynZrodlowyID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynDocelowyID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Produkty" type="tns:ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Produkt" type="tns:UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProduktID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ilosc" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentyPrzesunieciaMagazynowegoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UtworzDokumentyPrzesunieciaMagazynowegoResult" type="tns:UtworzDokumentyPrzesunieciaMagazynowegoResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentyPrzesunieciaMagazynowegoResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Dokumenty" type="tns:ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Dokument" type="tns:UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="KodBledu" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="OpisBledu" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PobierzMagazyny">
+        <s:complexType>
+          <s:sequence />
+        </s:complexType>
+      </s:element>
+      <s:element name="PobierzMagazynyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzMagazynyResult" type="tns:PobierzMagazynyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzMagazynyResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Magazyny" type="tns:ArrayOfPobierzMagazynyMagazynObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPobierzMagazynyMagazynObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Magazyn" type="tns:PobierzMagazynyMagazynObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PobierzMagazynyMagazynObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Symbol" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Opis" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PobierzGrupyTowarowe">
+        <s:complexType>
+          <s:sequence />
+        </s:complexType>
+      </s:element>
+      <s:element name="PobierzGrupyTowaroweResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzGrupyTowaroweResult" type="tns:PobierzGrupyTowaroweResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzGrupyTowaroweResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="GrupyTowarowe" type="tns:ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="GrupaTowarowa" type="tns:PobierzGrupyTowaroweGrupaTowarowaObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PobierzGrupyTowaroweGrupaTowarowaObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nazwa" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PobierzPotrawy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestData" type="tns:PobierzPotrawyRequestDataRequestObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzPotrawyRequestDataRequestObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="GrupaTowID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PobierzPotrawyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzPotrawyResult" type="tns:PobierzPotrawyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PobierzPotrawyResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Produkty" type="tns:ArrayOfPobierzPotrawyProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPobierzPotrawyProduktObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Produkt" type="tns:PobierzPotrawyProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PobierzPotrawyProduktObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProduktID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Indeks" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nazwa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NazwaSkrocona" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="JM" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Dokladnosc" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentRozchodowy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RequestData" type="tns:UtworzDokumentRozchodowyRequestDataRequestObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentRozchodowyRequestDataRequestObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TypDokumentuID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MagazynID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Produkty" type="tns:ArrayOfUtworzDokumentRozchodowyRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfUtworzDokumentRozchodowyRequestProduktObject">
+        <s:sequence>
+          <s:element maxOccurs="unbounded" name="Produkt" type="tns:UtworzDokumentRozchodowyRequestProduktObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentRozchodowyRequestProduktObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProduktID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Ilosc" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="Cena" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UtworzDokumentRozchodowyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UtworzDokumentRozchodowyResult" type="tns:UtworzDokumentRozchodowyResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="UtworzDokumentRozchodowyResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Dokument" type="tns:UtworzDokumentRozchodowyDokumentObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="UtworzDokumentRozchodowyDokumentObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numer" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="KodBledu" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="OpisBledu" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PobierzProduktySoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzProdukty" />
+  </wsdl:message>
+  <wsdl:message name="PobierzProduktySoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzProduktyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentProdukcjiSoapIn">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentProdukcji" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentProdukcjiSoapOut">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentProdukcjiResponse" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentyPrzesunieciaMagazynowegoSoapIn">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentyPrzesunieciaMagazynowego" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentyPrzesunieciaMagazynowegoSoapOut">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentyPrzesunieciaMagazynowegoResponse" />
+  </wsdl:message>
+  <wsdl:message name="PobierzMagazynySoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzMagazyny" />
+  </wsdl:message>
+  <wsdl:message name="PobierzMagazynySoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzMagazynyResponse" />
+  </wsdl:message>
+  <wsdl:message name="PobierzGrupyTowaroweSoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzGrupyTowarowe" />
+  </wsdl:message>
+  <wsdl:message name="PobierzGrupyTowaroweSoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzGrupyTowaroweResponse" />
+  </wsdl:message>
+  <wsdl:message name="PobierzPotrawySoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzPotrawy" />
+  </wsdl:message>
+  <wsdl:message name="PobierzPotrawySoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzPotrawyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentRozchodowySoapIn">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentRozchodowy" />
+  </wsdl:message>
+  <wsdl:message name="UtworzDokumentRozchodowySoapOut">
+    <wsdl:part name="parameters" element="tns:UtworzDokumentRozchodowyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICWSSoap">
+    <wsdl:operation name="PobierzProdukty">
+      <wsdl:input message="tns:PobierzProduktySoapIn" />
+      <wsdl:output message="tns:PobierzProduktySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentProdukcji">
+      <wsdl:input message="tns:UtworzDokumentProdukcjiSoapIn" />
+      <wsdl:output message="tns:UtworzDokumentProdukcjiSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentyPrzesunieciaMagazynowego">
+      <wsdl:input message="tns:UtworzDokumentyPrzesunieciaMagazynowegoSoapIn" />
+      <wsdl:output message="tns:UtworzDokumentyPrzesunieciaMagazynowegoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PobierzMagazyny">
+      <wsdl:input message="tns:PobierzMagazynySoapIn" />
+      <wsdl:output message="tns:PobierzMagazynySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PobierzGrupyTowarowe">
+      <wsdl:input message="tns:PobierzGrupyTowaroweSoapIn" />
+      <wsdl:output message="tns:PobierzGrupyTowaroweSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PobierzPotrawy">
+      <wsdl:input message="tns:PobierzPotrawySoapIn" />
+      <wsdl:output message="tns:PobierzPotrawySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentRozchodowy">
+      <wsdl:input message="tns:UtworzDokumentRozchodowySoapIn" />
+      <wsdl:output message="tns:UtworzDokumentRozchodowySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ICWSSoap" type="tns:ICWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PobierzProdukty">
+      <soap:operation soapAction="ICWSPobierzProdukty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentProdukcji">
+      <soap:operation soapAction="ICWSUtworzDokumentProdukcji" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentyPrzesunieciaMagazynowego">
+      <soap:operation soapAction="ICWSUtworzDokumentyPrzesunieciaMagazynowego" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzMagazyny">
+      <soap:operation soapAction="ICWSPobierzMagazyny" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzGrupyTowarowe">
+      <soap:operation soapAction="ICWSPobierzGrupyTowarowe" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzPotrawy">
+      <soap:operation soapAction="ICWSPobierzPotrawy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentRozchodowy">
+      <soap:operation soapAction="ICWSUtworzDokumentRozchodowy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ICWSSoap12" type="tns:ICWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PobierzProdukty">
+      <soap12:operation soapAction="ICWSPobierzProdukty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentProdukcji">
+      <soap12:operation soapAction="ICWSUtworzDokumentProdukcji" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentyPrzesunieciaMagazynowego">
+      <soap12:operation soapAction="ICWSUtworzDokumentyPrzesunieciaMagazynowego" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzMagazyny">
+      <soap12:operation soapAction="ICWSPobierzMagazyny" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzGrupyTowarowe">
+      <soap12:operation soapAction="ICWSPobierzGrupyTowarowe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzPotrawy">
+      <soap12:operation soapAction="ICWSPobierzPotrawy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UtworzDokumentRozchodowy">
+      <soap12:operation soapAction="ICWSUtworzDokumentRozchodowy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ICWS">
+    <wsdl:port name="ICWSSoap" binding="tns:ICWSSoap">
+      <soap:address location="http://192.168.81.70:8089/icws.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ICWSSoap12" binding="tns:ICWSSoap12">
+      <soap12:address location="http://192.168.81.70:8089/icws.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

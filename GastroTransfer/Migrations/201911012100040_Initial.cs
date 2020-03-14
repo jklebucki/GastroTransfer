@@ -1,9 +1,9 @@
-namespace GastroTransfer.Migrations
+﻿namespace GastroTransfer.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class First : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -15,16 +15,14 @@ namespace GastroTransfer.Migrations
                         Name = c.String(),
                         IsActive = c.Boolean(nullable: false),
                         UnitOfMesure = c.String(),
-                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4, defaultValue: 1),
+                        ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4),
                         ExternalId = c.Int(),
                         ExternalIndex = c.String(),
                         ExternalName = c.String(),
                         ExternalUnitOfMesure = c.String(),
-                        ProductGroupID = c.Int(nullable: false),
+                        ProductGroupId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ProducedItemId)
-                .ForeignKey("PSP.ProductGroups", t => t.ProductGroupID, cascadeDelete: true)
-                .Index(t => t.ProductGroupID);
+                .PrimaryKey(t => t.ProducedItemId);
             
             CreateTable(
                 "PSP.ProductGroups",
@@ -36,26 +34,26 @@ namespace GastroTransfer.Migrations
                 .PrimaryKey(t => t.ProductGroupId);
             
             CreateTable(
-                "PSP.TransferredItems",
+                "PSP.Production",
                 c => new
                     {
-                        TransferredItemId = c.Int(nullable: false, identity: true),
+                        ProductionItemId = c.Int(nullable: false, identity: true),
+                        ProducedItemId = c.Int(nullable: false),
                         Quantity = c.Decimal(nullable: false, precision: 18, scale: 4),
                         TransferType = c.Int(nullable: false),
                         IsSentToExternalSystem = c.Boolean(nullable: false),
                         Registered = c.DateTime(nullable: false),
                         SentToExternalSystem = c.DateTime(nullable: false),
                         PackageNumber = c.Int(),
+                        DocumentType = c.String(),
                     })
-                .PrimaryKey(t => t.TransferredItemId);
+                .PrimaryKey(t => t.ProductionItemId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("PSP.ProducedItems", "ProductGroupID", "PSP.ProductGroups");
-            DropIndex("PSP.ProducedItems", new[] { "ProductGroupID" });
-            DropTable("PSP.TransferredItems");
+            DropTable("PSP.Production");
             DropTable("PSP.ProductGroups");
             DropTable("PSP.ProducedItems");
         }

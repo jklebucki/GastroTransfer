@@ -9,9 +9,9 @@ namespace GastroTransfer.Services
 {
     interface IProductService
     {
-        bool CreateProduct(ProducedItem producedItem);
-        bool RemoveProduct(ProducedItem producedItem);
-        bool UpdateProduct(ProducedItem producedItem);
-        bool ChangeActiveStatus(int producedItemId);
+        ServiceMessage CreateProduct(ProducedItem producedItem);
+        ServiceMessage RemoveProduct(ProducedItem producedItem);
+        ServiceMessage UpdateProduct(ProducedItem producedItem);
+        ServiceMessage ChangeActiveStatus(int producedItemId);
     }
 }

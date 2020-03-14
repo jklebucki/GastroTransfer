@@ -248,7 +248,7 @@
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="3" StrokeDashArray="1 2"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -290,7 +290,13 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                                <Setter Property="Background" TargetName="border" Value="#00E676"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Background" TargetName="border" Value="#FF5722"/>
+                                <Setter Property="Foreground" Value="#BDBDBD"/>
+                                <Setter Property="Content" Value="Kliknij"/>
                                 <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
@@ -338,11 +344,26 @@
                 BorderThickness="1" 
                 CornerRadius="3,3,8,8" 
                 Margin="1,3,1,3" >
-            <WrapPanel Name="ButtomButtons" Orientation="Horizontal">
-                <Button x:Name="BackButton" Content="Usuń ostatni" Width="120" Height="55" Margin="8" FontSize="18" Click="Back_Click"/>
-                <Button x:Name="ConfigButton" Content="Kofiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click"/>
-                <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click"/>
-            </WrapPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <WrapPanel Grid.Column="1" Name="ButtomButtons" Orientation="Horizontal">
+                    <Button x:Name="BackButton" Content="Usuń ostatni" Width="120" Height="55" Margin="8" FontSize="18" Click="Back_Click"/>
+                    <Button x:Name="ConfigButton" Content="Konfiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click"/>
+                    <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click"/>
+                    <Button x:Name="SoapTestButton" Content="Soap Test" Width="120" Height="55" Margin="8" FontSize="18" Click="SoapTestButton_Click"/>
+                </WrapPanel>
+                <Grid Grid.Column="0" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton FontSize="20" Grid.Column="0" x:Name="ToggleOut" Content="Wydanie" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="True"/>
+                    <RadioButton FontSize="20" Grid.Column="1" x:Name="ToggleIn" Content="Zwrot" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}"/>
+                </Grid>
+            </Grid>
         </Border>
 
         <Grid Grid.Row="1" Grid.Column="1">
@@ -354,17 +375,7 @@
                 <RowDefinition Height="120"/>
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <RadioButton FontSize="20" Grid.Column="0" Name="toggle1" Content="One" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="True"/>
-                    <RadioButton FontSize="20" Grid.Column="1" Name="toggle2" Content="Two" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}"/>
-                </Grid>
-            </Border>
-            <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+            <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
                 <DataGrid TabIndex="0" x:Name="PositionsListGrid" Margin="0,0,0,0" 
                       RowHeaderWidth="0"
                       AutoGenerateColumns="False"
@@ -405,7 +416,7 @@
                                         Header="JM" FontSize="20"/>
                         <DataGridTextColumn Width="25*" 
                                         x:Name="Quantity" 
-                                        Binding="{Binding TransferredItem.Quantity, Mode=TwoWay, StringFormat=n4}" 
+                                        Binding="{Binding ProductionItem.Quantity, Mode=TwoWay, StringFormat=n4}" 
                                         Header="ILOŚĆ" FontSize="20">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="{x:Type TextBlock}">

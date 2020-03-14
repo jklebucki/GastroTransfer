@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GastroTransfer.Views.Dialogs"
         mc:Ignorable="d"
         Title="MeasurementWindow" Height="600" Width="600"
-        ResizeMode="NoResize" WindowStyle="None">
+        ResizeMode="NoResize" WindowStyle="None"
+        KeyDown="Window_KeyDown">
     <Window.Resources>
         <RoutedUICommand x:Key="cmd1" Text="1"></RoutedUICommand>
         <RoutedUICommand x:Key="cmd2" Text="2"></RoutedUICommand>
@@ -82,7 +83,7 @@
                 </Viewbox>
             </Border>
             <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
-                <TextBox x:Name="QuantityTextBox"  Text="" HorizontalContentAlignment="Right" HorizontalAlignment="Stretch" Margin="1" Width="100" KeyDown="QuantityTextBox_KeyDown"></TextBox>
+                <TextBox x:Name="QuantityTextBox"  Text="" HorizontalContentAlignment="Right" HorizontalAlignment="Stretch" Margin="1" Width="100" KeyDown="QuantityTextBox_KeyDown" IsReadOnly="True"></TextBox>
             </Viewbox>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.ColumnDefinitions>

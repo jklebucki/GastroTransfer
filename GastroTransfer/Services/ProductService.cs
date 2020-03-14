@@ -1,88 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using GastroTransfer.Data;
+using GastroTransfer.Models;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GastroTransfer.Data;
-using GastroTransfer.Models;
 
 namespace GastroTransfer.Services
 {
     class ProductService : IProductService
     {
-        public string ErrorMessage { get; protected set; }
         private AppDbContext dbContext { get; set; }
         public ProductService(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public bool CreateProduct(ProducedItem producedItem)
+        public ServiceMessage CreateProduct(ProducedItem producedItem)
         {
+            var serviceMessage = new ServiceMessage()
+            {
+                IsError = false,
+                Message = string.Empty,
+                ItemId = 0
+            };
+
             try
             {
                 dbContext.ProducedItems.Add(producedItem);
-                dbContext.SaveChanges();
-                return true;
+                serviceMessage.ItemId = dbContext.SaveChanges();
+                return serviceMessage;
             }
             catch (DbUpdateException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (NotSupportedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (ObjectDisposedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (InvalidOperationException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
-            return false;
+            serviceMessage.IsError = true;
+            return serviceMessage;
         }
 
-        public bool RemoveProduct(ProducedItem producedItem)
+        public ServiceMessage RemoveProduct(ProducedItem producedItem)
         {
+            var serviceMessage = new ServiceMessage()
+            {
+                IsError = false,
+                Message = string.Empty,
+                ItemId = 0
+            };
+
             try
             {
                 dbContext.ProducedItems.Remove(producedItem);
-                dbContext.SaveChanges();
-                return true;
+                serviceMessage.ItemId = dbContext.SaveChanges();
+                return serviceMessage;
             }
             catch (DbUpdateException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (NotSupportedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (ObjectDisposedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (InvalidOperationException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
-            return false;
+            serviceMessage.IsError = true;
+            return serviceMessage;
         }
 
-        public bool UpdateProduct(ProducedItem producedItem)
+        public ServiceMessage UpdateProduct(ProducedItem producedItem)
         {
+            var serviceMessage = new ServiceMessage()
+            {
+                IsError = false,
+                Message = string.Empty,
+                ItemId = 0
+            };
 
             try
             {
@@ -99,34 +116,42 @@ namespace GastroTransfer.Services
                 itemToChange.ProductGroupId = producedItem.ProductGroupId;
 
                 dbContext.Entry(itemToChange).State = EntityState.Modified;
-                dbContext.SaveChanges();
-                return true;
+                serviceMessage.ItemId = dbContext.SaveChanges();
+                return serviceMessage;
             }
             catch (DbUpdateException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (NotSupportedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (ObjectDisposedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (InvalidOperationException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
-            return false;
+            serviceMessage.IsError = true;
+            return serviceMessage;
         }
 
-        public bool ChangeActiveStatus(int producedItemId)
+        public ServiceMessage ChangeActiveStatus(int producedItemId)
         {
+            var serviceMessage = new ServiceMessage()
+            {
+                IsError = false,
+                Message = string.Empty,
+                ItemId = 0
+            };
+
             try
             {
                 var itemToChange = dbContext.ProducedItems.Find(producedItemId);
@@ -134,30 +159,31 @@ namespace GastroTransfer.Services
                 itemToChange.IsActive = false;
 
                 dbContext.Entry(itemToChange).State = EntityState.Modified;
-                dbContext.SaveChanges();
-                return true;
+                serviceMessage.ItemId = dbContext.SaveChanges();
+                return serviceMessage;
             }
             catch (DbUpdateException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (NotSupportedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (ObjectDisposedException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (InvalidOperationException ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                serviceMessage.Message = ex.Message;
             }
-            return false;
+            serviceMessage.IsError = true;
+            return serviceMessage;
         }
     }
 }

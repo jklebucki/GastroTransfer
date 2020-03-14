@@ -8,7 +8,7 @@ namespace GastroTransfer.Models
 {
     class ProductionViewModel
     {
-        public TransferredItem TransferredItem { get; set; }
+        public ProductionItem ProductionItem { get; set; }
         public ProducedItem ProducedItem { get; set; }
     }
 }

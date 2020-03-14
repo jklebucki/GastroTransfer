@@ -1,4 +1,5 @@
 ﻿using GastroTransfer.Data;
+using GastroTransfer.LsiService;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views.Dialogs;
@@ -41,8 +42,8 @@ namespace GastroTransfer
 
             InitializeSystem();
             InitializeComponent();
-            GetData();
             productionView = new List<ProductionViewModel>();
+            GetData();
             PositionsListGrid.DataContext = productionView;
             PositionsListGrid.ItemsSource = productionView;
             float scale = (float)SystemParameters.PrimaryScreenWidth / 1920f;
@@ -55,6 +56,7 @@ namespace GastroTransfer
             BackButton.Style = this.FindResource("RoundCorner") as Style;
             ConfigButton.Style = this.FindResource("RoundCorner") as Style;
             CloseButton.Style = this.FindResource("RoundCorner") as Style;
+            SoapTestButton.Style = this.FindResource("RoundCorner") as Style;
 
         }
 
@@ -92,6 +94,18 @@ namespace GastroTransfer
             }
             producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).ToList();
             productGroups = appDbContext.ProductGroups.ToList();
+            GetCurrentProduction();
+        }
+
+        private void GetCurrentProduction()
+        {
+            //get last production
+            ProductionService productionService = new ProductionService(appDbContext);
+            var currentProduction = productionService.GetProduction(false);
+            foreach (var item in currentProduction)
+            {
+                productionView.Add(item);
+            }
         }
 
         private void Config_Click(object sender, RoutedEventArgs e)
@@ -113,19 +127,38 @@ namespace GastroTransfer
             measurementWindow.ShowDialog();
             if (!measurementWindow.IsCanceled)
             {
-                productionView.Add(
-                    new ProductionViewModel
+                try
+                {
+                    var productionViewModel = new ProductionViewModel
                     {
                         ProducedItem = item,
-                        TransferredItem = new TransferredItem
+                        ProductionItem = new ProductionItem
                         {
-                            Quantity = measurementWindow.Quantity,
+                            Quantity = !(bool)ToggleIn.IsChecked ? measurementWindow.Quantity : measurementWindow.Quantity * -1,
                             Registered = DateTime.Now
                         }
-                    });
-                PositionsListGrid.Items.Refresh();
-                PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
-                PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                    };
+
+                    ProductionService productionService = new ProductionService(appDbContext);
+                    var message = productionService.AddProduction(productionViewModel);
+                    if (!message.IsError)
+                    {
+                        productionView.Add(productionViewModel);
+                        PositionsListGrid.Items.Refresh();
+                        PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
+                        PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                    }
+                    else
+                    {
+                        throw new Exception($"Item id:{message.ItemId}\nMessage: {message.Message}");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
         }
 
@@ -246,6 +279,26 @@ namespace GastroTransfer
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void SoapTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            ICWS lsiService = new ICWS();
+            lsiService.Url = "http://192.168.71.70:8089/icws.asmx";
+            PobierzMagazynyResult magazynyResult = new PobierzMagazynyResult();
+            var message = lsiService.Url;
+            try
+            {
+                magazynyResult = lsiService.PobierzMagazyny();
+                PobierzMagazynyMagazynObject[] magazyny = magazynyResult.Magazyny;
+
+                message += " - " + string.Join(", ", magazyny.Select(s => s.MagazynID)) + "\n" + string.Join(", ", magazyny.Select(s => s.Symbol)) + "\n" + string.Join(", ", magazyny.Select(s => s.Opis));
+            }
+            catch (Exception ex)
+            {
+                message += " - " + ex.Message;
+            }
+            MessageBox.Show(message);
         }
     }
 }

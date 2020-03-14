@@ -2,9 +2,9 @@
 
 namespace GastroTransfer.Models
 {
-    public class TransferredItem
+    public class ProductionItem
     {
-        public int TransferredItemId { get; set; }
+        public int ProductionItemId { get; set; }
         public int ProducedItemId { get; set; }
         public decimal Quantity { get; set; }
         public int TransferType { get; set; }
@@ -12,5 +12,6 @@ namespace GastroTransfer.Models
         public DateTime Registered { get; set; }
         public DateTime SentToExternalSystem { get; set; }
         public int? PackageNumber { get; set; }
+        public string DocumentType { get; set; }
     }
 }
