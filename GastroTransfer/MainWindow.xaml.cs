@@ -281,24 +281,11 @@ namespace GastroTransfer
             Close();
         }
 
-        private void SoapTestButton_Click(object sender, RoutedEventArgs e)
+        private async void SoapTestButton_Click(object sender, RoutedEventArgs e)
         {
-            ICWS lsiService = new ICWS();
-            lsiService.Url = "http://192.168.71.70:8089/icws.asmx";
-            PobierzMagazynyResult magazynyResult = new PobierzMagazynyResult();
-            var message = lsiService.Url;
-            try
-            {
-                magazynyResult = lsiService.PobierzMagazyny();
-                PobierzMagazynyMagazynObject[] magazyny = magazynyResult.Magazyny;
-
-                message += " - " + string.Join(", ", magazyny.Select(s => s.MagazynID)) + "\n" + string.Join(", ", magazyny.Select(s => s.Symbol)) + "\n" + string.Join(", ", magazyny.Select(s => s.Opis));
-            }
-            catch (Exception ex)
-            {
-                message += " - " + ex.Message;
-            }
-            MessageBox.Show(message);
+            LsiEndpointSupport.Info service = new LsiEndpointSupport.Info();
+            var message = await service.GetInfo();
+            MessageBox.Show(message.EndpointUrl + string.Join(", ", message.Warehouses.Select(x => x.Symbol)));
         }
     }
 }

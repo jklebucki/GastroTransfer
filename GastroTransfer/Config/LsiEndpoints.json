@@ -1,0 +1,12 @@
+[
+  {
+    "Id": 1,
+    "Name": "MOP Po³udnie",
+    "Url": "http://192.168.71.70:8089/icws.asmx"
+  },
+  {
+    "Id": 2,
+    "Name": "MOP Pó³noc",
+    "Url": "http://192.168.81.70:8089/icws.asmx"
+  }
+]

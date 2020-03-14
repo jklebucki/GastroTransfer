@@ -62,7 +62,15 @@
       <HintPath>..\packages\System.Data.SqlClient.4.7.0\lib\net461\System.Data.SqlClient.dll</HintPath>
     </Reference>
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Http, Version=4.7.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ServiceModel.Http.4.7.0\lib\net461\System.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives, Version=4.7.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ServiceModel.Primitives.4.7.0\lib\net461\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +98,7 @@
       <DependentUpon>201911012100040_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\ProductGroup.cs" />
     <Compile Include="Models\ProductionViewModel.cs" />
     <Compile Include="Models\ServiceMessage.cs" />
@@ -160,6 +169,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Config\LsiEndpoints.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -210,6 +220,10 @@
     <ProjectReference Include="..\..\AngelProtocol\AngelProtocol.csproj">
       <Project>{de6b7c60-8f38-4da0-9cdd-5827cbf465cb}</Project>
       <Name>AngelProtocol</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LsiEndpointSupport\LsiEndpointSupport.csproj">
+      <Project>{b7fa7f91-2d79-450c-afb7-e278a70a35ad}</Project>
+      <Name>LsiEndpointSupport</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

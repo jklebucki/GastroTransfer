@@ -9,5 +9,6 @@ namespace GastroTransfer.Services
         bool SaveConfig(Config config);
         Config GetConfig();
         bool InitializeConfig();
+        void InitializeEndpoints();
     }
 }

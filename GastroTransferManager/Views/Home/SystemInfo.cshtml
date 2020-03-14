@@ -1,0 +1,31 @@
+﻿@using LsiEndpointSupport.Models;
+@{
+    ViewData["Title"] = "Informacje o systemie";
+
+    var info = (SystemInfo)ViewBag.Message;
+}
+<h1>@ViewData["Title"]</h1>
+<h2>System obsługi produkcji dla apliakacji LSI Manager</h2>
+<br />
+<h3>Nazwa lokalu: <span style="color: darkblue">@info.EndpointName</span></h3>
+<h3>Adres usługi LSI: <span style="color: darkblue">@info.EndpointUrl</span></h3>
+<h4>Lista magazynów:</h4>
+<table class="table table-bordered table-striped table-sm" style="width: 100%!important">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Symbol</th>
+            <th>Nazwa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in info.Warehouses)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Symbol</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -14,12 +14,14 @@ namespace GastroTransfer.Services
         public string ConfigPath { get; protected set; }
         private ICryptoService cryptoService { get; set; }
         public string Message { get; protected set; }
+        public List<Endpoint> Endpoints { get; protected set; }
 
         public ConfigService(ICryptoService cryptoService)
         {
             ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
             Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath));
             this.cryptoService = cryptoService;
+            InitializeEndpoints();
         }
 
         public Config GetConfig()
@@ -79,6 +81,34 @@ namespace GastroTransfer.Services
                     Message = ex.Message;
                     return false;
                 }
+            }
+        }
+
+        public void InitializeEndpoints()
+        {
+            string endpointsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "endpoints.json");
+            Directory.CreateDirectory(Path.GetDirectoryName(endpointsPath));
+            Endpoints = new List<Endpoint>();
+            if (!File.Exists(endpointsPath))
+            {
+                Endpoints.Add(new Endpoint { Id = 1, Name = "Restauracja", Url = "http://192.168.71.70:8089/icws.asmx", Selected = true });
+                Endpoints.Add(new Endpoint { Id = 2, Name = "Restauracja", Url = "http://192.168.81.70:8089/icws.asmx", Selected = false });
+                using (StreamWriter sr = new StreamWriter(endpointsPath))
+                {
+                    sr.Write(JsonConvert.SerializeObject(Endpoints, Formatting.Indented));
+                }
+            }
+            else
+            {
+                GetEndpoints(endpointsPath);
+            }
+        }
+
+        private void GetEndpoints(string endpointsPath)
+        {
+            using (StreamReader sr = new StreamReader(endpointsPath))
+            {
+                Endpoints = JsonConvert.DeserializeObject<List<Endpoint>>(sr.ReadToEnd());
             }
         }
     }
