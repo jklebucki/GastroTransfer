@@ -12,14 +12,14 @@
                 c => new
                     {
                         ProducedItemId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(maxLength: 50),
                         IsActive = c.Boolean(nullable: false),
                         UnitOfMesure = c.String(),
                         ConversionRate = c.Decimal(nullable: false, precision: 18, scale: 4),
-                        ExternalId = c.Int(),
+                        ExternalId = c.String(maxLength: 20),
                         ExternalIndex = c.String(),
-                        ExternalName = c.String(),
-                        ExternalUnitOfMesure = c.String(),
+                        ExternalName = c.String(maxLength: 50),
+                        ExternalUnitOfMesure = c.String(maxLength: 10),
                         ProductGroupId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProducedItemId);
@@ -29,7 +29,7 @@
                 c => new
                     {
                         ProductGroupId = c.Int(nullable: false, identity: true),
-                        GroupName = c.String(),
+                        GroupName = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ProductGroupId);
             
@@ -45,7 +45,7 @@
                         Registered = c.DateTime(nullable: false),
                         SentToExternalSystem = c.DateTime(nullable: false),
                         PackageNumber = c.Int(),
-                        DocumentType = c.String(),
+                        DocumentType = c.String(maxLength: 10),
                     })
                 .PrimaryKey(t => t.ProductionItemId);
             

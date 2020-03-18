@@ -143,6 +143,7 @@ namespace GastroTransfer
                     var message = productionService.AddProduction(productionViewModel);
                     if (!message.IsError)
                     {
+                        productionViewModel.ProductionItem.ProductionItemId = message.ItemId;
                         productionView.Add(productionViewModel);
                         PositionsListGrid.Items.Refresh();
                         PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
@@ -162,20 +163,25 @@ namespace GastroTransfer
             }
         }
 
-        private void CurrencyListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             if (productionView.Count > 0)
             {
-                productionView.Remove(productionView.Last());
-                if (productionView.Count > 0)
+                var productToRemove = productionView.Last();
+                if (productToRemove != null)
                 {
-                    PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
-                    PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                    ProductionService productionService = new ProductionService(appDbContext);
+                    var messsge = productionService.RemoveProduction(productToRemove.ProductionItem.ProductionItemId);
+                    if (!messsge.IsError)
+                    {
+                        productionView.Remove(productToRemove);
+                        if (productionView.Count > 0)
+                        {
+                            PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
+                            PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                        }
+                    }
                 }
             }
             PositionsListGrid.Items.Refresh();
@@ -285,7 +291,12 @@ namespace GastroTransfer
         {
             LsiEndpointSupport.Info service = new LsiEndpointSupport.Info();
             var message = await service.GetInfo();
-            MessageBox.Show(message.EndpointUrl + string.Join(", ", message.Warehouses.Select(x => x.Symbol)));
+            string infoMessage = $"Lokal: {message.EndpointName}\nAdres usługi LSI: {message.EndpointUrl}\nMagazyny:";
+            foreach (var item in message.Warehouses)
+            {
+                infoMessage += $"\n{item.Symbol}\t{item.Name}";
+            }
+            MessageBox.Show(infoMessage, "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

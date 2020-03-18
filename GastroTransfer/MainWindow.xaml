@@ -385,8 +385,7 @@
                       CanUserResizeRows="False"
                       IsReadOnly="True"
                       Foreground="White"
-                      Background="Black"
-                      SelectionChanged="CurrencyListGrid_SelectionChanged">
+                      Background="Black">
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="FontWeight"  Value="Bold" />

@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 
 namespace GastroTransfer.Services
 {
+    /// <summary>
+    /// App config service
+    /// </summary>
     class ConfigService : IConfigService
     {
         public string ConfigPath { get; protected set; }
@@ -16,14 +19,23 @@ namespace GastroTransfer.Services
         public string Message { get; protected set; }
         public List<Endpoint> Endpoints { get; protected set; }
 
+        /// <summary>
+        /// ConfigService constructor  
+        /// </summary>
+        /// <param name="cryptoService">Encryption service</param>
         public ConfigService(ICryptoService cryptoService)
         {
+            ///<summary>Hardcoded </summary>
             ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
             Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath));
             this.cryptoService = cryptoService;
             InitializeEndpoints();
         }
 
+        /// <summary>
+        /// Reading config object from file
+        /// </summary>
+        /// <returns></returns>
         public Config GetConfig()
         {
             try
@@ -41,7 +53,11 @@ namespace GastroTransfer.Services
                 return null;
             }
         }
-
+        /// <summary>
+        /// Saving serialized config object to json file
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns></returns>
         public bool SaveConfig(Config config)
         {
             using (StreamWriter sw = new StreamWriter(ConfigPath, false, Encoding.UTF8))
@@ -60,6 +76,10 @@ namespace GastroTransfer.Services
             }
         }
 
+        /// <summary>
+        /// Initialize config with default values
+        /// </summary>
+        /// <returns></returns>
         public bool InitializeConfig()
         {
             using (StreamWriter sw = new StreamWriter(ConfigPath, false, Encoding.UTF8))
@@ -84,6 +104,9 @@ namespace GastroTransfer.Services
             }
         }
 
+        /// <summary>
+        /// Initialize config file 
+        /// </summary>
         public void InitializeEndpoints()
         {
             string endpointsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "endpoints.json");
@@ -91,6 +114,7 @@ namespace GastroTransfer.Services
             Endpoints = new List<Endpoint>();
             if (!File.Exists(endpointsPath))
             {
+                //Adding initial sample records
                 Endpoints.Add(new Endpoint { Id = 1, Name = "Restauracja", Url = "http://192.168.71.70:8089/icws.asmx", Selected = true });
                 Endpoints.Add(new Endpoint { Id = 2, Name = "Restauracja", Url = "http://192.168.81.70:8089/icws.asmx", Selected = false });
                 using (StreamWriter sr = new StreamWriter(endpointsPath))
@@ -104,6 +128,10 @@ namespace GastroTransfer.Services
             }
         }
 
+        /// <summary>
+        /// Getting endpoints list from endpoints.json file  
+        /// </summary>
+        /// <param name="endpointsPath"></param>
         private void GetEndpoints(string endpointsPath)
         {
             using (StreamReader sr = new StreamReader(endpointsPath))

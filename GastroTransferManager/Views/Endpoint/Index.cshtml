@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Endpoint test";
+}
+
+<h1>Moduł testujący usługi LSI</h1>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <button id="get-products" type="button" class="btn btn-primary btn-block">Produkty</button>
+        </div>
+        <div class="col-sm">
+            <button id="get-meals" type="button" class="btn btn-primary btn-block">Posiłki</button>
+        </div>
+        <div class="col-sm">
+            <button id="get-products-groups" type="button" class="btn btn-primary btn-block">Grupy produktów</button>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $('#get-products').click(function () {
+            axios.get('/Endpoint/GetProducts')
+                .then(function (response) {
+                    console.log(response);
+                    alert(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    console.log("Done!");
+                });
+        }
+        );
+        $('#get-meals').click(function () {
+            axios.get('/Endpoint/GetMeals')
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    console.log("Done!");
+                });
+        }
+        );
+        $('#get-products-groups').click(function () {
+            axios.get('/Endpoint/GetProductsGroups')
+                .then(function (response) {
+                    console.log(response);
+                    let responseMsg = "";
+                    alert(response.data.map(function (item) {
+                        return item.nazwa
+                    }));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    console.log("Done!");
+                });
+        }
+        );
+    </script>
+}

@@ -16,6 +16,11 @@ namespace GastroTransfer.Services
             this.dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Add product to database
+        /// </summary>
+        /// <param name="model">ProductionViewModel</param>
+        /// <returns></returns>
         public ServiceMessage AddProduction(ProductionViewModel model)
         {
             ServiceMessage message = new ServiceMessage();
@@ -24,20 +29,25 @@ namespace GastroTransfer.Services
                 model.ProductionItem.SentToExternalSystem = DateTime.Now;
                 model.ProductionItem.ProducedItemId = model.ProducedItem.ProducedItemId;
                 dbContext.TransferredItems.Add(model.ProductionItem);
-                var itemId = dbContext.SaveChanges();
+                dbContext.SaveChanges();
                 message.IsError = false;
-                message.ItemId = itemId;
+                message.ItemId = model.ProductionItem.ProductionItemId;
                 message.Message = "Added";
             }
             catch (Exception ex)
             {
                 message.IsError = true;
-                message.ItemId = model.ProducedItem.ProducedItemId;
+                message.ItemId = model.ProductionItem.ProductionItemId;
                 message.Message = ex.Message;
             }
             return message;
         }
 
+        /// <summary>
+        /// Get production 
+        /// </summary>
+        /// <param name="fullData">true - all records; false - only not sent to external system (current production)</param>
+        /// <returns></returns>
         public List<ProductionViewModel> GetProduction(bool fullData)
         {
             List<ProductionViewModel> production = new List<ProductionViewModel>();
@@ -70,11 +80,25 @@ namespace GastroTransfer.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Removes production from database
+        /// </summary>
+        /// <param name="productionId">ProductionItem.ProductionItemId</param>
+        /// <returns></returns>
         public ServiceMessage RemoveProduction(int productionId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entitytoRemove = dbContext.TransferredItems.Find(productionId);
+                dbContext.TransferredItems.Remove(entitytoRemove);
+                dbContext.SaveChanges();
+                return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
+            }
         }
-
 
     }
 }

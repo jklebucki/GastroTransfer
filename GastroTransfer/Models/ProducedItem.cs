@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace GastroTransfer.Models
 {
     /// <summary>
@@ -11,7 +13,7 @@ namespace GastroTransfer.Models
         public bool IsActive { get; set; }
         public string UnitOfMesure { get; set; }
         public decimal ConversionRate { get; set; }
-        public int? ExternalId { get; set; }
+        public string ExternalId { get; set; }
         public string ExternalIndex { get; set; }
         public string ExternalName { get; set; }
         public string ExternalUnitOfMesure { get; set; }

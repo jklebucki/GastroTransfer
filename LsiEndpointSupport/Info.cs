@@ -9,11 +9,17 @@ namespace LsiEndpointSupport
 {
     public class Info
     {
+        private Config config { get; set; }
+        private CWSSoapClient lsiService { get; set; }
+        private Endpoint endpoint { get; set; }
+        public Info()
+        {
+            config = new Config();
+            endpoint = config.Endpoints.FirstOrDefault(s => s.Selected == true);
+            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpoint.Url);
+        }
         public async Task<SystemInfo> GetInfo()
         {
-            Config config = new Config();
-            var endpoint = config.Endpoints.FirstOrDefault(s => s.Selected == true);
-            CWSSoapClient lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpoint.Url);
             PobierzMagazynyResponse magazynyResponse = new PobierzMagazynyResponse();
             var systemInfo = new SystemInfo();
             systemInfo.EndpointUrl = lsiService.Endpoint.Address.Uri.ToString();
@@ -21,7 +27,7 @@ namespace LsiEndpointSupport
             systemInfo.Warehouses = new List<Warehouse>();
             try
             {
-                magazynyResponse = await lsiService.PobierzMagazynyAsync();
+                magazynyResponse = await lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody() });
                 var magazyny = magazynyResponse.Body.PobierzMagazynyResult.Magazyny;
                 List<Warehouse> warehouses = new List<Warehouse>();
                 foreach (var magazyn in magazyny)
