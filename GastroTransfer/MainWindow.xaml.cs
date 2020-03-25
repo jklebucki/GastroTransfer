@@ -1,5 +1,4 @@
 ﻿using GastroTransfer.Data;
-using GastroTransfer.LsiService;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views.Dialogs;
@@ -12,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using LsiEndpointSupport;
 
 namespace GastroTransfer
 {
@@ -35,14 +35,20 @@ namespace GastroTransfer
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
                 XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-            //Test data
-            producedItems = ConstData.producedItems;
-            productGroups = ConstData.productGroups;
-            producedItems = producedItems.OrderBy(x => x.Name).ToList();
-
-            InitializeSystem();
             InitializeComponent();
+            BackButton.Style = this.FindResource("RoundCorner") as Style;
+            ConfigButton.Style = this.FindResource("RoundCorner") as Style;
+            CloseButton.Style = this.FindResource("RoundCorner") as Style;
+            ProductionButton.Style = this.FindResource("RoundCorner") as Style;
+            GetProducts.Style = this.FindResource("RoundCorner") as Style;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitializeSystem();
+            CheckingConnection();
             productionView = new List<ProductionViewModel>();
+            //Getting products and products groups data  
             GetData();
             PositionsListGrid.DataContext = productionView;
             PositionsListGrid.ItemsSource = productionView;
@@ -53,17 +59,12 @@ namespace GastroTransfer
 
             AddButtons(producedItems);
             AddGroupButtons(productGroups);
-            BackButton.Style = this.FindResource("RoundCorner") as Style;
-            ConfigButton.Style = this.FindResource("RoundCorner") as Style;
-            CloseButton.Style = this.FindResource("RoundCorner") as Style;
-            SoapTestButton.Style = this.FindResource("RoundCorner") as Style;
-
         }
 
         private void InitializeSystem()
         {
             //read or initialize config
-            configService = new ConfigService(new CryptoService());
+            configService = new ConfigService(new Services.CryptoService());
             config = configService.GetConfig();
             if (config == null)
             {
@@ -72,27 +73,26 @@ namespace GastroTransfer
             }
         }
 
+        private void CheckingConnection()
+        {
+            CheckConnection checkConnection = new CheckConnection(dbService, configService, this.FindResource("RoundCorner") as Style);
+            checkConnection.ShowDialog();
+        }
+
         private void GetData()
         {
-            //check or initialize database
+            configService = new ConfigService(new Services.CryptoService());
+            config = configService.GetConfig();
             dbService = new DbService(config);
-
-            while (!dbService.CheckConnection())
-            {
-                MessageBox.Show("Brak połączenia!" + dbService.ErrorMessage);
-                var configWindow = new ConfigWindow(this.FindResource("RoundCorner") as Style);
-                configWindow.ShowDialog();
-                config = configService.GetConfig();
-                dbService = new DbService(config);
-            }
+            //Database available
             appDbContext = new AppDbContext(dbService.GetConnectionString());
             if (appDbContext.ProductGroups.Count() == 0)
             {
-                appDbContext.ProducedItems.AddRange(producedItems);
-                appDbContext.ProductGroups.AddRange(productGroups);
+                //appDbContext.ProducedItems.AddRange(producedItems);
+                appDbContext.ProductGroups.AddRange(ConstData.productGroups);
                 appDbContext.SaveChanges();
             }
-            producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).ToList();
+            producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).OrderBy(x => x.Name).ToList();
             productGroups = appDbContext.ProductGroups.ToList();
             GetCurrentProduction();
         }
@@ -102,6 +102,8 @@ namespace GastroTransfer
             //get last production
             ProductionService productionService = new ProductionService(appDbContext);
             var currentProduction = productionService.GetProduction(false);
+            productionView.Clear();
+            PositionsListGrid.Items.Refresh();
             foreach (var item in currentProduction)
             {
                 productionView.Add(item);
@@ -110,7 +112,7 @@ namespace GastroTransfer
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
-            ConfigWindow configPage = new ConfigWindow(this.FindResource("RoundCorner") as Style);
+            ConfigWindow configPage = new ConfigWindow(this.FindResource("RoundCorner") as Style, this);
             configPage.ShowDialog();
             if (configPage.IsSaved)
             {
@@ -153,13 +155,11 @@ namespace GastroTransfer
                     {
                         throw new Exception($"Item id:{message.ItemId}\nMessage: {message.Message}");
                     }
-
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Błąd!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
             }
         }
 
@@ -191,7 +191,8 @@ namespace GastroTransfer
         {
             var btn = (Button)sender;
             var groupId = int.Parse(btn.Name.Split('_')[1]);
-            var items = producedItems.Where(x => x.ProductGroupId == groupId).ToList();
+            GetData();
+            var items = producedItems.Where(x => x.ProductGroupId == groupId).OrderBy(n => n.Name).ToList();
             if (groupId == 1)
                 AddButtons(producedItems);
             else
@@ -235,7 +236,6 @@ namespace GastroTransfer
                     Style = this.FindResource("RoundCorner") as Style
                 };
                 button.Click += new RoutedEventHandler(Production_Button_Click);
-
                 this.WrapButtons.Children.Add(button);
             }
         }
@@ -277,7 +277,6 @@ namespace GastroTransfer
                     Style = this.FindResource("RoundCorner") as Style
                 };
                 button.Click += new RoutedEventHandler(Button_Click_Filter);
-
                 this.GroupButtons.Children.Add(button);
             }
         }
@@ -287,16 +286,87 @@ namespace GastroTransfer
             Close();
         }
 
-        private async void SoapTestButton_Click(object sender, RoutedEventArgs e)
+        private async void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
-            LsiEndpointSupport.Info service = new LsiEndpointSupport.Info();
-            var message = await service.GetInfo();
-            string infoMessage = $"Lokal: {message.EndpointName}\nAdres usługi LSI: {message.EndpointUrl}\nMagazyny:";
-            foreach (var item in message.Warehouses)
+            var productionService = new ProductionService(appDbContext);
+            var currentProduction = productionService.GetProduction(false);
+            if (currentProduction.Count == 0)
             {
-                infoMessage += $"\n{item.Symbol}\t{item.Name}";
+                MessageBox.Show("Nie ma nic do wyprodukowania.", "Komunikat", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
-            MessageBox.Show(infoMessage, "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
+            var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId).Select(r => new { Index = r.Select(s => s.ProducedItem.ExternalId).First(), Q = r.Sum(q => q.ProductionItem.Quantity) }).ToList();
+            //return;
+            foreach (var product in sum)
+            {
+                if (product.Q > 0)
+                    products.Add(new LsiService.UtworzDokumentRozchodowyRequestProduktObject { Ilosc = product.Q, ProduktID = product.Index, Cena = 0 });
+            }
+
+            if (products.Count == 0)
+            {
+                MessageBox.Show("Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji.", "Komunikat", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            int documentTypeId = 1140;
+            Service service = new Service();
+            var productsGroups = await service.GetProductsGroups();
+            var warehouses = await service.GetWarehouses();
+            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
+            var response = await service.CreateDocument(documentTypeId, warehouseId, products);
+            var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
+            var respMessage = "";
+            if (docResp != null)
+            {
+                if (docResp.ID > 0)
+                    foreach (var product in currentProduction)
+                    {
+                        productionService.ChangeTransferStatus(product.ProductionItem.ProductionItemId, docResp.ID, documentTypeId);
+                    }
+                respMessage = $"Id dokumentu: {docResp.ID}\nNumer: {docResp.Numer}\nKod błędu: {docResp.KodBledu}\nOpis błędu: {docResp.OpisBledu}";
+            }
+            else
+                respMessage = "Totalny błąd";
+
+            MessageBox.Show(respMessage, "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+            GetCurrentProduction();
         }
+
+        private async void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
+        {
+            ProductService productService = new ProductService(appDbContext);
+            Service service = new Service();
+            var productsGroups = await service.GetProductsGroups();
+            var warehouses = await service.GetWarehouses();
+            var productGroupeId = productsGroups.FirstOrDefault(x => x.Nazwa.Contains("RECEPTURY")).ID;
+            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
+            var productsLsi = await service.GetMeals(productGroupeId, warehouseId);
+            var currentDbProducts = appDbContext.ProducedItems.ToList();
+            foreach (var product in productsLsi)
+            {
+                if (currentDbProducts.FirstOrDefault(ex => ex.ExternalIndex.Contains(product.Indeks)) == null)
+                {
+                    productService.CreateProduct(new ProducedItem
+                    {
+                        ExternalId = product.ProduktID,
+                        Name = product.Nazwa.Contains("r_") ? (product.Nazwa.Replace("r_", "").ToUpper()) : product.Nazwa,
+                        ConversionRate = 1,
+                        UnitOfMesure = product.JM,
+                        ExternalUnitOfMesure = product.JM,
+                        ExternalIndex = product.Indeks,
+                        IsActive = true,
+                        ProductGroupId = 1,
+                        ExternalName = product.NazwaSkrocona,
+                    });
+                }
+            }
+            GetData();
+            AddButtons(producedItems);
+        }
+
+
     }
 }

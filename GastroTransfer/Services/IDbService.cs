@@ -10,7 +10,7 @@ namespace GastroTransfer.Services
     interface IDbService
     {
         bool CheckConnection();
-        string GetConnectionString();
+        string GetConnectionString(int timeout);
 
     }
 }

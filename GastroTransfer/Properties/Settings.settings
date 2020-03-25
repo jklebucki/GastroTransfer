@@ -1,9 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GastroTransfer.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="GastroTransfer_LsiService_ICWS" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://192.168.81.70:8089/icws.asmx</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

@@ -89,9 +89,9 @@
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Data\DbContextFactory.cs" />
     <Compile Include="Data\DbInitializer.cs" />
-    <Compile Include="Migrations\202003181415267_Initial.cs" />
-    <Compile Include="Migrations\202003181415267_Initial.designer.cs">
-      <DependentUpon>202003181415267_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003232133141_Initial.cs" />
+    <Compile Include="Migrations\202003232133141_Initial.designer.cs">
+      <DependentUpon>202003232133141_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Endpoint.cs" />
@@ -106,16 +106,14 @@
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="CheckConnection.xaml.cs">
+      <DependentUpon>CheckConnection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\MeasurementWindow.xaml.cs">
       <DependentUpon>MeasurementWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Web References\LsiService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +128,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="CheckConnection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\ConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,45 +160,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202003181415267_Initial.resx">
-      <DependentUpon>202003181415267_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003232133141_Initial.resx">
+      <DependentUpon>202003232133141_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Config\LsiEndpoints.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Resources\ICWS.wsdl" />
-    <None Include="Web References\LsiService\ICWS.wsdl" />
-    <None Include="Web References\LsiService\PobierzGrupyTowaroweResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\PobierzMagazynyResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\PobierzPotrawyResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\PobierzProduktyResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\Reference.map">
-      <Generator>MSDiscoCodeGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Web References\LsiService\UtworzDokumentProdukcjiResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\UtworzDokumentRozchodowyResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\LsiService\UtworzDokumentyPrzesunieciaMagazynowegoResult.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -223,23 +197,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WebReferences Include="Web References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WebReferenceUrl Include="http://192.168.81.70:8089/ICWS.asmx">
-      <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\LsiService\</RelPath>
-      <UpdateFromURL>http://192.168.81.70:8089/ICWS.asmx</UpdateFromURL>
-      <ServiceLocationURL>
-      </ServiceLocationURL>
-      <CachedDynamicPropName>
-      </CachedDynamicPropName>
-      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>GastroTransfer_LsiService_ICWS</CachedSettingsPropName>
-    </WebReferenceUrl>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Web References\LsiService\ICWS.disco" />
+    <Resource Include="Assets\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
-    class DbService : IDbService
+    public class DbService : IDbService
     {
         private Config config { get; set; }
         public string ErrorMessage { get; protected set; }
@@ -19,7 +19,7 @@ namespace GastroTransfer.Services
         }
         public bool CheckConnection()
         {
-            using (SqlConnection connection = new SqlConnection(GetConnectionString()))
+            using (SqlConnection connection = new SqlConnection(GetConnectionString(5)))
             {
                 try
                 {
@@ -34,15 +34,17 @@ namespace GastroTransfer.Services
             }
         }
 
-        public string GetConnectionString()
+        public string GetConnectionString(int timeout = 0)
         {
             string connectionString = "";
+            var timeoutSection = timeout > 0 ? $"Connection Timeout={timeout};" : "";
             if (config.IsTrustedConnection)
             {
-                connectionString =  "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";Trusted_Connection=True;";
-            } else
+                connectionString = $"Server={config.ServerAddress};Database={config.DatabaseName};Trusted_Connection=True;{timeoutSection}";
+            }
+            else
             {
-                connectionString = "Server=" + config.ServerAddress + ";Database=" + config.DatabaseName + ";User id=" + config.UserName + ";Password=" + config.Password + ";";
+                connectionString = $"Server={config.ServerAddress};Database={config.DatabaseName};User id={config.UserName};Password={config.Password};{timeoutSection}";
             }
 
             if (!string.IsNullOrEmpty(config.AdditionalConnectionStringDirective))

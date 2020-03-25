@@ -15,21 +15,21 @@ namespace GastroTransfer.Views.Dialogs
         private readonly ConfigService configService;
         private string[] ports { get; set; }
         public bool IsSaved { get; protected set; }
-        public ConfigWindow(Style style)
+        public ConfigWindow(Style style, Window window)
         {
             IsSaved = false;
             try
             {
-                Owner = Application.Current.MainWindow;
+                Owner = window;
+                WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 ports = System.IO.Ports.SerialPort.GetPortNames();
             }
             catch (Exception)
             {
-                //Ignore
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
 
             Icon = null;
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
             configService = new ConfigService(new CryptoService());
             InitializeComponent();
             CloseButton.Style = style;
@@ -51,6 +51,12 @@ namespace GastroTransfer.Views.Dialogs
             Password.Password = config.Password;
             IsTrustedConnection.IsChecked = config.IsTrustedConnection;
             AdditionalConnectionStringDirective.Text = config.AdditionalConnectionStringDirective;
+            ExternalDbServerAddress.Text = config.ExternalDbServerAddress;
+            ExternalDbDatabaseName.Text = config.ExternalDbDatabaseName;
+            ExternalDbUserName.Text = config.ExternalDbUserName;
+            ExternalDbPassword.Password = config.ExternalDbPassword;
+            ExternalDbIsTrustedConnection.IsChecked = config.ExternalDbIsTrustedConnection;
+            ExternalDbAdditionalConnectionStringDirective.Text = config.ExternalDbAdditionalConnectionStringDirective;
             WeightComPortName.Text = config.WeightComPortName;
             WeightComBoudRate.Text = config.WeightComBaudRate.ToString();
             WeightComIsConnected.IsChecked = config.WeightComIsConnected;
@@ -72,8 +78,14 @@ namespace GastroTransfer.Views.Dialogs
                     Password = Password.Password,
                     IsTrustedConnection = (bool)IsTrustedConnection.IsChecked,
                     AdditionalConnectionStringDirective = AdditionalConnectionStringDirective.Text,
+                    ExternalDbServerAddress = ExternalDbServerAddress.Text,
+                    ExternalDbDatabaseName = ExternalDbDatabaseName.Text,
+                    ExternalDbUserName = ExternalDbUserName.Text,
+                    ExternalDbPassword = ExternalDbPassword.Password,
+                    ExternalDbIsTrustedConnection = (bool)ExternalDbIsTrustedConnection.IsChecked,
+                    ExternalDbAdditionalConnectionStringDirective = ExternalDbAdditionalConnectionStringDirective.Text,
                     WeightComIsConnected = (bool)WeightComIsConnected.IsChecked,
-                    WeightComPortName = WeightComPortName.Text,
+                    WeightComPortName = WeightComPortName.Text != null ? WeightComPortName.Text : "",
                     WeightComBaudRate = int.Parse(WeightComBoudRate.Text),
                     WeightComDataBits = int.Parse(WeightComDataBits.Text),
                     WeightComStopBits = (int)(System.IO.Ports.StopBits)WeightComStopBits.SelectedItem,
@@ -101,11 +113,11 @@ namespace GastroTransfer.Views.Dialogs
         {
             var choice = MessageBox.Show($"Błąd zapisu konfiguracji\n{message}\n\nAnuluj żeby wrócić do edycji.", "Błąd", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             if (choice == MessageBoxResult.OK)
-                Close();
+                this.Close();
         }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -75,9 +76,31 @@ namespace GastroTransfer.Services
             return production;
         }
 
-        public ServiceMessage ChangeTransferStatus(int productionId)
+        /// <summary>
+        /// Change transfer status
+        /// </summary>
+        /// <param name="productionId"></param>
+        /// <param name="packageNumber"></param>
+        /// <param name="documentType"></param>
+        /// <returns></returns>
+        public ServiceMessage ChangeTransferStatus(int productionId, int packageNumber, int documentType)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entitytoUpdate = dbContext.TransferredItems.Find(productionId);
+                entitytoUpdate.IsSentToExternalSystem = true;
+                entitytoUpdate.SentToExternalSystem = DateTime.Now;
+                entitytoUpdate.PackageNumber = packageNumber;
+                entitytoUpdate.DocumentType = documentType;
+
+                dbContext.Entry(entitytoUpdate).State = EntityState.Modified;
+                dbContext.SaveChanges();
+                return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
+            }
         }
 
         /// <summary>
@@ -90,14 +113,18 @@ namespace GastroTransfer.Services
             try
             {
                 var entitytoRemove = dbContext.TransferredItems.Find(productionId);
-                dbContext.TransferredItems.Remove(entitytoRemove);
-                dbContext.SaveChanges();
-                return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
+                if (!entitytoRemove.IsSentToExternalSystem)
+                {
+                    dbContext.TransferredItems.Remove(entitytoRemove);
+                    dbContext.SaveChanges();
+                    return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
+                }
             }
             catch (Exception ex)
             {
                 return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
             }
+            return new ServiceMessage { IsError = true, ItemId = productionId, Message = "It is already in the external system" };
         }
 
     }

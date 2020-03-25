@@ -26,7 +26,7 @@ namespace GastroTransfer.Data
             modelBuilder.Entity<ProducedItem>().ToTable("ProducedItems", schemaName: "PSP");
             modelBuilder.Entity<ProductGroup>().ToTable("ProductGroups", schemaName: "PSP");
             modelBuilder.Entity<ProductionItem>().ToTable("Production", schemaName: "PSP");
-           
+
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ConversionRate).HasPrecision(18, 4);
             modelBuilder.Entity<ProducedItem>()
@@ -37,12 +37,10 @@ namespace GastroTransfer.Data
                 .Property(x => x.Name).HasMaxLength(50);
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ExternalUnitOfMesure).HasMaxLength(10);
-           
+
             modelBuilder.Entity<ProductionItem>()
                 .Property(x => x.Quantity).HasPrecision(18, 4);
-            modelBuilder.Entity<ProductionItem>()
-                .Property(x => x.DocumentType).HasMaxLength(10);
-            
+
             modelBuilder.Entity<ProductGroup>()
                 .Property(x => x.GroupName).HasMaxLength(50);
         }

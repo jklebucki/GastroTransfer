@@ -22,12 +22,20 @@ namespace GastroTransferManager.Controllers
 
         public async Task<IActionResult> GetProducts()
         {
-            return Json(await service.GetProducts());
+            var groups = await service.GetProductsGroups();
+            var warehouses = await service.GetWarehouses();
+            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("SUROWCE KOMPLETACJA MOP")).ID;
+            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
+            return Json(await service.GetProducts(groupId, warehouseId));
         }
 
         public async Task<IActionResult> GetMeals()
         {
-            return Json(await service.GetMeals());
+            var groups = await service.GetProductsGroups();
+            var warehouses = await service.GetWarehouses();
+            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("RECEPTURY")).ID;
+            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
+            return Json(await service.GetMeals(groupId, warehouseId));
         }
 
         public async Task<IActionResult> GetProductsGroups()

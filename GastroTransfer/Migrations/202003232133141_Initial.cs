@@ -45,7 +45,7 @@
                         Registered = c.DateTime(nullable: false),
                         SentToExternalSystem = c.DateTime(nullable: false),
                         PackageNumber = c.Int(),
-                        DocumentType = c.String(maxLength: 10),
+                        DocumentType = c.Int(),
                     })
                 .PrimaryKey(t => t.ProductionItemId);
             

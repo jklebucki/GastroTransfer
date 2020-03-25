@@ -9,6 +9,6 @@ namespace GastroTransfer.Services
         ServiceMessage AddProduction(ProductionViewModel model);
         List<ProductionViewModel> GetProduction(bool fullData);
         ServiceMessage RemoveProduction(int productionId);
-        ServiceMessage ChangeTransferStatus(int productionId);
+        ServiceMessage ChangeTransferStatus(int productionId, int packageNumber, int documentType);
     }
 }

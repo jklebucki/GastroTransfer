@@ -6,14 +6,14 @@ namespace GastroTransfer.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.3.0")]
+    [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
     public sealed partial class Initial : IMigrationMetadata
     {
         private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003181415267_Initial"; }
+            get { return "202003232133141_Initial"; }
         }
         
         string IMigrationMetadata.Source

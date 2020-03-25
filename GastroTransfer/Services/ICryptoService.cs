@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
-    interface ICryptoService
+    public interface ICryptoService
     {
         string EncodePassword(string plainPassword);
         string DecodePassword(string hashedPassword);

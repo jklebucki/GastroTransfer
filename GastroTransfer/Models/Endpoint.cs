@@ -1,7 +1,7 @@
 ﻿
 namespace GastroTransfer.Models
 {
-    class Endpoint
+    public class Endpoint
     {
         public int Id { get; set; }
         public string Name { get; set; }
