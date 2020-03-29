@@ -1,10 +1,5 @@
 ﻿using GastroTransfer.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
@@ -24,6 +19,25 @@ namespace GastroTransfer.Services
                 try
                 {
                     connection.Open();
+                    connection.Close();
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return false;
+                }
+            }
+        }
+
+        public bool CheckLsiConnection()
+        {
+            using (SqlConnection connection = new SqlConnection(GetLsiConnectionString(30)))
+            {
+                try
+                {
+                    connection.Open();
+                    connection.Close();
                     return true;
                 }
                 catch (SqlException ex)
@@ -49,6 +63,25 @@ namespace GastroTransfer.Services
 
             if (!string.IsNullOrEmpty(config.AdditionalConnectionStringDirective))
                 connectionString += config.AdditionalConnectionStringDirective;
+
+            return connectionString;
+        }
+
+        public string GetLsiConnectionString(int timeout = 0)
+        {
+            string connectionString = "";
+            var timeoutSection = timeout > 0 ? $"Connection Timeout={timeout};" : "";
+            if (config.IsTrustedConnection)
+            {
+                connectionString = $"Server={config.ExternalDbServerAddress};Database={config.ExternalDbDatabaseName};Trusted_Connection=True;{timeoutSection}";
+            }
+            else
+            {
+                connectionString = $"Server={config.ExternalDbServerAddress};Database={config.ExternalDbDatabaseName};User id={config.ExternalDbUserName};Password={config.ExternalDbPassword};{timeoutSection}";
+            }
+
+            if (!string.IsNullOrEmpty(config.ExternalDbAdditionalConnectionStringDirective))
+                connectionString += config.ExternalDbAdditionalConnectionStringDirective;
 
             return connectionString;
         }

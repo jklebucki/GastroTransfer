@@ -63,6 +63,9 @@ namespace GastroTransfer.Views.Dialogs
             WeightComDataBits.Text = config.WeightComDataBits.ToString();
             WeightComStopBits.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.StopBits)).GetValue(config.WeightComStopBits);
             WeightComParity.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.Parity)).GetValue(config.WeightComParity);
+            DocumentTypeSymbol.Text = config.ProductionDocumentSymbol;
+            WarehouseId.Text = config.WarehouseSymbol;
+            EndpointUrl.Text = config.EndpointUrl;
         }
 
         private void SaveConfigButton_Click(object sender, RoutedEventArgs e)
@@ -89,7 +92,10 @@ namespace GastroTransfer.Views.Dialogs
                     WeightComBaudRate = int.Parse(WeightComBoudRate.Text),
                     WeightComDataBits = int.Parse(WeightComDataBits.Text),
                     WeightComStopBits = (int)(System.IO.Ports.StopBits)WeightComStopBits.SelectedItem,
-                    WeightComParity = (int)(System.IO.Ports.Parity)WeightComParity.SelectedItem
+                    WeightComParity = (int)(System.IO.Ports.Parity)WeightComParity.SelectedItem,
+                    EndpointUrl = EndpointUrl.Text,
+                    WarehouseSymbol = WarehouseId.Text,
+                    ProductionDocumentSymbol = DocumentTypeSymbol.Text
                 };
                 var isSaved = configService.SaveConfig(cfg);
                 if (isSaved)

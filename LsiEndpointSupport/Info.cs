@@ -9,21 +9,17 @@ namespace LsiEndpointSupport
 {
     public class Info
     {
-        private Config config { get; set; }
         private CWSSoapClient lsiService { get; set; }
-        private Endpoint endpoint { get; set; }
-        public Info()
+        public Info(string endpointUrl)
         {
-            config = new Config();
-            endpoint = config.Endpoints.FirstOrDefault(s => s.Selected == true);
-            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpoint.Url);
+            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
         }
         public async Task<SystemInfo> GetInfo()
         {
             PobierzMagazynyResponse magazynyResponse = new PobierzMagazynyResponse();
             var systemInfo = new SystemInfo();
             systemInfo.EndpointUrl = lsiService.Endpoint.Address.Uri.ToString();
-            systemInfo.EndpointName = endpoint.Name;
+            systemInfo.EndpointName = "Serwis LSI";
             systemInfo.Warehouses = new List<Warehouse>();
             try
             {

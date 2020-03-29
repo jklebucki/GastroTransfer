@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace LsiEndpointSupport
 {
-    public class Service
+    public class LsiEndpointService
     {
-        private Config config { get; set; }
         private CWSSoapClient lsiService { get; set; }
-        private Endpoint endpoint { get; set; }
-        public Service()
+        public LsiEndpointService(string endpointUrl)
         {
-            config = new Config();
-            endpoint = config.Endpoints.FirstOrDefault(s => s.Selected == true);
-            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpoint.Url);
+            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
         }
 
         public async Task<ArrayOfPobierzProduktyProduktObject> GetProducts(int groupId, string magazynId)

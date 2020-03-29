@@ -21,8 +21,8 @@ namespace GastroTransfer.Models
         public int WeightComStopBits { get; set; }
         public int WeightComDataBits { get; set; }
         public int WeightComParity { get; set; }
-        public int EndpointId { get; set; }
+        public string EndpointUrl { get; set; }
         public string WarehouseSymbol { get; set; }
-        public string ProductGroupName { get; set; }
+        public string ProductionDocumentSymbol { get; set; }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using GastroTransfer.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace GastroTransfer.Data
@@ -30,7 +26,7 @@ namespace GastroTransfer.Data
                     Name = "Schab w sosie grzybowym",
                     UnitOfMesure = "kg",
                     ProducedItemId = 1,
-                    ProductGroupId = 2,
+                    ExternalGroupId = 2,
                     ConversionRate = 0
 
                 },
@@ -40,7 +36,7 @@ namespace GastroTransfer.Data
                     Name = "Karkówka z grilla",
                     UnitOfMesure = "kg",
                     ProducedItemId = 2,
-                    ProductGroupId = 2,
+                    ExternalGroupId = 2,
                     ConversionRate = 0
 
                 },
@@ -50,7 +46,7 @@ namespace GastroTransfer.Data
                     Name = "Wątróbka drobiowa z cebulką",
                     UnitOfMesure = "kg",
                     ProducedItemId = 3,
-                    ProductGroupId = 2,
+                    ExternalGroupId = 2,
                     ConversionRate = 0
 
                 },
@@ -60,7 +56,7 @@ namespace GastroTransfer.Data
                     Name = "Pulpety",
                     UnitOfMesure = "kg",
                     ProducedItemId = 4,
-                    ProductGroupId = 2,
+                    ExternalGroupId = 2,
                     ConversionRate = 0
 
                 },
@@ -70,7 +66,7 @@ namespace GastroTransfer.Data
                     Name = "Flaki",
                     UnitOfMesure = "l",
                     ProducedItemId = 5,
-                    ProductGroupId = 3,
+                    ExternalGroupId = 3,
                     ConversionRate = 0
 
                 },
@@ -80,7 +76,7 @@ namespace GastroTransfer.Data
                     Name = "Zupa gulaszowa",
                     UnitOfMesure = "l",
                     ProducedItemId = 6,
-                    ProductGroupId = 3,
+                    ExternalGroupId = 3,
                     ConversionRate = 0
 
                 },
@@ -90,7 +86,7 @@ namespace GastroTransfer.Data
                     Name = "Żurek",
                     UnitOfMesure = "l",
                     ProducedItemId = 7,
-                    ProductGroupId = 3,
+                    ExternalGroupId = 3,
                     ConversionRate = 0
 
                 },
@@ -100,7 +96,7 @@ namespace GastroTransfer.Data
                     Name = "Zupa grochowa",
                     UnitOfMesure = "l",
                     ProducedItemId = 8,
-                    ProductGroupId = 3,
+                    ExternalGroupId = 3,
                     ConversionRate = 0
 
                 }
@@ -111,26 +107,8 @@ namespace GastroTransfer.Data
                 new ProductGroup
                 {
                     GroupName = "Wszystkie",
+                    ExternalGroupId = 0,
                     ProductGroupId = 1,
-
-                },
-                new ProductGroup
-                {
-                    GroupName = "Zupy",
-                    ProductGroupId = 3,
-
-                },
-                new ProductGroup
-                {
-                    GroupName = "Dania",
-                    ProductGroupId = 2,
-
-                },
-                new ProductGroup
-                {
-                    GroupName= "Śniadania",
-                    ProductGroupId = 4,
-
                 }
         };
     }

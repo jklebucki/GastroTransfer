@@ -1,10 +1,5 @@
 ﻿using GastroTransfer.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GastroTransfer.Data
 {
@@ -34,9 +29,13 @@ namespace GastroTransfer.Data
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ExternalName).HasMaxLength(50);
             modelBuilder.Entity<ProducedItem>()
+                .Property(x => x.ExternalIndex).HasMaxLength(50);
+            modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.Name).HasMaxLength(50);
             modelBuilder.Entity<ProducedItem>()
                 .Property(x => x.ExternalUnitOfMesure).HasMaxLength(10);
+            modelBuilder.Entity<ProducedItem>()
+                .Property(x => x.UnitOfMesure).HasMaxLength(10);
 
             modelBuilder.Entity<ProductionItem>()
                 .Property(x => x.Quantity).HasPrecision(18, 4);

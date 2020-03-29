@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GastroTransfer"
         mc:Ignorable="d"
-        Title="AJK Software loader" Height="400" Width="800" AllowsTransparency="True" WindowStyle="None" Background="Black" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" >
+        Title="AJK Software loader" Height="400" Width="800" 
+        AllowsTransparency="True" WindowStyle="None" Background="Black" 
+        Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" >
     <Grid Background="#FFF7F7F7">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="titleRow" Height="15*" Language="pl-pl"/>

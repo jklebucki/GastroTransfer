@@ -89,21 +89,26 @@
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Data\DbContextFactory.cs" />
     <Compile Include="Data\DbInitializer.cs" />
-    <Compile Include="Migrations\202003232133141_Initial.cs" />
-    <Compile Include="Migrations\202003232133141_Initial.designer.cs">
-      <DependentUpon>202003232133141_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003281720120_Initial.cs" />
+    <Compile Include="Migrations\202003281720120_Initial.designer.cs">
+      <DependentUpon>202003281720120_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Endpoint.cs" />
+    <Compile Include="Models\ProducedItemView.cs" />
+    <Compile Include="Models\ProductGroupView.cs" />
     <Compile Include="Models\ProductGroup.cs" />
     <Compile Include="Models\ProductionViewModel.cs" />
+    <Compile Include="Models\ProductsViewModel.cs" />
     <Compile Include="Models\ServiceMessage.cs" />
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Services\DbService.cs" />
     <Compile Include="Services\ICryptoService.cs" />
     <Compile Include="Services\IDbService.cs" />
+    <Compile Include="Services\IProductGroupsService.cs" />
     <Compile Include="Services\IProductionService.cs" />
     <Compile Include="Services\IProductService.cs" />
+    <Compile Include="Services\ProductGroupsService.cs" />
     <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="CheckConnection.xaml.cs">
@@ -114,6 +119,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\MeasurementWindow.xaml.cs">
       <DependentUpon>MeasurementWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ProductsWindow.xaml.cs">
+      <DependentUpon>ProductsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +148,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\ProductsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Config.cs" />
@@ -160,8 +172,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202003232133141_Initial.resx">
-      <DependentUpon>202003232133141_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003281720120_Initial.resx">
+      <DependentUpon>202003281720120_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

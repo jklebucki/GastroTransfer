@@ -1,16 +1,10 @@
-﻿using GastroTransfer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GastroTransfer.Services
+﻿namespace GastroTransfer.Services
 {
     interface IDbService
     {
         bool CheckConnection();
+        bool CheckLsiConnection();
         string GetConnectionString(int timeout);
-
+        string GetLsiConnectionString(int timeout);
     }
 }

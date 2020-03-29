@@ -20,13 +20,15 @@
                 <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="48*"/>
+                <ColumnDefinition Width="48*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Viewbox Grid.ColumnSpan="2" Grid.Row="0" Stretch="Uniform" >
+            <Viewbox Grid.ColumnSpan="4" Grid.Row="0"  Stretch="Uniform" >
                 <TextBlock Text="Konfiguracja systemu" FontSize="10" Margin="5" FontWeight="Bold"/>
             </Viewbox>
-            <GroupBox Grid.ColumnSpan="2" Grid.Row="1" Margin="5" BorderBrush="Black" FontSize="16">
+            <GroupBox Grid.Column="1"  Grid.Row="1" Margin="5" BorderBrush="Black" FontSize="16">
                 <GroupBox.Header>
                     Konfiguracja serwera SQL
                 </GroupBox.Header>
@@ -81,7 +83,7 @@
                     </Viewbox>
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.ColumnSpan="2" Grid.Row="2" Margin="5" BorderBrush="Black" FontSize="16">
+            <GroupBox Grid.Column="1" Grid.Row="2" Margin="5" BorderBrush="Black" FontSize="16">
                 <GroupBox.Header>
                     Konfiguracja serwera SQL systemu zewnętrznego
                 </GroupBox.Header>
@@ -136,7 +138,7 @@
                     </Viewbox>
                 </Grid>
             </GroupBox>
-            <GroupBox Grid.ColumnSpan="2" Grid.Row="3" Margin="5" BorderBrush="Black" FontSize="18">
+            <GroupBox Grid.Column="2" Grid.Row="1" Margin="5" BorderBrush="Black" FontSize="18">
                 <GroupBox.Header>
                     Konfiguracja wagi
                 </GroupBox.Header>
@@ -207,7 +209,44 @@
                     </Viewbox>
                 </Grid>
             </GroupBox>
-            <Grid Grid.Row="4" Grid.ColumnSpan="2" Margin="5">
+            <GroupBox Grid.Column="2" Grid.Row="2" Margin="5" BorderBrush="Black" FontSize="18">
+                <GroupBox.Header>
+                    Konfiguracja usługi LSI
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0" Stretch="Uniform" >
+                        <TextBlock Text="Adres usługi" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="EndpointUrl"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="320"></TextBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
+                        <TextBlock Text="Magazyn" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="WarehouseId"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="320"></TextBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
+                        <TextBlock Text="Typ dokumentu produkcji" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="DocumentTypeSymbol"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="320"></TextBox>
+                    </Viewbox>
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="2*"/>

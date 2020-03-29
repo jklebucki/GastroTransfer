@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace GastroTransfer.Models
+﻿namespace GastroTransfer.Models
 {
     /// <summary>
     /// Positions to create buttons
@@ -17,6 +14,6 @@ namespace GastroTransfer.Models
         public string ExternalIndex { get; set; }
         public string ExternalName { get; set; }
         public string ExternalUnitOfMesure { get; set; }
-        public int ProductGroupId { get; set; }
+        public int ExternalGroupId { get; set; }
     }
 }

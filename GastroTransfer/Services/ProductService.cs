@@ -113,7 +113,7 @@ namespace GastroTransfer.Services
                 itemToChange.ExternalIndex = producedItem.ExternalIndex;
                 itemToChange.ExternalName = producedItem.ExternalName;
                 itemToChange.ExternalUnitOfMesure = producedItem.ExternalUnitOfMesure;
-                itemToChange.ProductGroupId = producedItem.ProductGroupId;
+                itemToChange.ExternalGroupId = producedItem.ExternalGroupId;
 
                 dbContext.Entry(itemToChange).State = EntityState.Modified;
                 serviceMessage.ItemId = dbContext.SaveChanges();

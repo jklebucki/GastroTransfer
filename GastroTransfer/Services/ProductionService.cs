@@ -1,11 +1,9 @@
-﻿using System;
+﻿using GastroTransfer.Data;
+using GastroTransfer.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GastroTransfer.Data;
-using GastroTransfer.Models;
 
 namespace GastroTransfer.Services
 {

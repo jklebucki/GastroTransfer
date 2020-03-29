@@ -1,14 +1,9 @@
 ﻿using GastroTransfer.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GastroTransfer.Data
 {
-    class DbInitializer: IDatabaseInitializer<AppDbContext>
+    class DbInitializer : IDatabaseInitializer<AppDbContext>
     {
         public void InitializeDatabase(AppDbContext context)
         {

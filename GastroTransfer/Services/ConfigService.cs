@@ -1,11 +1,9 @@
-﻿using System;
+﻿using GastroTransfer.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using GastroTransfer.Models;
-using Newtonsoft.Json;
 
 namespace GastroTransfer.Services
 {
@@ -29,7 +27,6 @@ namespace GastroTransfer.Services
             ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
             Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath));
             this.cryptoService = cryptoService;
-            InitializeEndpoints();
         }
 
         /// <summary>
@@ -111,29 +108,6 @@ namespace GastroTransfer.Services
             }
         }
 
-        /// <summary>
-        /// Initialize config file 
-        /// </summary>
-        public void InitializeEndpoints()
-        {
-            string endpointsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "endpoints.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(endpointsPath));
-            Endpoints = new List<Endpoint>();
-            if (!File.Exists(endpointsPath))
-            {
-                //Adding initial sample records
-                Endpoints.Add(new Endpoint { Id = 1, Name = "Restauracja", Url = "http://192.168.71.70:8089/icws.asmx", Selected = true });
-                Endpoints.Add(new Endpoint { Id = 2, Name = "Restauracja", Url = "http://192.168.81.70:8089/icws.asmx", Selected = false });
-                using (StreamWriter sr = new StreamWriter(endpointsPath))
-                {
-                    sr.Write(JsonConvert.SerializeObject(Endpoints, Formatting.Indented));
-                }
-            }
-            else
-            {
-                GetEndpoints(endpointsPath);
-            }
-        }
 
         /// <summary>
         /// Getting endpoints list from endpoints.json file  

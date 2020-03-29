@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace LsiEndpointSupport
 {
-    class DbService
+    public class LsiDbService
     {
         public SqlConnection sqlConnection { get; set; }
         public bool IsError { get; set; }
         public string Message { get; set; }
 
-        public DbService(string connectionString)
+        public LsiDbService(string connectionString)
         {
             IsError = false;
             this.sqlConnection = new SqlConnection(connectionString);

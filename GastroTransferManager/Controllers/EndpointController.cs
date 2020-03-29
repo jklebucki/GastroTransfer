@@ -9,10 +9,10 @@ namespace GastroTransferManager.Controllers
 {
     public class EndpointController : Controller
     {
-        private Service service { get; set; }
+        private LsiEndpointService service { get; set; }
         public EndpointController()
         {
-            service = new Service();
+            service = new LsiEndpointService("http://192.168.81.70:8089/icws.asmx");
         }
         public IActionResult Index()
         {

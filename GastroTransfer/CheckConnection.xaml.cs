@@ -1,20 +1,9 @@
 ﻿using GastroTransfer.Services;
 using GastroTransfer.Views.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace GastroTransfer
@@ -28,8 +17,8 @@ namespace GastroTransfer
         private BackgroundWorker backgroundWorker;
         private DispatcherTimer timer;
         private DbService dbService;
-        private ConfigService configService;
-        private Style style;
+        private readonly ConfigService configService;
+        private readonly Style style;
         private bool connected;
         public CheckConnection(DbService dbService, ConfigService configService, Style style)
         {
@@ -108,7 +97,7 @@ namespace GastroTransfer
 
         private void done(object sender, RunWorkerCompletedEventArgs e)
         {
-            if(!connected)
+            if (!connected)
             {
                 timer.Stop();
                 closeButton.Visibility = Visibility.Visible;

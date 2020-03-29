@@ -26,7 +26,7 @@ namespace GastroTransferManager.Controllers
 
         public async Task<IActionResult> SystemInfo()
         {
-            Info info = new Info();
+            Info info = new Info("http://192.168.81.70:8089/icws.asmx");
             ViewBag.Message = await info.GetInfo();
             return View();
         }

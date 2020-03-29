@@ -1,0 +1,137 @@
+﻿<Window x:Class="GastroTransfer.Views.Dialogs.ProductsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GastroTransfer.Views.Dialogs"
+        mc:Ignorable="d"
+        Title="Produkty" Height="768" Width="1024"
+        AllowsTransparency="True" WindowStyle="None" Background="Black"
+        Loaded="Window_Loaded">
+    <Grid Background="#BBDEFB">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+            <Viewbox>
+                <Viewbox.LayoutTransform>
+                    <ScaleTransform CenterX="50" ScaleX="1" />
+                </Viewbox.LayoutTransform>
+                <TextBlock Text="ZARZĄDZANIE PRODUKTAMI"  
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Stretch" 
+                               Margin="5,0,5,0"
+                               FontWeight="Bold"/>
+            </Viewbox>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60*" />
+                <ColumnDefinition Width="40*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                <DataGrid 
+                    TabIndex="0" 
+                    x:Name="ProductsGrid" 
+                    Margin="0,0,0,0" 
+                    RowHeaderWidth="0"
+                    AutoGenerateColumns="False"
+                    CanUserResizeColumns="False" 
+                    CanUserSortColumns="False" 
+                    SelectionMode="Single" 
+                    CanUserResizeRows="False"
+                    CanUserAddRows="False"
+                    IsReadOnly="False"
+                    Foreground="White"
+                    Background="Gray"
+                    ItemsSource="{Binding Path=DataContext.Products, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontWeight"  Value="Bold" />
+                            <Setter Property="FontSize"  Value="{Binding FontSize, ElementName = ProductName}" />
+                            <Setter Property="Background"  Value="#FF000000" />
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="FontWeight"  Value="Bold" />
+                            <Setter Property="FontSize"  Value="20" />
+                            <Setter Property="Background"  Value="#FF5B802E" />
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                            Width="42*" 
+                            x:Name="ProductNameColumn" 
+                            Binding="{Binding  Name, Mode=TwoWay}" 
+                            Header="NAZWA" FontSize="20"
+                            IsReadOnly="True"/>
+                        <DataGridTextColumn 
+                            Width="15*" 
+                            x:Name="UnitOfMesureColumn" 
+                            Binding="{Binding UnitOfMesure, Mode=TwoWay}" 
+                            Header="JM" FontSize="20" 
+                            IsReadOnly="True"/>
+                        <DataGridComboBoxColumn 
+                            Width="25*" 
+                            x:Name="ProductGroupIdColumn" 
+                            SelectedValueBinding="{Binding ProductGroupId, Mode=TwoWay}" 
+                            DisplayMemberPath="GroupName" 
+                            Header="GRUPA"
+                            SelectedValuePath="ExternalGroupId">
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <DataGridCheckBoxColumn
+                            Width="18*" 
+                            x:Name="IsActiveColumn" 
+                            Binding="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            Header="AKTYWNY">
+                            <DataGridCheckBoxColumn.ElementStyle>
+                                <Style TargetType="{x:Type CheckBox}">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="FontSize" Value="40" />
+                                </Style>
+                            </DataGridCheckBoxColumn.ElementStyle>
+                        </DataGridCheckBoxColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                <WrapPanel Name="GroupButtons"  Orientation="Horizontal"/>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                <ScrollViewer >
+                    <WrapPanel x:Name="WrapButtons" Orientation="Horizontal"/>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+        <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+            <WrapPanel Name="FooterButtons"  Orientation="Vertical">
+                <Button x:Name="GetProductsButton" Content="Pobierz produkty" Width="160" Height="40" Margin="8" FontSize="18" Click="GetProductsButton_Click"/>
+                <Button x:Name="CloseButton" Content="Zamknij" Width="160" Height="40" Margin="8" FontSize="18" Click="CloseButton_Click" />
+            </WrapPanel>
+        </Border>
+    </Grid>
+</Window>
