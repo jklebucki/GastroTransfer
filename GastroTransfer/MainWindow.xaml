@@ -329,12 +329,12 @@
             <DockPanel >
                 <Viewbox>
                     <Viewbox.LayoutTransform>
-                        <ScaleTransform CenterX="50" ScaleX="2" />
+                        <ScaleTransform CenterX="50" ScaleX="1.3" />
                     </Viewbox.LayoutTransform>
                     <TextBlock Text="SYSTEM ROZLICZENIA PRODUKCJI"  
                                HorizontalAlignment="Stretch" 
                                VerticalAlignment="Stretch" 
-                               Margin="35,0,35,0"
+                               Margin="30,0,30,0"
                                FontWeight="Bold"/>
                 </Viewbox>
             </DockPanel>
@@ -354,7 +354,9 @@
                     <Button x:Name="ConfigButton" Content="Konfiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click"/>
                     <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click"/>
                     <Button x:Name="ProductionButton" Content="Produkuj" Width="120" Height="55" Margin="8" FontSize="18" Click="ProductionButton_Click"/>
-                    <Button x:Name="GetProducts" Content="Pobierz produkty" Width="120" Height="55" Margin="8" FontSize="14" Click="GetProductsFromEndpoint_Click"/>
+                    <Button x:Name="GetProducts" Width="120" Height="55" Margin="8" FontSize="18" Click="GetProductsFromEndpoint_Click">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pobierz produkty</TextBlock>
+                    </Button>
                 </WrapPanel>
                 <Grid Grid.Column="0" Margin="5">
                     <Grid.ColumnDefinitions>
@@ -428,7 +430,9 @@
                 </DataGrid>
             </Border>
             <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <WrapPanel Name="GroupButtons"  Orientation="Horizontal"/>
+                <ScrollViewer >
+                    <WrapPanel Name="GroupButtons"  Orientation="Horizontal"/>
+                </ScrollViewer>
             </Border>
             <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
                 <ScrollViewer >

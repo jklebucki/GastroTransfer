@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO.Ports;
 using AngelProtocol;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,7 +10,24 @@ namespace UnitTests
     public class UnitTestAngelProtocol
     {
         [TestMethod]
-        public void TestMethod2()
+        public void InitializeSerialPort()
+        {
+            WeightCommonInterface weight = new WeightCommonInterface(new ComPortSettings
+            {
+                BaudRate = 9600,
+                PortName = "COM3",
+                StopBits = 1,
+                DataBits = 8,
+                Parity = 0
+            });
+            var obj = new PrivateObject(weight);
+            var retVal = obj.Invoke("InitializeSerialPort");
+            Trace.WriteLine(retVal);
+            Assert.IsTrue(typeof(SerialPort) == retVal.GetType());
+
+        }
+        [TestMethod]
+        public void GetWeight()
         {
             WeightCommonInterface weight = new WeightCommonInterface(new ComPortSettings
             {
@@ -20,7 +39,7 @@ namespace UnitTests
             });
 
             var test = weight.GetWeihgt();
-            Assert.IsTrue(test > 0);
+            Assert.IsTrue(test == 0);
 
         }
     }

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace GastroTransfer.Views.Dialogs
 {
@@ -31,22 +32,26 @@ namespace GastroTransfer.Views.Dialogs
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             CloseButton.Style = style;
             GetProductsButton.Style = style;
+            GetGroups();
         }
 
         private void FillViewModel()
         {
-            var productsGroups = appDbContext.ProductGroups.ToList();
+            ViewModel.Products.Clear();
+            ViewModel.ProductsGroups.Clear();
+            var productsGroups = appDbContext.ProductGroups.Where(a => a.IsActive).ToList();
             foreach (var group in productsGroups)
             {
                 ViewModel.ProductsGroups.Add(new ProductGroupView
                 {
                     ProductGroupId = group.ProductGroupId,
                     ExternalGroupId = group.ExternalGroupId,
-                    GroupName = group.GroupName
+                    GroupName = group.GroupName,
+                    IsActive = group.IsActive
                 });
             }
 
-            var products = appDbContext.ProducedItems.ToList();
+            var products = appDbContext.ProducedItems.Where(a => a.IsActive).ToList();
             foreach (var product in products)
             {
                 var item = new ProducedItemView
@@ -77,10 +82,10 @@ namespace GastroTransfer.Views.Dialogs
             producedItemsToChange = new List<ProducedItemView>();
         }
 
-        private async Task<bool> GetProducts(int groupId, string warehouseSymbol)
+        private async Task<ServiceMessage> GetProducts(int groupId, string warehouseSymbol)
         {
             if (string.IsNullOrEmpty(config.EndpointUrl))
-                return false;
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Endpoint address not set" };
 
             ProductService productService = new ProductService(appDbContext);
             LsiEndpointService service = new LsiEndpointService(config.EndpointUrl);
@@ -88,29 +93,36 @@ namespace GastroTransfer.Views.Dialogs
             var warehouses = await service.GetWarehouses();
             var warehouse = warehouses.FirstOrDefault(x => x.Symbol.Contains(warehouseSymbol));
             if (warehouse == null)
-                return false;
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Warehouse is null" };
             var productsLsi = await service.GetMeals(groupId, warehouse.MagazynID);
+            if (productsLsi == null)
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Product list is null" };
             var currentDbProducts = appDbContext.ProducedItems.ToList();
             foreach (var product in productsLsi)
             {
+                var item = new ProducedItem
+                {
+                    ExternalId = product.ProduktID,
+                    Name = product.Nazwa.Contains("r_") ? (product.Nazwa.Replace("r_", "").ToUpper()) : product.Nazwa,
+                    ConversionRate = 1,
+                    UnitOfMesure = product.JM,
+                    ExternalUnitOfMesure = product.JM,
+                    ExternalIndex = product.Indeks,
+                    IsActive = true,
+                    ExternalGroupId = groupId,
+                    ExternalName = product.NazwaSkrocona,
+                };
+
                 if (currentDbProducts.FirstOrDefault(ex => ex.ExternalIndex.Contains(product.Indeks)) == null)
                 {
-                    var item = new ProducedItem
-                    {
-                        ExternalId = product.ProduktID,
-                        Name = product.Nazwa.Contains("r_") ? (product.Nazwa.Replace("r_", "").ToUpper()) : product.Nazwa,
-                        ConversionRate = 1,
-                        UnitOfMesure = product.JM,
-                        ExternalUnitOfMesure = product.JM,
-                        ExternalIndex = product.Indeks,
-                        IsActive = true,
-                        ExternalGroupId = groupId,
-                        ExternalName = product.NazwaSkrocona,
-                    };
                     productService.CreateProduct(item);
                 }
+                else
+                {
+                    productService.UpdateProduct(item);
+                }
             }
-            return true;
+            return new ServiceMessage { IsError = false, ItemId = 0, Message = "Products downloaded" };
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -122,19 +134,14 @@ namespace GastroTransfer.Views.Dialogs
         {
             if (!string.IsNullOrEmpty(config.EndpointUrl) && !string.IsNullOrEmpty(config.WarehouseSymbol))
             {
-                var groups = appDbContext.ProductGroups.ToList();
-                if (groups.Count == 1)
-                {
-                    await AddFirstGroup();
-                    groups = appDbContext.ProductGroups.ToList();
-                }
+                var groups = appDbContext.ProductGroups.Where(a => a.IsActive).ToList();
 
                 foreach (var group in groups)
                 {
                     if (group.ExternalGroupId != 0)
                         await GetProducts(group.ExternalGroupId, config.WarehouseSymbol);
                 }
-                //InitializeViewModel();
+                FillViewModel();
                 MessageBox.Show("Pobieranie zakończone", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
@@ -155,18 +162,86 @@ namespace GastroTransfer.Views.Dialogs
             }
         }
 
-        private async Task<bool> AddFirstGroup()
+        private async Task<ServiceMessage> GetGroups()
         {
             if (string.IsNullOrEmpty(config.EndpointUrl))
-                return false;
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Endpoint URL not set" };
             LsiEndpointService endpointService = new LsiEndpointService(config.EndpointUrl);
-            ProductGroupsService productGroupsService = new ProductGroupsService(appDbContext);
             var groups = await endpointService.GetProductsGroups();
-            var group = groups.FirstOrDefault(x => x.Nazwa.Contains("RECEPTURY PROD"));
-            if (group == null)
-                return false;
-            productGroupsService.AddGroup(new ProductGroup { ExternalGroupId = group.ID, GroupName = group.Nazwa });
-            return true;
+            if (groups.Count == 0)
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Empty group list" };
+            foreach (var group in groups)
+            {
+                var id = 1;
+                ViewModel.DownloadedProductsGroups.Add(new ProductGroupView { ProductGroupId = id, ExternalGroupId = group.ID, GroupName = group.Nazwa, IsActive = false });
+                id++;
+            }
+            return new ServiceMessage { IsError = false, ItemId = 0, Message = "Groups downloaded" };
+        }
+
+        private void GroupList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ProductGroupsService productGroupsService = new ProductGroupsService(appDbContext);
+            var selectedItem = (ProductGroupView)((ListBox)sender).SelectedItem;
+            if (selectedItem == null)
+                return;
+            productGroupsService.AddGroup(
+                new ProductGroup
+                {
+                    ExternalGroupId = selectedItem.ExternalGroupId,
+                    GroupName = selectedItem.GroupName,
+                    IsActive = true
+                });
+            var allAddedGroups = productGroupsService.GetGroups();
+            ActivateProducts(allAddedGroups);
+            ViewModel.ProductsGroups.Clear();
+            foreach (var group in allAddedGroups.Where(a => a.IsActive).ToList())
+                ViewModel.ProductsGroups.Add(
+                    new ProductGroupView
+                    {
+                        ProductGroupId = group.ProductGroupId,
+                        IsActive = group.IsActive,
+                        ExternalGroupId = group.ExternalGroupId,
+                        GroupName = group.GroupName
+                    });
+        }
+
+        private void SelectedGroupList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ProductGroupsService productGroupsService = new ProductGroupsService(appDbContext);
+            var selectedItem = (ProductGroupView)((ListBox)sender).SelectedItem;
+            productGroupsService.UpdateGroup(
+                new ProductGroup
+                {
+                    ProductGroupId = selectedItem.ProductGroupId,
+                    ExternalGroupId = selectedItem.ExternalGroupId,
+                    GroupName = selectedItem.GroupName,
+                    IsActive = false
+                });
+            var allAddedGroups = productGroupsService.GetGroups();
+            DeactivateProducts(allAddedGroups);
+            foreach (var group in allAddedGroups.Where(a => a.IsActive).ToList())
+                ViewModel.ProductsGroups.Add(
+                    new ProductGroupView
+                    {
+                        ProductGroupId = group.ProductGroupId,
+                        IsActive = group.IsActive,
+                        ExternalGroupId = group.ExternalGroupId,
+                        GroupName = group.GroupName
+                    });
+            FillViewModel();
+        }
+
+        private void DeactivateProducts(List<ProductGroup> allAddedGroups)
+        {
+            ProductService productService = new ProductService(appDbContext);
+            productService.ChangeActiveStatus(allAddedGroups.Where(a => !a.IsActive).Select(i => i.ExternalGroupId).ToList(), false);
+        }
+
+        private void ActivateProducts(List<ProductGroup> allAddedGroups)
+        {
+            ProductService productService = new ProductService(appDbContext);
+            productService.ChangeActiveStatus(allAddedGroups.Where(a => a.IsActive).Select(i => i.ExternalGroupId).ToList(), true);
         }
     }
 }

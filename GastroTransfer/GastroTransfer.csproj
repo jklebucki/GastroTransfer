@@ -89,9 +89,9 @@
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Data\DbContextFactory.cs" />
     <Compile Include="Data\DbInitializer.cs" />
-    <Compile Include="Migrations\202003281720120_Initial.cs" />
-    <Compile Include="Migrations\202003281720120_Initial.designer.cs">
-      <DependentUpon>202003281720120_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202003301329167_Initial.cs" />
+    <Compile Include="Migrations\202003301329167_Initial.designer.cs">
+      <DependentUpon>202003301329167_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Endpoint.cs" />
@@ -172,8 +172,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202003281720120_Initial.resx">
-      <DependentUpon>202003281720120_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003301329167_Initial.resx">
+      <DependentUpon>202003301329167_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

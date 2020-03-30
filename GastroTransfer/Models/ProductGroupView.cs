@@ -24,6 +24,23 @@ namespace GastroTransfer.Models
                 }
             }
         }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return this._isActive;
+            }
+
+            set
+            {
+                if (value != this._isActive)
+                {
+                    this._isActive = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

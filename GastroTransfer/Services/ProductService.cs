@@ -1,8 +1,10 @@
 ﻿using GastroTransfer.Data;
 using GastroTransfer.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace GastroTransfer.Services
 {
@@ -143,7 +145,7 @@ namespace GastroTransfer.Services
             return serviceMessage;
         }
 
-        public ServiceMessage ChangeActiveStatus(int producedItemId)
+        public ServiceMessage ChangeActiveStatus(List<int> externalGroupsIds, bool isActive)
         {
             var serviceMessage = new ServiceMessage()
             {
@@ -154,12 +156,13 @@ namespace GastroTransfer.Services
 
             try
             {
-                var itemToChange = dbContext.ProducedItems.Find(producedItemId);
-
-                itemToChange.IsActive = false;
-
-                dbContext.Entry(itemToChange).State = EntityState.Modified;
-                serviceMessage.ItemId = dbContext.SaveChanges();
+                var itemsToChange = dbContext.ProducedItems.Where(x => externalGroupsIds.Contains(x.ExternalGroupId)).ToList();
+                foreach (var item in itemsToChange)
+                {
+                    item.IsActive = isActive;
+                    dbContext.Entry(item).State = EntityState.Modified;
+                    dbContext.SaveChanges();
+                }
                 return serviceMessage;
             }
             catch (DbUpdateException ex)

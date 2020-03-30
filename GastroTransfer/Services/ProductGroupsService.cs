@@ -50,12 +50,13 @@ namespace GastroTransfer.Services
         {
             if (group != null)
             {
-                var groupToUpdate = appDbContext.ProductGroups.FirstOrDefault(id => id.ProductGroupId == group.ProductGroupId);
+                var groupToUpdate = appDbContext.ProductGroups.FirstOrDefault(id => id.ExternalGroupId == group.ExternalGroupId);
                 if (groupToUpdate != null)
                 {
                     try
                     {
                         groupToUpdate.GroupName = group.GroupName;
+                        groupToUpdate.IsActive = group.IsActive;
                         appDbContext.Entry(groupToUpdate).State = System.Data.Entity.EntityState.Modified;
                         appDbContext.SaveChanges();
                     }

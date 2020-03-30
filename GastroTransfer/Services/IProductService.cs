@@ -1,4 +1,5 @@
 ﻿using GastroTransfer.Models;
+using System.Collections.Generic;
 
 namespace GastroTransfer.Services
 {
@@ -7,6 +8,6 @@ namespace GastroTransfer.Services
         ServiceMessage CreateProduct(ProducedItem producedItem);
         ServiceMessage RemoveProduct(ProducedItem producedItem);
         ServiceMessage UpdateProduct(ProducedItem producedItem);
-        ServiceMessage ChangeActiveStatus(int producedItemId);
+        ServiceMessage ChangeActiveStatus(List<int> producedItemId, bool isActive);
     }
 }

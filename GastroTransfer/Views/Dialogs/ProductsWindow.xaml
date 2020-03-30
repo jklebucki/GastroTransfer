@@ -122,9 +122,30 @@
                 <WrapPanel Name="GroupButtons"  Orientation="Horizontal"/>
             </Border>
             <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <ScrollViewer >
-                    <WrapPanel x:Name="WrapButtons" Orientation="Horizontal"/>
-                </ScrollViewer>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox 
+                        x:Name="GroupList"
+                        Grid.Column="0"
+                        Width="198.874"
+                        DisplayMemberPath="GroupName"
+                        SelectedValuePath="ExternalGroupId"
+                        MouseDoubleClick="GroupList_MouseDoubleClick"
+                        ItemsSource="{Binding Path=DataContext.DownloadedProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Margin="-1,-1,0,-1" HorizontalAlignment="Left">
+                    </ListBox>
+                    <ListBox 
+                        x:Name="SelectedGroupList"
+                        Grid.Column="1"
+                        Width="198.874"
+                        DisplayMemberPath="GroupName"
+                        SelectedValuePath="ExternalGroupId"
+                        MouseDoubleClick="SelectedGroupList_MouseDoubleClick"
+                        ItemsSource="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Margin="-1,-1,0,-1" HorizontalAlignment="Left">
+                    </ListBox>
+                </Grid>
             </Border>
         </Grid>
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">

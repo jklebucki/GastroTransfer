@@ -29,14 +29,11 @@ namespace GastroTransfer
         private List<ProducedItem> producedItems { get; set; }
         private List<ProductGroup> productGroups { get; set; }
         private ObservableCollection<ProductionViewModel> productionViewItems { get; set; }
-
+        private delegate void GetDataDelegate();
+        private GetDataDelegate GetDataDelegateMethod;
         public MainWindow()
         {
-            var cultureInfo = new CultureInfo("pl-PL");
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
-            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(
-                XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            GetDataDelegateMethod = GetData;
             InitializeComponent();
             BackButton.Style = this.FindResource("RoundCorner") as Style;
             ConfigButton.Style = this.FindResource("RoundCorner") as Style;
@@ -90,12 +87,11 @@ namespace GastroTransfer
             appDbContext = new AppDbContext(dbService.GetConnectionString());
             if (appDbContext.ProductGroups.Count() == 0)
             {
-                //appDbContext.ProducedItems.AddRange(producedItems);
                 appDbContext.ProductGroups.AddRange(ConstData.productGroups);
                 appDbContext.SaveChanges();
             }
             producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).OrderBy(x => x.Name).ToList();
-            productGroups = appDbContext.ProductGroups.ToList();
+            productGroups = appDbContext.ProductGroups.Where(x => x.IsActive || x.ProductGroupId == 1).OrderBy(x => x.GroupName).ToList();
             AddButtons(producedItems);
             AddGroupButtons(productGroups);
             GetCurrentProduction();
@@ -111,7 +107,6 @@ namespace GastroTransfer
             productionViewItems.Clear();
             foreach (var product in production)
                 productionViewItems.Add(product);
-            //PositionsListGrid.Items.Refresh();
         }
 
         private void Config_Click(object sender, RoutedEventArgs e)
@@ -203,45 +198,87 @@ namespace GastroTransfer
                 AddButtons(items);
         }
 
+        private Button CreateProductButton(ProducedItem item)
+        {
+            Viewbox box = new Viewbox
+            {
+                Stretch = Stretch.Uniform,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Width = 160,
+            };
+
+            TextBlock text = new TextBlock
+            {
+                Text = $"{item.Name}",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                Width = 160,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(5, 5, 5, 5)
+            };
+            box.Child = text;
+
+            Button button = new Button()
+            {
+                Name = $"N_{item.ProducedItemId}",
+                Content = box,
+                Tag = item.ExternalGroupId,
+                Height = 90,
+                Width = 180,
+                Margin = new Thickness(5, 5, 5, 5),
+                FontSize = 24,
+                Style = this.FindResource("RoundCorner") as Style
+            };
+            button.Click += new RoutedEventHandler(Production_Button_Click);
+            return button;
+        }
+
         private void AddButtons(List<ProducedItem> producedItems)
         {
             this.WrapButtons.Children.Clear();
             foreach (var item in producedItems)
             {
-                Viewbox box = new Viewbox
-                {
-                    Stretch = Stretch.Uniform,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 160,
-                };
-
-                TextBlock text = new TextBlock
-                {
-                    Text = $"{item.Name}",
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    TextAlignment = TextAlignment.Center,
-                    Width = 160,
-                    TextWrapping = TextWrapping.Wrap,
-                    Margin = new Thickness(5, 5, 5, 5)
-                };
-                box.Child = text;
-
-                Button button = new Button()
-                {
-                    Name = $"N_{item.ProducedItemId}",
-                    Content = box,
-                    Tag = item.ExternalGroupId,
-                    Height = 90,
-                    Width = 180,
-                    Margin = new Thickness(5, 5, 5, 5),
-                    FontSize = 24,
-                    Style = this.FindResource("RoundCorner") as Style
-                };
-                button.Click += new RoutedEventHandler(Production_Button_Click);
-                this.WrapButtons.Children.Add(button);
+                this.WrapButtons.Children.Add(CreateProductButton(item));
             }
+        }
+
+        private Button CreateFilterButton(ProductGroup item)
+        {
+            Viewbox box = new Viewbox
+            {
+                Stretch = Stretch.Uniform,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Width = 160,
+            };
+
+            TextBlock text = new TextBlock
+            {
+                Text = $"{item.GroupName}",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                Width = 160,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(5, 5, 5, 5)
+            };
+            box.Child = text;
+
+            Button button = new Button()
+            {
+                Name = $"N_{item.ExternalGroupId}",
+                Content = box,
+                Tag = item.ExternalGroupId,
+                Height = 35,
+                Width = 180,
+                Margin = new Thickness(5, 5, 5, 5),
+                FontSize = 24,
+                Style = this.FindResource("RoundCorner") as Style
+            };
+            button.Click += new RoutedEventHandler(Button_Click_Filter);
+            return button;
         }
 
         private void AddGroupButtons(List<ProductGroup> productGroups)
@@ -249,39 +286,7 @@ namespace GastroTransfer
             this.GroupButtons.Children.Clear();
             foreach (var item in productGroups)
             {
-                Viewbox box = new Viewbox
-                {
-                    Stretch = Stretch.Uniform,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 160,
-                };
-
-                TextBlock text = new TextBlock
-                {
-                    Text = $"{item.GroupName}",
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    TextAlignment = TextAlignment.Center,
-                    Width = 160,
-                    TextWrapping = TextWrapping.Wrap,
-                    Margin = new Thickness(5, 5, 5, 5)
-                };
-                box.Child = text;
-
-                Button button = new Button()
-                {
-                    Name = $"N_{item.ExternalGroupId}",
-                    Content = box,
-                    Tag = item.ExternalGroupId,
-                    Height = 35,
-                    Width = 180,
-                    Margin = new Thickness(5, 5, 5, 5),
-                    FontSize = 24,
-                    Style = this.FindResource("RoundCorner") as Style
-                };
-                button.Click += new RoutedEventHandler(Button_Click_Filter);
-                this.GroupButtons.Children.Add(button);
+                this.GroupButtons.Children.Add(CreateFilterButton(item));
             }
         }
 
@@ -293,7 +298,7 @@ namespace GastroTransfer
         private async void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
             var message = await StartProduction();
-            GetData();
+            GetDataDelegateMethod.Invoke();
             MessageBox.Show(message.Message, "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
