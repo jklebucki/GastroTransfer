@@ -8,52 +8,61 @@
         Title="AJK Software loader" Height="400" Width="800" 
         AllowsTransparency="True" WindowStyle="None" Background="Black" 
         Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" >
-    <Grid Background="#FFF7F7F7">
-        <Grid.RowDefinitions>
-            <RowDefinition x:Name="titleRow" Height="15*" Language="pl-pl"/>
-            <RowDefinition Height="90*"/>
-            <RowDefinition Height="10*"/>
-        </Grid.RowDefinitions>
-        <Grid Margin="5" Grid.Row="1" d:LayoutOverrides="HorizontalAlignment" RenderTransformOrigin="0.343,0.489">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45*"/>
-                <ColumnDefinition Width="73*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15*"/>
-                    <RowDefinition Height="85*"/>
-                </Grid.RowDefinitions>
-                <Viewbox Grid.Row="0">
-                    <Viewbox.LayoutTransform>
-                        <ScaleTransform CenterX="50" ScaleX="1" />
-                    </Viewbox.LayoutTransform>
-                    <TextBlock Text="SYSTEM ROZLICZENIA PRODUKCJI GASTRONOMICZNEJ"  
+    <Border BorderThickness="3" BorderBrush="Black">
+        <Grid Background="#BBDEFB">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="titleRow" Height="15*" Language="pl-pl"/>
+                <RowDefinition Height="88*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="5" Grid.Row="1" d:LayoutOverrides="HorizontalAlignment" RenderTransformOrigin="0.343,0.489">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45*"/>
+                    <ColumnDefinition Width="73*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="85*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0">
+                        <Viewbox.LayoutTransform>
+                            <ScaleTransform CenterX="50" ScaleX="1" />
+                        </Viewbox.LayoutTransform>
+                        <TextBlock Text="SYSTEM ROZLICZENIA PRODUKCJI GASTRONOMICZNEJ"  
                                HorizontalAlignment="Stretch" 
                                VerticalAlignment="Stretch" 
                                Margin="5,0,5,0"
                                FontWeight="Bold"/>
-                </Viewbox>
-                <RichTextBox x:Name="rtbInfo" IsReadOnly="True" Grid.Row="1" Margin="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" FontSize="14" BorderThickness="0" Background="#FFF7F7F7" Foreground="#FF0A0A0A" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="Sprawdzam połączenie z bazą danych..."/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
+                    </Viewbox>
+                    <RichTextBox x:Name="rtbInfo" IsReadOnly="True" Grid.Row="1" Margin="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" FontSize="14" BorderThickness="0" Background="#FFF7F7F7" Foreground="#FF0A0A0A" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+                        <FlowDocument Background="#BBDEFB">
+                            <Paragraph>
+                                <Run Text="Sprawdzam połączenie z bazą danych..."/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+                <Image x:Name="logoImage" Margin="7.166,10" ScrollViewer.VerticalScrollBarVisibility="Disabled" Source="/Assets/logo.png" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
             </Grid>
-            <Image x:Name="logoImage" Margin="7.166,10" ScrollViewer.VerticalScrollBarVisibility="Disabled" Source="/Assets/logo.png" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+            <Label x:Name="titleLabel" Content="URUCHAMIANIE SYSTEMU" Margin="15,5" Foreground="#FFF3EEEE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontSize="21.333" Padding="2">
+                <Label.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="#FFB00000" Offset="1"/>
+                    </LinearGradientBrush>
+                </Label.Background>
+            </Label>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="15*"/>
+                </Grid.ColumnDefinitions>
+                <ProgressBar Grid.ColumnSpan="3" x:Name="Progress" Visibility="Hidden" Grid.Column="0" IsIndeterminate="True" Background="#BBDEFB" Margin="5"/>
+                <Button Grid.Column="1" Visibility="Hidden" Style="{StaticResource RoundCorner}" x:Name="configButton" Content="Konfiguracja" Margin="3" Click="configButton_Click" />
+                <Button Grid.Column="2" Visibility="Hidden" Style="{StaticResource RoundCorner}" x:Name="closeButton" Content="Zamknij" Margin="3" Click="closeButton_Click" />
+            </Grid>
         </Grid>
-        <Label x:Name="titleLabel" Content="URUCHAMIANIE SYSTEMU" Margin="15,5" Foreground="#FFF3EEEE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" FontSize="21.333" Padding="2">
-            <Label.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop Color="#FFB00000" Offset="1"/>
-                </LinearGradientBrush>
-            </Label.Background>
-        </Label>
-        <Button Visibility="Hidden" x:Name="configButton" Content="Konfiguracja" HorizontalAlignment="Right" Margin="0,2,140,2" Grid.Row="2" Width="75" Click="configButton_Click" />
-        <Button Visibility="Hidden" x:Name="closeButton" Content="Zamknij" HorizontalAlignment="Right" Margin="0,2,40,2" Grid.Row="2" Width="75" Click="closeButton_Click" />
-
-    </Grid>
+    </Border>
 </Window>

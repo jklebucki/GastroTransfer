@@ -40,6 +40,7 @@ namespace GastroTransfer
             {
                 closeButton.Visibility = Visibility.Hidden;
                 configButton.Visibility = Visibility.Hidden;
+                Progress.Visibility = Visibility.Visible;
                 timer.Start();
                 backgroundWorker.RunWorkerAsync();
             }
@@ -51,6 +52,7 @@ namespace GastroTransfer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Progress.Visibility = Visibility.Visible;
             initializeWorker();
             rtbInfo.Document.LineHeight = 2;
 
@@ -101,6 +103,7 @@ namespace GastroTransfer
                 timer.Stop();
                 closeButton.Visibility = Visibility.Visible;
                 configButton.Visibility = Visibility.Visible;
+                Progress.Visibility = Visibility.Hidden;
             }
             else
             {
