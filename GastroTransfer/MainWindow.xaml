@@ -7,64 +7,7 @@
         mc:Ignorable="d"
         Title="Gastro - transfer" Height="1024" Width="1280" WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None" Loaded="Window_Loaded">
     <Window.Resources>
-        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="8" BorderBrush="Black" BorderThickness="2">
-                                <Border.Background>
-                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
-                                        <RadialGradientBrush.RelativeTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
-                                                        ScaleX="1.5" ScaleY="1.5"/>
-                                                <TranslateTransform X="0.02" Y="0.3"/>
-                                            </TransformGroup>
-                                        </RadialGradientBrush.RelativeTransform>
-                                        <GradientStop Offset="1" Color="#00000000"/>
-                                        <GradientStop Offset="0.3" Color="LightBlue"/>
-                                    </RadialGradientBrush>
-                                </Border.Background>
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
 
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border">
-                                    <Setter.Value>
-                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
-                                            <RadialGradientBrush.RelativeTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
-                                                    <TranslateTransform X="0.02" Y="0.3"/>
-                                                </TransformGroup>
-                                            </RadialGradientBrush.RelativeTransform>
-                                            <GradientStop Color="#00000000" Offset="1"/>
-                                            <GradientStop Color="#FF303030" Offset="0.3"/>
-                                        </RadialGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
         <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
         <SolidColorBrush x:Key="StandardBackgroundBrush" Color="Black" />
@@ -350,13 +293,13 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <WrapPanel Grid.Column="1" Name="ButtomButtons" Orientation="Horizontal">
-                    <Button x:Name="BackButton" Content="Usuń ostatni" Width="120" Height="55" Margin="8" FontSize="18" Click="Back_Click"/>
-                    <Button x:Name="ConfigButton" Content="Konfiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click"/>
-                    <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click"/>
-                    <Button x:Name="ProductionButton" Content="Produkuj" Width="120" Height="55" Margin="8" FontSize="18" Click="ProductionButton_Click"/>
-                    <Button x:Name="GetProducts" Width="120" Height="55" Margin="8" FontSize="18" Click="GetProductsFromEndpoint_Click">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center">Pobierz produkty</TextBlock>
+                    <Button x:Name="BackButton" Content="Usuń ostatni" Width="120" Height="55" Margin="8" FontSize="18" Click="Back_Click" Style="{StaticResource RoundCorner}"/>
+                    <Button x:Name="ConfigButton" Content="Konfiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click" Style="{StaticResource RoundCorner}"/>
+                    <Button x:Name="ProductionButton" Content="Produkcja" Width="120" Height="55" Margin="8" FontSize="18" Click="ProductionButton_Click" Style="{StaticResource RoundCorner}"/>
+                    <Button x:Name="GetProducts" Width="120" Height="55" Margin="8" FontSize="18" Click="GetProductsFromEndpoint_Click" Style="{StaticResource RoundCorner}">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold">Pobierz produkty</TextBlock>
                     </Button>
+                    <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click" Style="{StaticResource RoundCorner}"/>
                 </WrapPanel>
                 <Grid Grid.Column="0" Margin="5">
                     <Grid.ColumnDefinitions>
@@ -368,7 +311,6 @@
                 </Grid>
             </Grid>
         </Border>
-
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
@@ -442,4 +384,3 @@
         </Grid>
     </Grid>
 </Window>
-

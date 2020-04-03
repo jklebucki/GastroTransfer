@@ -18,13 +18,11 @@ namespace GastroTransfer
         private DispatcherTimer timer;
         private DbService dbService;
         private readonly ConfigService configService;
-        private readonly Style style;
         private bool connected;
-        public CheckConnection(DbService dbService, ConfigService configService, Style style)
+        public CheckConnection(DbService dbService, ConfigService configService)
         {
             this.configService = configService;
             this.dbService = dbService;
-            this.style = style;
             InitializeComponent();
         }
 
@@ -35,7 +33,8 @@ namespace GastroTransfer
 
         private void configButton_Click(object sender, RoutedEventArgs e)
         {
-            var configWindow = new ConfigWindow(style, this);
+            var configWindow = new ConfigWindow();
+            configWindow.Owner = this;
             configWindow.ShowDialog();
             if (configWindow.IsSaved)
             {

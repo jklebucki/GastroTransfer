@@ -27,6 +27,7 @@ namespace GastroTransfer.Services
             {
                 model.ProductionItem.SentToExternalSystem = DateTime.Now;
                 model.ProductionItem.ProducedItemId = model.ProducedItem.ProducedItemId;
+                model.ProductionItem.IsSentToExternalSystem = false;
                 dbContext.TransferredItems.Add(model.ProductionItem);
                 dbContext.SaveChanges();
                 message.IsError = false;
@@ -37,6 +38,30 @@ namespace GastroTransfer.Services
             {
                 message.IsError = true;
                 message.ItemId = model.ProductionItem.ProductionItemId;
+                message.Message = ex.Message;
+            }
+            return message;
+        }
+
+        public ServiceMessage AddProduction(ProductionItem productionItem)
+        {
+            ServiceMessage message = new ServiceMessage();
+            try
+            {
+                productionItem.SentToExternalSystem = DateTime.Now;
+                productionItem.IsSentToExternalSystem = false;
+                productionItem.Registered = DateTime.Now;
+                productionItem.TransferType = -1;
+                dbContext.TransferredItems.Add(productionItem);
+                dbContext.SaveChanges();
+                message.IsError = false;
+                message.ItemId = productionItem.ProductionItemId;
+                message.Message = "Added";
+            }
+            catch (Exception ex)
+            {
+                message.IsError = true;
+                message.ItemId = productionItem.ProductionItemId;
                 message.Message = ex.Message;
             }
             return message;
@@ -81,23 +106,25 @@ namespace GastroTransfer.Services
         /// <param name="packageNumber"></param>
         /// <param name="documentType"></param>
         /// <returns></returns>
-        public ServiceMessage ChangeTransferStatus(int productionId, int packageNumber, int documentType)
+        public ServiceMessage ChangeTransferStatus(int[] productionIds, int packageNumber, int documentType)
         {
             try
             {
-                var entitytoUpdate = dbContext.TransferredItems.Find(productionId);
-                entitytoUpdate.IsSentToExternalSystem = true;
-                entitytoUpdate.SentToExternalSystem = DateTime.Now;
-                entitytoUpdate.PackageNumber = packageNumber;
-                entitytoUpdate.DocumentType = documentType;
-
-                dbContext.Entry(entitytoUpdate).State = EntityState.Modified;
+                dbContext.TransferredItems
+                    .Where(i => productionIds.Contains(i.ProductionItemId))
+                    .ForEachAsync(n =>
+                    {
+                        n.IsSentToExternalSystem = true;
+                        n.SentToExternalSystem = DateTime.Now;
+                        n.DocumentType = documentType;
+                        n.PackageNumber = packageNumber;
+                    }).Wait();
                 dbContext.SaveChanges();
-                return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
+                return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status zmieniony" };
             }
             catch (Exception ex)
             {
-                return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = ex.Message };
             }
         }
 

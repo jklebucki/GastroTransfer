@@ -18,12 +18,12 @@ namespace GastroTransfer.Views.Dialogs
         public decimal Quantity { get; protected set; }
         public bool IsCanceled { get; protected set; }
 
-        public MeasurementWindow(Style buttonStyle, string productName, Config config)
+        public MeasurementWindow(string productName, Config config)
         {
             Owner = Application.Current.MainWindow;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             InitializeComponent();
-            SetButtonsStyle(buttonStyle);
+            SetButtonsStyle(this.FindResource("RoundCorner") as Style);
             Quantity = 0;
             QuantityTextBox.Text = "0";
             ProductName.Text = productName;

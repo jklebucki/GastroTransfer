@@ -6,39 +6,42 @@
         xmlns:local="clr-namespace:GastroTransfer.Views.Dialogs"
         mc:Ignorable="d"
         Title="Produkty" Height="768" Width="1024"
-        AllowsTransparency="True" WindowStyle="None" Background="Black"
-        Loaded="Window_Loaded">
-    <Grid Background="#BBDEFB">
-        <Grid.ColumnDefinitions>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-            <Viewbox>
-                <Viewbox.LayoutTransform>
-                    <ScaleTransform CenterX="50" ScaleX="1" />
-                </Viewbox.LayoutTransform>
-                <TextBlock Text="ZARZĄDZANIE PRODUKTAMI"  
-                               HorizontalAlignment="Stretch" 
-                               VerticalAlignment="Stretch" 
-                               Margin="5,0,5,0"
-                               FontWeight="Bold"/>
-            </Viewbox>
-        </Border>
-        <Grid Grid.Row="1">
+        AllowsTransparency="True" WindowStyle="None"
+        Loaded="Window_Loaded"
+        Background="#BBDEFB">
+    <Border BorderBrush="Black" BorderThickness="3">
+        <Grid Background="#BBDEFB" Margin="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="60*" />
-                <ColumnDefinition Width="40*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="120"/>
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <DataGrid 
+            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                <Viewbox>
+                    <Viewbox.LayoutTransform>
+                        <ScaleTransform CenterX="50" ScaleX="1" />
+                    </Viewbox.LayoutTransform>
+                    <TextBlock
+                    Text="ZARZĄDZANIE PRODUKTAMI"
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    Margin="5,0,5,0"
+                    FontWeight="Bold"/>
+                </Viewbox>
+            </Border>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55*" />
+                    <ColumnDefinition Width="45*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                    <DataGrid 
                     TabIndex="0" 
                     x:Name="ProductsGrid" 
                     Margin="0,0,0,0" 
@@ -53,106 +56,182 @@
                     Foreground="White"
                     Background="Gray"
                     ItemsSource="{Binding Path=DataContext.Products, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="FontWeight"  Value="Bold" />
-                            <Setter Property="FontSize"  Value="{Binding FontSize, ElementName = ProductName}" />
-                            <Setter Property="Background"  Value="#FF000000" />
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="FontWeight"  Value="Bold" />
-                            <Setter Property="FontSize"  Value="20" />
-                            <Setter Property="Background"  Value="#FF5B802E" />
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn 
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="FontWeight"  Value="Bold" />
+                                <Setter Property="FontSize"  Value="14" />
+                                <Setter Property="Background"  Value="#FF000000" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="FontWeight"  Value="Bold" />
+                                <Setter Property="FontSize"  Value="12" />
+                                <Setter Property="Background"  Value="#FF5B802E" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
                             Width="42*" 
                             x:Name="ProductNameColumn" 
                             Binding="{Binding  Name, Mode=TwoWay}" 
-                            Header="NAZWA" FontSize="20"
+                            Header="NAZWA"
                             IsReadOnly="True"/>
-                        <DataGridTextColumn 
-                            Width="15*" 
+                            <DataGridTextColumn 
+                            Width="10*" 
                             x:Name="UnitOfMesureColumn" 
                             Binding="{Binding UnitOfMesure, Mode=TwoWay}" 
-                            Header="JM" FontSize="20" 
+                            Header="JM" 
                             IsReadOnly="True"/>
-                        <DataGridComboBoxColumn 
+                            <DataGridComboBoxColumn 
                             Width="25*" 
                             x:Name="ProductGroupIdColumn" 
                             SelectedValueBinding="{Binding ProductGroupId, Mode=TwoWay}" 
                             DisplayMemberPath="GroupName" 
                             Header="GRUPA"
                             SelectedValuePath="ExternalGroupId">
-                            <DataGridComboBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.ElementStyle>
-                            <DataGridComboBoxColumn.EditingElementStyle>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
-                                </Style>
-                            </DataGridComboBoxColumn.EditingElementStyle>
-                        </DataGridComboBoxColumn>
-                        <DataGridCheckBoxColumn
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=TwoWay}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+                            <DataGridCheckBoxColumn
+                            Visibility="Hidden"
                             Width="18*" 
                             x:Name="IsActiveColumn" 
                             Binding="{Binding IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             Header="AKTYWNY">
-                            <DataGridCheckBoxColumn.ElementStyle>
-                                <Style TargetType="{x:Type CheckBox}">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="FontSize" Value="40" />
-                                </Style>
-                            </DataGridCheckBoxColumn.ElementStyle>
-                        </DataGridCheckBoxColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Border>
-            <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <WrapPanel Name="GroupButtons"  Orientation="Horizontal"/>
-            </Border>
-            <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-                <Grid>
+                                <DataGridCheckBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="40" />
+                                    </Style>
+                                </DataGridCheckBoxColumn.ElementStyle>
+                            </DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                    <TextBlock 
+                    TextWrapping="Wrap"
+                    Margin="-1,-1,0,-1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    FontWeight="Bold" 
+                    TextAlignment="Center">
+                        Wybierz grupy podwójnym kliknięciem na elemencie sekcji
+                    <LineBreak/>    
+                        "DOSTĘPNE GRUPY"
+                    <LineBreak/>
+                        Usunięcie grupy polega na podwójnym kliknieciu na element w sekcji
+                    <LineBreak/>
+                        "WYBRANE GRUPY"
+                    </TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="95*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                            <Viewbox>
+                                <Viewbox.LayoutTransform>
+                                    <ScaleTransform CenterX="50" ScaleX="1" />
+                                </Viewbox.LayoutTransform>
+                                <TextBlock Text="DOSTĘPNE GRUPY"  
+                               HorizontalAlignment="Stretch" 
+                               VerticalAlignment="Stretch" 
+                               Margin="5,0,5,0"
+                               FontWeight="Bold"/>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                            <Viewbox>
+                                <Viewbox.LayoutTransform>
+                                    <ScaleTransform CenterX="50" ScaleX="1" />
+                                </Viewbox.LayoutTransform>
+                                <TextBlock Text="WYBRANE GRUPY"  
+                                    HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" 
+                                    Margin="5,0,5,0"
+                                    FontWeight="Bold"/>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                            <ListBox 
+                                x:Name="GroupList"
+                                HorizontalContentAlignment="Stretch"
+                                DisplayMemberPath="GroupName"
+                                SelectedValuePath="ExternalGroupId"
+                                MouseDoubleClick="GroupList_MouseDoubleClick"
+                                Margin="-1,-1,0,-1"
+                                ItemsSource="{Binding Path=DataContext.DownloadedProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                            </ListBox>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
+                            <ListBox 
+                                x:Name="SelectedGroupList"
+                                HorizontalContentAlignment="Stretch"
+                                DisplayMemberPath="GroupName"
+                                SelectedValuePath="ExternalGroupId"
+                                MouseDoubleClick="SelectedGroupList_MouseDoubleClick"
+                                Margin="-1,-1,0,-1"
+                                ItemsSource="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                            </ListBox>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="1">
+                <Grid Name="FooterButtons">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <ListBox 
-                        x:Name="GroupList"
-                        Grid.Column="0"
-                        Width="198.874"
-                        DisplayMemberPath="GroupName"
-                        SelectedValuePath="ExternalGroupId"
-                        MouseDoubleClick="GroupList_MouseDoubleClick"
-                        ItemsSource="{Binding Path=DataContext.DownloadedProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Margin="-1,-1,0,-1" HorizontalAlignment="Left">
-                    </ListBox>
-                    <ListBox 
-                        x:Name="SelectedGroupList"
-                        Grid.Column="1"
-                        Width="198.874"
-                        DisplayMemberPath="GroupName"
-                        SelectedValuePath="ExternalGroupId"
-                        MouseDoubleClick="SelectedGroupList_MouseDoubleClick"
-                        ItemsSource="{Binding Path=DataContext.ProductsGroups, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Margin="-1,-1,0,-1" HorizontalAlignment="Left">
-                    </ListBox>
+                    <Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
+                    <Button
+                        Margin="5"
+                        Grid.Column="5"
+                        x:Name="CloseButton" 
+                        Content="Zamknij" 
+                        FontSize="18" 
+                        Click="CloseButton_Click"  
+                        Style="{StaticResource RoundCorner}"/>
+                    <Border Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="2">
+                        <TextBlock  
+                            FontSize="16" 
+                            TextWrapping="Wrap"
+                            Name="Feedback" 
+                            TextAlignment="Center" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1" CornerRadius="2" Margin="2">
+                        <ProgressBar Visibility="Hidden" x:Name="Progress" IsIndeterminate="True" Background="Transparent"/>
+                    </Border>
                 </Grid>
             </Border>
         </Grid>
-        <Border Grid.Row="2" BorderBrush="Black" BorderThickness="1" CornerRadius="1,1,1,1" Margin="1,1,1,1">
-            <WrapPanel Name="FooterButtons"  Orientation="Vertical">
-                <Button x:Name="GetProductsButton" Content="Pobierz produkty" Width="160" Height="40" Margin="8" FontSize="18" Click="GetProductsButton_Click"/>
-                <Button x:Name="CloseButton" Content="Zamknij" Width="160" Height="40" Margin="8" FontSize="18" Click="CloseButton_Click" />
-            </WrapPanel>
-        </Border>
-    </Grid>
+    </Border>
 </Window>

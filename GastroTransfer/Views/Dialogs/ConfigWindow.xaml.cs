@@ -15,12 +15,11 @@ namespace GastroTransfer.Views.Dialogs
         private readonly ConfigService configService;
         private string[] ports { get; set; }
         public bool IsSaved { get; protected set; }
-        public ConfigWindow(Style style, Window window)
+        public ConfigWindow()
         {
             IsSaved = false;
             try
             {
-                Owner = window;
                 WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 ports = System.IO.Ports.SerialPort.GetPortNames();
             }
@@ -32,6 +31,7 @@ namespace GastroTransfer.Views.Dialogs
             Icon = null;
             configService = new ConfigService(new CryptoService());
             InitializeComponent();
+            var style = this.FindResource("RoundCorner") as Style;
             CloseButton.Style = style;
             SaveConfigButton.Style = style;
             Loaded += WindowLoaded;

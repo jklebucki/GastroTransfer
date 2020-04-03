@@ -2,17 +2,12 @@
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views.Dialogs;
-using LsiEndpointSupport;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace GastroTransfer
@@ -30,16 +25,12 @@ namespace GastroTransfer
         private List<ProductGroup> productGroups { get; set; }
         private ObservableCollection<ProductionViewModel> productionViewItems { get; set; }
         private delegate void GetDataDelegate();
-        private GetDataDelegate GetDataDelegateMethod;
+        private readonly GetDataDelegate GetDataDelegateMethod;
         public MainWindow()
         {
             GetDataDelegateMethod = GetData;
             InitializeComponent();
-            BackButton.Style = this.FindResource("RoundCorner") as Style;
-            ConfigButton.Style = this.FindResource("RoundCorner") as Style;
-            CloseButton.Style = this.FindResource("RoundCorner") as Style;
-            ProductionButton.Style = this.FindResource("RoundCorner") as Style;
-            GetProducts.Style = this.FindResource("RoundCorner") as Style;
+            //BackButton.Style = this.FindResource("RoundCorner") as Style;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,7 +65,7 @@ namespace GastroTransfer
 
         private void CheckingConnection()
         {
-            CheckConnection checkConnection = new CheckConnection(dbService, configService, this.FindResource("RoundCorner") as Style);
+            CheckConnection checkConnection = new CheckConnection(dbService, configService);
             checkConnection.ShowDialog();
         }
 
@@ -91,7 +82,7 @@ namespace GastroTransfer
                 appDbContext.SaveChanges();
             }
             producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).OrderBy(x => x.Name).ToList();
-            productGroups = appDbContext.ProductGroups.Where(x => x.IsActive || x.ProductGroupId == 1).OrderBy(x => x.GroupName).ToList();
+            productGroups = appDbContext.ProductGroups.Where(x => x.IsActive || x.ProductGroupId == 1).ToList();
             AddButtons(producedItems);
             AddGroupButtons(productGroups);
             GetCurrentProduction();
@@ -111,7 +102,8 @@ namespace GastroTransfer
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
-            ConfigWindow configPage = new ConfigWindow(this.FindResource("RoundCorner") as Style, this);
+            ConfigWindow configPage = new ConfigWindow();
+            configPage.Owner = this;
             configPage.ShowDialog();
             if (configPage.IsSaved)
             {
@@ -124,7 +116,7 @@ namespace GastroTransfer
             var btn = (Button)sender;
             var productId = int.Parse(btn.Name.Split('_')[1]);
             var item = producedItems.FirstOrDefault(x => x.ProducedItemId == productId);
-            var measurementWindow = new MeasurementWindow(this.FindResource("RoundCorner") as Style, item.Name, config);
+            var measurementWindow = new MeasurementWindow(item.Name, config);
             measurementWindow.ShowDialog();
             if (!measurementWindow.IsCanceled)
             {
@@ -168,6 +160,16 @@ namespace GastroTransfer
             if (productionViewItems.Count > 0)
             {
                 var productToRemove = productionViewItems.Last();
+                ConfirmWindow confirmWindow = new ConfirmWindow(
+                    "Tak",
+                    "Nie",
+                    "Na pewno chcesz usunąc?" +
+                    $"\n{productToRemove.ProducedItem.Name}" +
+                    $"\t{productToRemove.ProductionItem.Quantity} {productToRemove.ProducedItem.UnitOfMesure}");
+                confirmWindow.Owner = this;
+                confirmWindow.ShowDialog();
+                if (confirmWindow.IsCanacel)
+                    return;
                 if (productToRemove != null)
                 {
                     ProductionService productionService = new ProductionService(appDbContext);
@@ -292,71 +294,25 @@ namespace GastroTransfer
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            ConfirmWindow confirmWindow = new ConfirmWindow();
+            confirmWindow.Owner = this;
+            confirmWindow.ShowDialog();
+            if (!confirmWindow.IsCanacel)
+                Close();
         }
 
-        private async void ProductionButton_Click(object sender, RoutedEventArgs e)
+        private void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
-            var message = await StartProduction();
+            ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config);
+            productionWindow.Owner = this;
+            productionWindow.ShowDialog();
+
             GetDataDelegateMethod.Invoke();
-            MessageBox.Show(message.Message, "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private async Task<ServiceMessage> StartProduction()
-        {
-            if (!dbService.CheckLsiConnection())
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak połączenia z bazą danych systemu LSI" };
-
-            LsiDbService lsiDbService = new LsiDbService(dbService.GetLsiConnectionString());
-            var documentType = lsiDbService.GetDocumentsTypes().FirstOrDefault(x => x.Symbol == config.ProductionDocumentSymbol);
-
-            if (documentType == null)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Niewłaściwy typ dokumentu produkcji" };
-
-            if (string.IsNullOrEmpty(config.EndpointUrl))
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiduracji usług" };
-
-            var productionService = new ProductionService(appDbContext);
-            var currentProduction = productionService.GetProduction(false);
-            if (currentProduction.Count == 0)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania." };
-
-            var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
-            var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId).Select(r => new { Index = r.Select(s => s.ProducedItem.ExternalId).First(), Q = r.Sum(q => q.ProductionItem.Quantity) }).ToList();
-            //return;
-            foreach (var product in sum)
-            {
-                if (product.Q > 0)
-                    products.Add(new LsiService.UtworzDokumentRozchodowyRequestProduktObject { Ilosc = product.Q, ProduktID = product.Index, Cena = 0 });
-            }
-
-            if (products.Count == 0)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji." };
-
-            LsiEndpointService service = new LsiEndpointService(config.EndpointUrl);
-            var productsGroups = await service.GetProductsGroups();
-            var warehouses = await service.GetWarehouses();
-            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
-            var response = await service.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
-            var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
-            var respMessage = "";
-            if (docResp != null)
-            {
-                if (docResp.ID > 0)
-                    foreach (var product in currentProduction)
-                    {
-                        productionService.ChangeTransferStatus(product.ProductionItem.ProductionItemId, docResp.ID, documentType.DocumentTypeId);
-                    }
-                respMessage = $"Id dokumentu: {docResp.ID}\nNumer: {docResp.Numer}\nKod błędu: {docResp.KodBledu}\nOpis błędu: {docResp.OpisBledu}";
-            }
-            else
-                respMessage = "Totalny błąd";
-            return new ServiceMessage { IsError = true, ItemId = 0, Message = respMessage };
         }
 
         private void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
         {
-            ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, this.FindResource("RoundCorner") as Style, config);
+            ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, config);
             productsWindow.ShowDialog();
             GetData();
         }
