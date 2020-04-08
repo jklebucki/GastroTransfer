@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>AJK Software Sp. z o.o.</Authors>
+    <Description>Biblioteka zawierająca mechanizmy obsługi API systemu LSI</Description>
+    <Copyright>AJK Software Sp. z o.o.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

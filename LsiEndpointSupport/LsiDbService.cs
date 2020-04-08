@@ -1,10 +1,7 @@
-﻿using System;
+﻿using LsiEndpointSupport.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Data.SqlClient;
-using LsiEndpointSupport.Models;
-using System.IO;
-using Newtonsoft.Json;
 
 namespace LsiEndpointSupport
 {
@@ -43,14 +40,36 @@ namespace LsiEndpointSupport
                 IsError = true;
                 Message = ex.Message;
             }
+            finally
+            {
+                sqlConnection.Close();
+            }
 
             return documents;
         }
 
-        public bool AddDocumentInfo(int documentId, string documentDescription)
+        public bool AddDocumentInfo(int documentId, string documentDescription, DateTime documentDate)
         {
-
-            return true;
+            var sqlCommand = new SqlCommand("update LSIdok_mag_oczek_nagl set UWAGI = @DocDesc, Data = @DocDate where DCID = @DocId", sqlConnection);
+            sqlCommand.Parameters.Add("@DocDesc", System.Data.SqlDbType.NVarChar).Value = documentDescription;
+            sqlCommand.Parameters.Add("@DocId", System.Data.SqlDbType.Int).Value = documentId;
+            sqlCommand.Parameters.Add("@DocDate", System.Data.SqlDbType.DateTime).Value = new DateTime(documentDate.Year, documentDate.Month, documentDate.Day, 23, 59, 59);
+            try
+            {
+                sqlConnection.Open();
+                var sqlResponse = sqlCommand.ExecuteNonQuery();
+                IsError = false;
+            }
+            catch (Exception ex)
+            {
+                IsError = true;
+                Message = ex.Message;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return IsError ? false : true;
         }
     }
 }

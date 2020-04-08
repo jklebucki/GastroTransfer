@@ -2,6 +2,7 @@
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using LsiEndpointSupport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,16 @@ namespace GastroTransfer.Views.Dialogs
             InitializeComponent();
             DocumentType.Text += config.ProductionDocumentSymbol;
             WarehouseSymbol.Text += config.WarehouseSymbol;
+            ProductionDate.SelectedDate = DateTime.Now;
+            ProductionDate.DisplayDateEnd = DateTime.Now;
+            ProductionDate.SelectedDateChanged += ProductionDate_SelectedDateChanged;
+        }
+
+        private void ProductionDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedDate = (DatePicker)sender;
+            if (selectedDate.SelectedDate == null || selectedDate.SelectedDate > DateTime.Now)
+                ProductionDate.SelectedDate = DateTime.Now;
         }
 
         private async Task<ServiceMessage> StartProduction()
@@ -44,7 +55,8 @@ namespace GastroTransfer.Views.Dialogs
                 return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiduracji usług" };
 
             var productionService = new ProductionService(appDbContext);
-            var currentProduction = productionService.GetProduction(false);
+            var selectedDate = (DateTime)ProductionDate.SelectedDate;
+            var currentProduction = productionService.GetProduction(false).Where(d => d.ProductionItem.Registered <= new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, 23, 59, 59)).ToList();
             if (currentProduction.Count == 0)
                 return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania." };
 
@@ -74,10 +86,13 @@ namespace GastroTransfer.Views.Dialogs
             if (docResp != null)
             {
                 if (docResp.ID > 0)
+                {
                     productionService.ChangeTransferStatus(
                         currentProduction.Select(i => i.ProductionItem.ProductionItemId).ToArray(),
                         docResp.ID,
                         documentType.DocumentTypeId);
+                    lsiDbService.AddDocumentInfo(docResp.ID, $"Produkcja, Ilość razem: {sum.Sum(x => x.Q)}", (DateTime)ProductionDate.SelectedDate);
+                }
 
                 if (docResp.KodBledu != 0)
                 {

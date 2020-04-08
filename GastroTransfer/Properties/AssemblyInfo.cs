@@ -6,11 +6,11 @@ using System.Windows;
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
 [assembly: AssemblyTitle("GastroTransfer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("System obsługi produkcji oparty na API magazynowym systemu LSI")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("AJK Software Sp. z o.o.")]
 [assembly: AssemblyProduct("GastroTransfer")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright ©  AJK Software Sp. z o.o. 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

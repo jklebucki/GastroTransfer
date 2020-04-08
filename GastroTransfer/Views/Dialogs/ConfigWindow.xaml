@@ -246,6 +246,31 @@
                     </Viewbox>
                 </Grid>
             </GroupBox>
+            <GroupBox  Grid.Row="3" Grid.Column="1" Margin="5" BorderBrush="Black" FontSize="18">
+                <GroupBox.Header>
+                    Hasło administratora systemu
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0" Stretch="Uniform" >
+                        <TextBlock Text="Hasło" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="0" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <PasswordBox x:Name="SystemPassword"  HorizontalAlignment="Stretch" Margin="5" Width="200"></PasswordBox>
+                    </Viewbox>
+                </Grid>
+            </GroupBox>
             <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

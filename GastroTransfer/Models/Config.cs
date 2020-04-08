@@ -24,5 +24,6 @@ namespace GastroTransfer.Models
         public string EndpointUrl { get; set; }
         public string WarehouseSymbol { get; set; }
         public string ProductionDocumentSymbol { get; set; }
+        public string SystemPassword { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace GastroTransfer.Views.Dialogs
 
         private void WindowLoaded(object sender, RoutedEventArgs args)
         {
+            ServerAddress.Focus();
             var stopBits = Enum.GetValues(typeof(System.IO.Ports.StopBits)).OfType<System.IO.Ports.StopBits>().ToList();
             stopBits.RemoveAt(0);
             WeightComPortName.ItemsSource = ports;
@@ -66,6 +67,7 @@ namespace GastroTransfer.Views.Dialogs
             DocumentTypeSymbol.Text = config.ProductionDocumentSymbol;
             WarehouseId.Text = config.WarehouseSymbol;
             EndpointUrl.Text = config.EndpointUrl;
+            SystemPassword.Password = config.SystemPassword;
         }
 
         private void SaveConfigButton_Click(object sender, RoutedEventArgs e)
@@ -95,7 +97,8 @@ namespace GastroTransfer.Views.Dialogs
                     WeightComParity = (int)(System.IO.Ports.Parity)WeightComParity.SelectedItem,
                     EndpointUrl = EndpointUrl.Text,
                     WarehouseSymbol = WarehouseId.Text,
-                    ProductionDocumentSymbol = DocumentTypeSymbol.Text
+                    ProductionDocumentSymbol = DocumentTypeSymbol.Text,
+                    SystemPassword = SystemPassword.Password
                 };
                 var isSaved = configService.SaveConfig(cfg);
                 if (isSaved)

@@ -62,6 +62,20 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="ResizedCalendarBox" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <Viewbox Height="250"
+                        Width="250">
+                            <CalendarItem x:Name="PART_CalendarItem"
+                                BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" />
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 
 </Application>

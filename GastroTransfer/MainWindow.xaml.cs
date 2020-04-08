@@ -23,6 +23,7 @@ namespace GastroTransfer
         private DbService dbService { get; set; }
         private List<ProducedItem> producedItems { get; set; }
         private List<ProductGroup> productGroups { get; set; }
+        private ProductionService productionService { get; set; }
         private ObservableCollection<ProductionViewModel> productionViewItems { get; set; }
         private delegate void GetDataDelegate();
         private readonly GetDataDelegate GetDataDelegateMethod;
@@ -35,8 +36,11 @@ namespace GastroTransfer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            configService = new ConfigService(new CryptoService());
             InitializeSystem();
-            CheckingConnection();
+            CheckingConnection(true);
+            productionService = new ProductionService(appDbContext);
+
             productionViewItems = new ObservableCollection<ProductionViewModel>();
             //Getting products and products groups data  
             GetData();
@@ -54,7 +58,6 @@ namespace GastroTransfer
         private void InitializeSystem()
         {
             //read or initialize config
-            configService = new ConfigService(new Services.CryptoService());
             config = configService.GetConfig();
             if (config == null)
             {
@@ -63,19 +66,22 @@ namespace GastroTransfer
             }
         }
 
-        private void CheckingConnection()
+        private void CheckingConnection(bool systemStart)
         {
-            CheckConnection checkConnection = new CheckConnection(dbService, configService);
+            CheckConnection checkConnection = new CheckConnection(dbService, configService, systemStart);
             checkConnection.ShowDialog();
+            RenewConfiguration();
+        }
+
+        private void RenewConfiguration()
+        {
+            config = configService.GetConfig();
+            dbService = new DbService(config);
+            appDbContext = new AppDbContext(dbService.GetConnectionString());
         }
 
         private void GetData()
         {
-            configService = new ConfigService(new Services.CryptoService());
-            config = configService.GetConfig();
-            dbService = new DbService(config);
-            //Database available
-            appDbContext = new AppDbContext(dbService.GetConnectionString());
             if (appDbContext.ProductGroups.Count() == 0)
             {
                 appDbContext.ProductGroups.AddRange(ConstData.productGroups);
@@ -93,21 +99,34 @@ namespace GastroTransfer
         /// </summary>
         private void GetCurrentProduction()
         {
-            ProductionService productionService = new ProductionService(appDbContext);
             var production = productionService.GetProduction(false);
             productionViewItems.Clear();
             foreach (var product in production)
                 productionViewItems.Add(product);
         }
 
+        private bool LogIn()
+        {
+            LoginWindow loginWindow = new LoginWindow(config);
+            loginWindow.Owner = this;
+            loginWindow.ShowDialog();
+            if (!loginWindow.LoginOk)
+                return false;
+            return true;
+        }
+
         private void Config_Click(object sender, RoutedEventArgs e)
         {
+            if (!LogIn())
+                return;
             ConfigWindow configPage = new ConfigWindow();
             configPage.Owner = this;
             configPage.ShowDialog();
             if (configPage.IsSaved)
             {
                 config = configService.GetConfig();
+                RenewConfiguration();
+                CheckingConnection(false);
             }
         }
 
@@ -132,7 +151,6 @@ namespace GastroTransfer
                         }
                     };
 
-                    ProductionService productionService = new ProductionService(appDbContext);
                     var message = productionService.AddProduction(productionViewModel);
                     if (!message.IsError)
                     {
@@ -172,7 +190,6 @@ namespace GastroTransfer
                     return;
                 if (productToRemove != null)
                 {
-                    ProductionService productionService = new ProductionService(appDbContext);
                     var messsge = productionService.RemoveProduction(productToRemove.ProductionItem.ProductionItemId);
                     if (!messsge.IsError)
                     {
@@ -303,6 +320,8 @@ namespace GastroTransfer
 
         private void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!LogIn())
+                return;
             ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config);
             productionWindow.Owner = this;
             productionWindow.ShowDialog();
@@ -312,6 +331,8 @@ namespace GastroTransfer
 
         private void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
         {
+            if (!LogIn())
+                return;
             ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, config);
             productsWindow.ShowDialog();
             GetData();

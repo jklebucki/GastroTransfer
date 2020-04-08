@@ -41,6 +41,7 @@ namespace GastroTransfer.Services
                 {
                     var config = JsonConvert.DeserializeObject<Config>(sr.ReadToEnd());
                     config.Password = cryptoService.DecodePassword(config.Password);
+                    config.SystemPassword = cryptoService.DecodePassword(config.SystemPassword);
                     config.ExternalDbPassword = cryptoService.DecodePassword(config.ExternalDbPassword);
                     return config;
                 }
@@ -63,6 +64,7 @@ namespace GastroTransfer.Services
                 try
                 {
                     config.Password = cryptoService.EncodePassword(config.Password);
+                    config.SystemPassword = cryptoService.EncodePassword(config.SystemPassword);
                     config.ExternalDbPassword = cryptoService.EncodePassword(config.ExternalDbPassword);
                     sw.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
                     return true;
@@ -91,6 +93,7 @@ namespace GastroTransfer.Services
                         DatabaseName = "GastroTransfer",
                         UserName = "sa",
                         Password = cryptoService.EncodePassword("#Password123!"),
+                        SystemPassword = cryptoService.EncodePassword("admin"),
                         IsTrustedConnection = false,
                         ExternalDbPassword = cryptoService.EncodePassword("#Password123!"),
                         WeightComBaudRate = 9600,

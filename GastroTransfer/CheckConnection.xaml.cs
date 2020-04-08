@@ -19,11 +19,13 @@ namespace GastroTransfer
         private DbService dbService;
         private readonly ConfigService configService;
         private bool connected;
-        public CheckConnection(DbService dbService, ConfigService configService)
+        public CheckConnection(DbService dbService, ConfigService configService, bool onSystemStart)
         {
             this.configService = configService;
             this.dbService = dbService;
             InitializeComponent();
+            if (!onSystemStart)
+                titleLabel.Content = "SPRAWDZANIE KONFIGURACJI";
         }
 
         private void closeButton_Click(object sender, RoutedEventArgs e)
