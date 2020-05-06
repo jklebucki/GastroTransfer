@@ -52,7 +52,7 @@ namespace GastroTransfer.Views.Dialogs
                 return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Niewłaściwy typ dokumentu produkcji - {config.ProductionDocumentSymbol}" };
 
             if (string.IsNullOrEmpty(config.EndpointUrl))
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiduracji usług" };
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiguracji usługi LSI" };
 
             var productionService = new ProductionService(appDbContext);
             var selectedDate = (DateTime)ProductionDate.SelectedDate;
