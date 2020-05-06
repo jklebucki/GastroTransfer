@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Text;
 
 namespace GastroTransfer.Services
@@ -23,10 +25,45 @@ namespace GastroTransfer.Services
         /// <param name="cryptoService">Encryption service</param>
         public ConfigService(ICryptoService cryptoService)
         {
-            ///<summary>Hardcoded </summary>
-            ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath));
+            CreateConfigDirectory();
             this.cryptoService = cryptoService;
+        }
+
+        /// <summary>
+        /// Creating config directory at first startup
+        /// </summary>
+        private void CreateConfigDirectory()
+        {
+            ConfigPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "AJKSoftware", "GastroTransfer", "config.json");
+            if (!Directory.Exists(Path.GetDirectoryName(ConfigPath)))
+            {
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath));
+                    DirectoryInfo directory = new DirectoryInfo(Path.GetDirectoryName(ConfigPath));
+                    DirectorySecurity security = directory.GetAccessControl();
+                    var allDomainUsers = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+                    var authenticatedUser = new SecurityIdentifier(WellKnownSidType.AuthenticatedUserSid, null);
+                    var allUsers = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+                    security.AddAccessRule(new FileSystemAccessRule(allUsers, FileSystemRights.FullControl,
+                                    InheritanceFlags.None,
+                                    PropagationFlags.NoPropagateInherit,
+                                    AccessControlType.Allow));
+                    security.AddAccessRule(new FileSystemAccessRule(authenticatedUser, FileSystemRights.FullControl,
+                                    InheritanceFlags.ObjectInherit,
+                                    PropagationFlags.InheritOnly,
+                                    AccessControlType.Allow));
+                    security.AddAccessRule(new FileSystemAccessRule(allDomainUsers, FileSystemRights.FullControl,
+                                    InheritanceFlags.None,
+                                    PropagationFlags.NoPropagateInherit,
+                                    AccessControlType.Allow));
+                    directory.SetAccessControl(security);
+                }
+                catch (Exception ex)
+                {
+                    Message = $"Error 100:\n {ex.Message}";
+                }
+            }
         }
 
         /// <summary>
@@ -99,7 +136,9 @@ namespace GastroTransfer.Services
                         WeightComBaudRate = 9600,
                         WeightComDataBits = 8,
                         WeightComStopBits = (int)(System.IO.Ports.StopBits.One),
-                        WeightComParity = (int)(System.IO.Ports.Parity.None)
+                        WeightComParity = (int)(System.IO.Ports.Parity.None),
+                        OnPasswordProduction = true,
+                        OnPasswordProductsImport = true
                     }, Formatting.Indented));
                     return true;
                 }

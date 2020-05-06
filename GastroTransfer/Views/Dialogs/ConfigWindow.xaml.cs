@@ -68,6 +68,8 @@ namespace GastroTransfer.Views.Dialogs
             WarehouseId.Text = config.WarehouseSymbol;
             EndpointUrl.Text = config.EndpointUrl;
             SystemPassword.Password = config.SystemPassword;
+            OnPasswordProduction.IsChecked = config.OnPasswordProduction;
+            OnPasswordProductsImport.IsChecked = config.OnPasswordProductsImport;
         }
 
         private void SaveConfigButton_Click(object sender, RoutedEventArgs e)
@@ -98,7 +100,9 @@ namespace GastroTransfer.Views.Dialogs
                     EndpointUrl = EndpointUrl.Text,
                     WarehouseSymbol = WarehouseId.Text,
                     ProductionDocumentSymbol = DocumentTypeSymbol.Text,
-                    SystemPassword = SystemPassword.Password
+                    SystemPassword = SystemPassword.Password,
+                    OnPasswordProduction = (bool)OnPasswordProduction.IsChecked,
+                    OnPasswordProductsImport = (bool)OnPasswordProductsImport.IsChecked
                 };
                 var isSaved = configService.SaveConfig(cfg);
                 if (isSaved)

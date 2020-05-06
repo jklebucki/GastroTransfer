@@ -37,6 +37,11 @@ namespace GastroTransfer
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             configService = new ConfigService(new CryptoService());
+            if (configService.Message != null && configService.Message.Contains("Error"))
+            {
+                MessageBox.Show(configService.Message, "Błąd krytyczny", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(999);
+            }
             InitializeSystem();
             CheckingConnection(true);
             productionService = new ProductionService(appDbContext);
@@ -320,8 +325,9 @@ namespace GastroTransfer
 
         private void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!LogIn())
-                return;
+            if (config.OnPasswordProduction)
+                if (!LogIn())
+                    return;
             ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config);
             productionWindow.Owner = this;
             productionWindow.ShowDialog();
@@ -331,8 +337,9 @@ namespace GastroTransfer
 
         private void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
         {
-            if (!LogIn())
-                return;
+            if (config.OnPasswordProductsImport)
+                if (!LogIn())
+                    return;
             ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, config);
             productsWindow.ShowDialog();
             GetData();
