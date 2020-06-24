@@ -1,8 +1,7 @@
-﻿using System;
-using System.Windows.Controls;
-using GastroTransfer;
+﻿using GastroTransfer;
 using GastroTransfer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Windows.Controls;
 
 namespace UnitTests
 {

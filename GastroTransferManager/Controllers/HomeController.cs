@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GastroTransferManager.Models;
+using LsiEndpointSupport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using GastroTransferManager.Models;
-using LsiEndpointSupport;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GastroTransferManager.Controllers
 {

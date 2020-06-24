@@ -1,8 +1,7 @@
-﻿using System;
+﻿using AngelProtocol;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.IO.Ports;
-using AngelProtocol;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {

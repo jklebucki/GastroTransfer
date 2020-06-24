@@ -1,5 +1,3 @@
-using System;
-
 namespace GastroTransferManager.Models
 {
     public class ErrorViewModel
