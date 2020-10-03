@@ -79,7 +79,9 @@ namespace GastroTransfer.Views.Dialogs
             LsiEndpointService service = new LsiEndpointService(config.EndpointUrl);
             var productsGroups = await service.GetProductsGroups();
             var warehouses = await service.GetWarehouses();
-            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
+            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(config.WarehouseSymbol)).MagazynID;
+            if (warehouseId == null)
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie odnaleziono magazynu {config.WarehouseSymbol}" };
             var response = await service.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
             var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
             var respMessage = new ServiceMessage { IsError = false, ItemId = 0, Message = "" };
@@ -103,7 +105,10 @@ namespace GastroTransfer.Views.Dialogs
             }
             else
             {
-                respMessage.Message = "Totalny błąd";
+                respMessage.Message = "Totalny błąd.\nPrawdopodobne przyczyny:\n" +
+                    "1. Endpoint LSI wyłączony.\n" +
+                    "2. Endpint w niewłasciwej wersji.\n" +
+                    "Nalezy to zgłosić do LSI.";
                 respMessage.IsError = true;
             }
             return respMessage;

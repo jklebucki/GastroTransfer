@@ -19,7 +19,6 @@ namespace LsiEndpointSupport
             PobierzProduktyResponse response = new PobierzProduktyResponse();
             try
             {
-
                 response = await lsiService.PobierzProduktyAsync(new PobierzProduktyRequest
                 {
                     Body = new PobierzProduktyRequestBody
