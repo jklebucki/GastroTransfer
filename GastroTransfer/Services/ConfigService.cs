@@ -80,6 +80,7 @@ namespace GastroTransfer.Services
                     config.Password = cryptoService.DecodePassword(config.Password);
                     config.SystemPassword = cryptoService.DecodePassword(config.SystemPassword);
                     config.ExternalDbPassword = cryptoService.DecodePassword(config.ExternalDbPassword);
+                    config.ProductionPassword = cryptoService.DecodePassword(config.ProductionPassword);
                     return config;
                 }
             }
@@ -103,6 +104,7 @@ namespace GastroTransfer.Services
                     config.Password = cryptoService.EncodePassword(config.Password);
                     config.SystemPassword = cryptoService.EncodePassword(config.SystemPassword);
                     config.ExternalDbPassword = cryptoService.EncodePassword(config.ExternalDbPassword);
+                    config.ProductionPassword = cryptoService.EncodePassword(config.ProductionPassword);
                     sw.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
                     return true;
                 }

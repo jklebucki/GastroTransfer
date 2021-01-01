@@ -105,7 +105,7 @@ namespace GastroTransfer.Services
 
             try
             {
-                var itemToChange = dbContext.ProducedItems.FirstOrDefault(x => x.ExternalIndex == producedItem.ExternalIndex);
+                var itemToChange = dbContext.ProducedItems.FirstOrDefault(x => x.ExternalId == producedItem.ExternalId);
                 if (itemToChange != null)
                 {
                     itemToChange.Name = producedItem.Name;

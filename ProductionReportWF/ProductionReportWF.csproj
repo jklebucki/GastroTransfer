@@ -8,7 +8,7 @@
     <ProjectGuid>{AE29E1DC-2BFF-4EA1-80D1-2893156DD4BC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ProductionReportWF</RootNamespace>
-    <AssemblyName>ProductionReportWF</AssemblyName>
+    <AssemblyName>ProductionReport</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -63,6 +63,12 @@
     <Compile Include="DbSettings\Models\Product.cs" />
     <Compile Include="DbSettings\Models\Production.cs" />
     <Compile Include="DbSettings\Models\ProductionView.cs" />
+    <Compile Include="EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     <Compile Include="SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

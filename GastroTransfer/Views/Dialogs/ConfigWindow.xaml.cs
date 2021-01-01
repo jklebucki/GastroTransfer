@@ -68,6 +68,7 @@ namespace GastroTransfer.Views.Dialogs
             WarehouseId.Text = config.WarehouseSymbol;
             EndpointUrl.Text = config.EndpointUrl;
             SystemPassword.Password = config.SystemPassword;
+            ProductionPassword.Password = config.ProductionPassword;
             OnPasswordProduction.IsChecked = config.OnPasswordProduction;
             OnPasswordProductsImport.IsChecked = config.OnPasswordProductsImport;
         }
@@ -101,6 +102,7 @@ namespace GastroTransfer.Views.Dialogs
                     WarehouseSymbol = WarehouseId.Text,
                     ProductionDocumentSymbol = DocumentTypeSymbol.Text,
                     SystemPassword = SystemPassword.Password,
+                    ProductionPassword = ProductionPassword.Password,
                     OnPasswordProduction = (bool)OnPasswordProduction.IsChecked,
                     OnPasswordProductsImport = (bool)OnPasswordProductsImport.IsChecked
                 };

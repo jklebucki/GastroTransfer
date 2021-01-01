@@ -110,9 +110,9 @@ namespace GastroTransfer
                 productionViewItems.Add(product);
         }
 
-        private bool LogIn()
+        private bool LogIn(LoginType loginType)
         {
-            LoginWindow loginWindow = new LoginWindow(config);
+            LoginWindow loginWindow = new LoginWindow(config, loginType);
             loginWindow.Owner = this;
             loginWindow.ShowDialog();
             if (!loginWindow.LoginOk)
@@ -122,7 +122,7 @@ namespace GastroTransfer
 
         private void Config_Click(object sender, RoutedEventArgs e)
         {
-            if (!LogIn())
+            if (!LogIn(LoginType.System))
                 return;
             ConfigWindow configPage = new ConfigWindow();
             configPage.Owner = this;
@@ -326,7 +326,7 @@ namespace GastroTransfer
         private void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
             if (config.OnPasswordProduction)
-                if (!LogIn())
+                if (!LogIn(LoginType.Production))
                     return;
             ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config);
             productionWindow.Owner = this;
@@ -338,7 +338,7 @@ namespace GastroTransfer
         private void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
         {
             if (config.OnPasswordProductsImport)
-                if (!LogIn())
+                if (!LogIn(LoginType.System))
                     return;
             ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, config);
             productsWindow.ShowDialog();

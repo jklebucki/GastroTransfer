@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -40,12 +41,15 @@
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.dgReport = new System.Windows.Forms.DataGridView();
+            this.contextMenuRowEdit = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editQuantityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgReport)).BeginInit();
+            this.contextMenuRowEdit.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -193,9 +197,25 @@
             this.dgReport.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgReport.Location = new System.Drawing.Point(3, 3);
             this.dgReport.Name = "dgReport";
+            this.dgReport.ReadOnly = true;
             this.dgReport.RowHeadersVisible = false;
             this.dgReport.Size = new System.Drawing.Size(794, 323);
             this.dgReport.TabIndex = 0;
+            this.dgReport.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgReport_RowEnter);
+            // 
+            // contextMenuRowEdit
+            // 
+            this.contextMenuRowEdit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editQuantityToolStripMenuItem});
+            this.contextMenuRowEdit.Name = "contextMenuRowEdit";
+            this.contextMenuRowEdit.Size = new System.Drawing.Size(135, 26);
+            // 
+            // edytujIlośćToolStripMenuItem
+            // 
+            this.editQuantityToolStripMenuItem.Name = "edytujIlośćToolStripMenuItem";
+            this.editQuantityToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.editQuantityToolStripMenuItem.Text = "Edytuj ilość";
+            this.editQuantityToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -215,6 +235,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgReport)).EndInit();
+            this.contextMenuRowEdit.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -232,6 +253,8 @@
         private System.Windows.Forms.Label labTime;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.ContextMenuStrip contextMenuRowEdit;
+        private System.Windows.Forms.ToolStripMenuItem editQuantityToolStripMenuItem;
     }
 }
 

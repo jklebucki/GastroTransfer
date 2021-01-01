@@ -270,16 +270,22 @@
                         <PasswordBox x:Name="SystemPassword"  HorizontalAlignment="Stretch" Margin="5" Width="200"></PasswordBox>
                     </Viewbox>
                     <Viewbox Grid.Column="0" Grid.Row="1" Stretch="Uniform" >
-                        <TextBlock Text="Produkcja z hasłem" FontSize="10" Margin="5" />
-                    </Viewbox>
-                    <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
-                        <CheckBox x:Name="OnPasswordProduction" />
-                    </Viewbox>
-                    <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
                         <TextBlock Text="Pobieranie produktów z hasłem" FontSize="10" Margin="5" />
                     </Viewbox>
-                    <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
+                    <Viewbox Grid.Column="1" Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
                         <CheckBox x:Name="OnPasswordProductsImport" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="2" Stretch="Uniform" >
+                        <TextBlock Text="Hasło do produkcji" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <PasswordBox x:Name="ProductionPassword"  HorizontalAlignment="Stretch" Margin="5" Width="200"></PasswordBox>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
+                        <TextBlock Text="Produkcja z hasłem" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
+                        <CheckBox x:Name="OnPasswordProduction" />
                     </Viewbox>
                 </Grid>
             </GroupBox>

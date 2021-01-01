@@ -10,5 +10,6 @@ namespace ProductionReportWF.DbSettings.Models
         public bool Wyslany { get; set; }
         public DateTime DataProdukcji { get; set; }
         public DateTime? DataWyslaniaDoLSI { get; set; }
+        public int Id { get; set; }
     }
 }

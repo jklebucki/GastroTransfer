@@ -119,7 +119,7 @@ namespace GastroTransfer.Views.Dialogs
                     ExternalName = product.NazwaSkrocona,
                 };
 
-                if (currentDbProducts.FirstOrDefault(ex => ex.ExternalIndex.Contains(product.Indeks)) == null)
+                if (currentDbProducts.FirstOrDefault(ex => ex.ExternalId.Contains(product.ProduktID)) == null)
                 {
                     productService.CreateProduct(item);
                 }

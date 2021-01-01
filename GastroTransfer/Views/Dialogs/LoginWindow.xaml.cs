@@ -11,11 +11,23 @@ namespace GastroTransfer.Views.Dialogs
     {
         private Config config { get; set; }
         public bool LoginOk { get; protected set; }
-        public LoginWindow(Config config)
+        private LoginType _loginType { get; set; }
+        public LoginWindow(Config config, LoginType loginType)
         {
+            _loginType = loginType;
             LoginOk = false;
             this.config = config;
             InitializeComponent();
+            switch (_loginType)
+            {
+                case LoginType.System:
+                    QueryText.Text = "Podaj hasło administratora.";
+                    break;
+                case LoginType.Production:
+                    QueryText.Text = "Podaj hasło do produkcji.";
+                    break;
+            }
+            
         }
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +56,20 @@ namespace GastroTransfer.Views.Dialogs
 
         private void LogIn()
         {
-            if (Password.Password == config.SystemPassword)
+            switch (_loginType)
+            {
+                case LoginType.System:
+                    CheckCorrect(Password.Password, config.SystemPassword);
+                    break;
+                case LoginType.Production:
+                    CheckCorrect(Password.Password, config.ProductionPassword);
+                    break;
+            }
+        }
+
+        private void CheckCorrect(string savedPassword, string enteredPassword)
+        {
+            if (savedPassword == enteredPassword)
             {
                 LoginOk = true;
                 Close();

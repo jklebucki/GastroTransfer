@@ -295,10 +295,10 @@
                 <WrapPanel Grid.Column="1" Name="ButtomButtons" Orientation="Horizontal">
                     <Button x:Name="BackButton" Content="Usuń ostatni" Width="120" Height="55" Margin="8" FontSize="18" Click="Back_Click" Style="{StaticResource RoundCorner}"/>
                     <Button x:Name="ConfigButton" Content="Konfiguracja" Width="120" Height="55" Margin="8" FontSize="18" Click="Config_Click" Style="{StaticResource RoundCorner}"/>
-                    <Button x:Name="ProductionButton" Content="Produkcja" Width="120" Height="55" Margin="8" FontSize="18" Click="ProductionButton_Click" Style="{StaticResource RoundCorner}"/>
                     <Button x:Name="GetProducts" Width="120" Height="55" Margin="8" FontSize="18" Click="GetProductsFromEndpoint_Click" Style="{StaticResource RoundCorner}">
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold">Pobierz produkty</TextBlock>
                     </Button>
+                    <Button x:Name="ProductionButton" Content="Produkcja" Width="120" Height="55" Margin="8" FontSize="18" Click="ProductionButton_Click" Style="{StaticResource RoundCorner}"/>
                     <Button x:Name="CloseButton" Content="Zamknij" Width="120" Height="55" Margin="8" FontSize="18" Click="CloseButton_Click" Style="{StaticResource RoundCorner}"/>
                 </WrapPanel>
                 <Grid Grid.Column="0" Margin="5">

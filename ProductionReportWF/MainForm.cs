@@ -1,10 +1,12 @@
-﻿using ProductionReportWF.DbSettings;
+﻿using LinqToDB;
+using ProductionReportWF.DbSettings;
 using ProductionReportWF.DbSettings.Models;
 using ProductionReportWF.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,6 +14,7 @@ namespace ProductionReportWF
 {
     public partial class MainForm : Form
     {
+        private int? SelectedIndex { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -70,7 +73,8 @@ namespace ProductionReportWF
                                     JM = product.UnitOfMesure,
                                     Wyslany = p.IsSentToExternalSystem,
                                     DataProdukcji = p.Registered,
-                                    DataWyslaniaDoLSI = p.Registered != p.SentToExternalSystem ? p.SentToExternalSystem : (DateTime?)null
+                                    DataWyslaniaDoLSI = p.SentToExternalSystem,
+                                    Id = p.ProductionItemId
                                 };
                     return query.ToList();
                 }
@@ -94,13 +98,59 @@ namespace ProductionReportWF
             dgReport.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgReport.Columns[1].FillWeight = 5F;
             dgReport.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgReport.Columns[2].FillWeight = 5F;
+            dgReport.Columns[2].FillWeight = 12F;
             dgReport.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgReport.Columns[3].FillWeight = 8F;
             dgReport.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgReport.Columns[4].FillWeight = 15F;
             dgReport.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgReport.Columns[5].FillWeight = 15F;
+            dgReport.Columns[6].Visible = false;
+            foreach (DataGridViewRow row in dgReport.Rows)
+            {
+                row.ContextMenuStrip = contextMenuRowEdit;
+                if (!(bool)row.Cells[3].Value) row.Cells[5].Value = null;
+            }
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((bool)dgReport.Rows[(int)SelectedIndex].Cells[3].Value)
+            {
+                MessageBox.Show(this, $"Edycja niedozwolona - pozycja przesłana do LSI", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (SelectedIndex == null)
+            {
+                MessageBox.Show(this, $"Wybierz jedną pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                var selectedRow = dgReport.Rows[(int)SelectedIndex];
+                EditForm editForm = new EditForm(selectedRow);
+                editForm.ShowDialog(this);
+                if (editForm.IsChanged)
+                {
+                    dgReport.Rows[(int)SelectedIndex].Cells[2].Value = string.Format("{0:0.0000}", editForm.Quantity);
+                    UpdateQuantityDb((int)selectedRow.Cells[6].Value, editForm.Quantity);
+                }
+            }
+        }
+
+        private void dgReport_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            SelectedIndex = e.RowIndex;
+        }
+
+        private void UpdateQuantityDb(int id, decimal quantity)
+        {
+            using (var db = new DbGastroTransfer(ConnectionString()))
+            {
+                var productionItem = db.Productions.FirstOrDefault(p => p.ProductionItemId == id);
+                productionItem.Quantity = quantity;
+                db.Update(productionItem);
+            }
         }
     }
 }

@@ -94,6 +94,7 @@
       <DependentUpon>202003301329167_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\LoginType.cs" />
     <Compile Include="Models\Endpoint.cs" />
     <Compile Include="Models\ProducedItemView.cs" />
     <Compile Include="Models\ProductGroupView.cs" />
