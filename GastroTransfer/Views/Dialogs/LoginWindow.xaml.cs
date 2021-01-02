@@ -27,7 +27,7 @@ namespace GastroTransfer.Views.Dialogs
                     QueryText.Text = "Podaj hasło do produkcji.";
                     break;
             }
-            
+
         }
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)

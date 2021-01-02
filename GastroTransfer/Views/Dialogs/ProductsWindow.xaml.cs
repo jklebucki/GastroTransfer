@@ -112,7 +112,7 @@ namespace GastroTransfer.Views.Dialogs
             }
             await appDbContext.SaveChangesAsync();
 
-            var productsIdsContainedInProduction = await appDbContext.TransferredItems.Where(pr => doubleProductsIds.Contains(pr.ProducedItemId)).Select(i=>i.ProducedItemId).ToListAsync();
+            var productsIdsContainedInProduction = await appDbContext.TransferredItems.Where(pr => doubleProductsIds.Contains(pr.ProducedItemId)).Select(i => i.ProducedItemId).ToListAsync();
             var doubleProductsToRemove = doubleProducts.Where(p => !productsIdsContainedInProduction.Contains(p.ProducedItemId));
             appDbContext.ProducedItems.RemoveRange(doubleProductsToRemove);
             await appDbContext.SaveChangesAsync();
