@@ -89,8 +89,39 @@ namespace GastroTransfer.Views.Dialogs
             Progress.Visibility = Visibility.Hidden;
         }
 
+        private async Task RepairProducts()
+        {
+            var doubleProductsExternalIds = await appDbContext.ProducedItems.GroupBy(g => g.ExternalId).Select(dp => new
+            {
+                ExternalId = dp.Key,
+                CountDp = dp.Count()
+            }).Where(c => c.CountDp > 1).Select(s => s.ExternalId).ToListAsync();
+
+            if (doubleProductsExternalIds.Count() == 0)
+                return;
+
+            var doubleProducts = await appDbContext.ProducedItems.Where(p => doubleProductsExternalIds.Contains(p.ExternalId)).ToListAsync();
+            var doubleProductsIds = doubleProducts.Select(i => i.ProducedItemId).ToArray();
+            var production = await appDbContext.TransferredItems.Where(pr => doubleProductsIds.Contains(pr.ProducedItemId)).ToListAsync();
+            foreach (var pr in production)
+            {
+                var exId = doubleProducts.FirstOrDefault(p => p.ProducedItemId == pr.ProducedItemId).ExternalId;
+                var newId = doubleProducts.FirstOrDefault(p => p.ExternalId == exId).ProducedItemId;
+                pr.ProducedItemId = newId;
+                appDbContext.Entry(pr).State = EntityState.Modified;
+            }
+            await appDbContext.SaveChangesAsync();
+
+            var productsIdsContainedInProduction = await appDbContext.TransferredItems.Where(pr => doubleProductsIds.Contains(pr.ProducedItemId)).Select(i=>i.ProducedItemId).ToListAsync();
+            var doubleProductsToRemove = doubleProducts.Where(p => !productsIdsContainedInProduction.Contains(p.ProducedItemId));
+            appDbContext.ProducedItems.RemoveRange(doubleProductsToRemove);
+            await appDbContext.SaveChangesAsync();
+            return;
+        }
+
         private async Task<ServiceMessage> GetProducts(int groupId, string warehouseSymbol)
         {
+            await RepairProducts();
             if (string.IsNullOrEmpty(config.EndpointUrl))
                 return new ServiceMessage { IsError = true, ItemId = 0, Message = "Ades usługi LSI nie został ustawiony." };
 
@@ -119,7 +150,7 @@ namespace GastroTransfer.Views.Dialogs
                     ExternalName = product.NazwaSkrocona,
                 };
 
-                if (currentDbProducts.FirstOrDefault(ex => ex.ExternalId.Contains(product.ProduktID)) == null)
+                if (currentDbProducts.FirstOrDefault(ex => ex.ExternalId == item.ExternalId) == null)
                 {
                     productService.CreateProduct(item);
                 }

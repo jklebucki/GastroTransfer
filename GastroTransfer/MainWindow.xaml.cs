@@ -205,6 +205,13 @@ namespace GastroTransfer
                             PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
                         }
                     }
+                    else
+                    {
+                        ConfirmWindow confirm = new ConfirmWindow("Rozumiem", messsge.Message);
+                        confirm.Owner = this;
+                        confirm.ShowDialog();
+                    }
+
                 }
             }
             PositionsListGrid.Items.Refresh();

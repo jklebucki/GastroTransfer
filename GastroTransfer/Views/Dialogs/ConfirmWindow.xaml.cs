@@ -21,6 +21,14 @@ namespace GastroTransfer.Views.Dialogs
             CloseButton.Content = confirmButtonText;
         }
 
+        public ConfirmWindow(string cancelButtonText, string queryText)
+        {
+            InitializeComponent();
+            QueryText.Text = queryText;
+            CancelButton.Content = cancelButtonText;
+            CloseButton.Visibility = Visibility.Hidden;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 

@@ -149,7 +149,7 @@ namespace GastroTransfer.Services
             {
                 return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
             }
-            return new ServiceMessage { IsError = true, ItemId = productionId, Message = "It is already in the external system" };
+            return new ServiceMessage { IsError = true, ItemId = productionId, Message = "Usunięcie niemożliwe. Pozycja wysłana do systemu zewnętrnego." };
         }
 
     }
