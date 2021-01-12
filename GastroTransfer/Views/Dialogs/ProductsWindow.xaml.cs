@@ -159,6 +159,19 @@ namespace GastroTransfer.Views.Dialogs
                     productService.UpdateProduct(item);
                 }
             }
+
+            var currentDbProductsInGroup = await appDbContext.ProducedItems.Where(p => p.ExternalGroupId == groupId).ToListAsync().ConfigureAwait(false);
+            foreach (var productInGroup in currentDbProductsInGroup)
+            {
+                var inactiveProduct = productsLsi.FirstOrDefault(p => p.ProduktID == productInGroup.ExternalId);
+                if (inactiveProduct == null)
+                {
+                    productInGroup.IsActive = false;
+                    appDbContext.Entry(productInGroup).State = EntityState.Modified;
+                }
+            }
+            await appDbContext.SaveChangesAsync().ConfigureAwait(false);
+
             return new ServiceMessage { IsError = false, ItemId = 0, Message = "Produkty pobrane." };
         }
 
@@ -187,11 +200,15 @@ namespace GastroTransfer.Views.Dialogs
             var groups = await endpointService.GetProductsGroups();
             if (groups.Count == 0)
                 return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie pobrano żadnej grupy. Sprawdź konfigurację systemu." };
+
+            int id = 1;
             foreach (var group in groups.OrderBy(n => n.Nazwa))
             {
-                var id = 1;
-                ViewModel.DownloadedProductsGroups.Add(new ProductGroupView { ProductGroupId = id, ExternalGroupId = group.ID, GroupName = group.Nazwa, IsActive = false });
-                id++;
+                if (group.Nazwa.Substring(0, 2) == "RP")
+                {
+                    ViewModel.DownloadedProductsGroups.Add(new ProductGroupView { ProductGroupId = id, ExternalGroupId = group.ID, GroupName = group.Nazwa, IsActive = false });
+                    id++;
+                }
             }
             return new ServiceMessage { IsError = false, ItemId = 0, Message = "Dostepne grupy pobrane z usługi LSI" };
         }

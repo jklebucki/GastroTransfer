@@ -39,6 +39,9 @@
     <ApplicationIcon>robotic_arm_xWD_12.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.12.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.12.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="linq2db, Version=3.0.1.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
       <HintPath>..\packages\linq2db.3.0.1\lib\net46\linq2db.dll</HintPath>
     </Reference>
@@ -56,8 +59,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ExportToExcel.cs" />
     <Compile Include="DbSettings\ConnectionStringSettings.cs" />
     <Compile Include="DbSettings\DbGastroTransfer.cs" />
     <Compile Include="DbSettings\Models\Product.cs" />
@@ -76,6 +81,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ErrorMessage.cs" />
+    <Compile Include="Models\ReportRow.cs" />
     <Compile Include="Models\SystemSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

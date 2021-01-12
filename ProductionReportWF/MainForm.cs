@@ -1,6 +1,8 @@
 ﻿using LinqToDB;
+using ProductionReportWF.Common;
 using ProductionReportWF.DbSettings;
 using ProductionReportWF.DbSettings.Models;
+using ProductionReportWF.Models;
 using ProductionReportWF.Services;
 using System;
 using System.Collections.Generic;
@@ -150,6 +152,88 @@ namespace ProductionReportWF
                 productionItem.Quantity = quantity;
                 db.Update(productionItem);
             }
+        }
+        private void exportToExcelBtn_Click(object sender, EventArgs e)
+        {
+            if (dgReport.Rows.Count == 0)
+            {
+                MessageBox.Show(this, "Brak danych do eksportu", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog zapiszPlik = new SaveFileDialog();
+            zapiszPlik.DefaultExt = "xlsx";
+            zapiszPlik.FileName = "Dane";
+            zapiszPlik.Filter = "Pliki Excel (*.xlsx)|*.xlsx";
+            if (zapiszPlik.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    infoLab.Text = "Eksportuję dane...";
+                    Refresh();
+                    ExportToExcel.dataGridToExcel(zapiszPlik.FileName, false, dgReport, "Produkcja");
+                    MessageBox.Show(this, "Eksport do pliku zakończony", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    infoLab.Text = "";
+                    Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\nError 3", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            List<ReportRow> report = new List<ReportRow>();
+            foreach (DataGridViewRow row in dgReport.Rows)
+            {
+                report.Add(new ReportRow
+                {
+                    Product = row.Cells[0].Value.ToString(),
+                    Unit = row.Cells[1].Value.ToString(),
+                    Quantity = Convert.ToDecimal(row.Cells[2].Value),
+                    Year = Convert.ToDateTime(row.Cells[4].Value).Year,
+                    Month = Convert.ToDateTime(row.Cells[4].Value).Month,
+                });
+            }
+
+            report = report.GroupBy(r => new { r.Product, r.Unit, r.Month, r.Year }).Select(d => new ReportRow
+            {
+                Product = d.Key.Product,
+                Unit = d.Key.Unit,
+                Month = d.Key.Month,
+                Year = d.Key.Year,
+                Quantity = d.Sum(s => s.Quantity)
+            }).ToList();
+
+            if (dgReport.Rows.Count == 0)
+            {
+                MessageBox.Show(this, "Brak danych do eksportu", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog zapiszPlik = new SaveFileDialog();
+            zapiszPlik.DefaultExt = "xlsx";
+            zapiszPlik.FileName = "Dane";
+            zapiszPlik.Filter = "Pliki Excel (*.xlsx)|*.xlsx";
+            if (zapiszPlik.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    infoLab.Text = "Eksportuję dane...";
+                    Refresh();
+                    ExportToExcel.listToExcel(zapiszPlik.FileName, false, report, "Dane");
+                    MessageBox.Show(this, "Eksport do pliku zakończony", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    infoLab.Text = "";
+                    Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\nError 3", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
         }
     }
 }

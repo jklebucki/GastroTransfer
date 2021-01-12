@@ -40,9 +40,12 @@
             this.labTime = new System.Windows.Forms.Label();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnSubmit = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.infoLab = new System.Windows.Forms.Label();
             this.dgReport = new System.Windows.Forms.DataGridView();
             this.contextMenuRowEdit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editQuantityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -77,10 +80,12 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.dtFrom, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.dtTo, 2, 1);
@@ -90,6 +95,9 @@
             this.tableLayoutPanel1.Controls.Add(this.labTime, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnSettings, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnSubmit, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.infoLab, 5, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnReport, 4, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -188,6 +196,26 @@
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Location = new System.Drawing.Point(393, 69);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(114, 22);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Eksport do Excela";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.exportToExcelBtn_Click);
+            // 
+            // infoLab
+            // 
+            this.infoLab.AutoSize = true;
+            this.infoLab.Location = new System.Drawing.Point(653, 69);
+            this.infoLab.Margin = new System.Windows.Forms.Padding(3);
+            this.infoLab.Name = "infoLab";
+            this.infoLab.Size = new System.Drawing.Size(0, 13);
+            this.infoLab.TabIndex = 9;
+            // 
             // dgReport
             // 
             this.dgReport.AllowUserToAddRows = false;
@@ -210,12 +238,23 @@
             this.contextMenuRowEdit.Name = "contextMenuRowEdit";
             this.contextMenuRowEdit.Size = new System.Drawing.Size(135, 26);
             // 
-            // edytujIlośćToolStripMenuItem
+            // editQuantityToolStripMenuItem
             // 
-            this.editQuantityToolStripMenuItem.Name = "edytujIlośćToolStripMenuItem";
+            this.editQuantityToolStripMenuItem.Name = "editQuantityToolStripMenuItem";
             this.editQuantityToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.editQuantityToolStripMenuItem.Text = "Edytuj ilość";
             this.editQuantityToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // btnReport
+            // 
+            this.btnReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReport.Location = new System.Drawing.Point(513, 69);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(134, 22);
+            this.btnReport.TabIndex = 10;
+            this.btnReport.Text = "Podsumowanie do Excel";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // MainForm
             // 
@@ -255,6 +294,9 @@
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.ContextMenuStrip contextMenuRowEdit;
         private System.Windows.Forms.ToolStripMenuItem editQuantityToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label infoLab;
+        private System.Windows.Forms.Button btnReport;
     }
 }
 
