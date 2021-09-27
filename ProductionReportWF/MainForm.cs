@@ -124,7 +124,7 @@ namespace ProductionReportWF
 
             if (SelectedIndex == null)
             {
-                MessageBox.Show(this, $"Wybierz jedną pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(this, $"Wybierz pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -165,7 +165,7 @@ namespace ProductionReportWF
             zapiszPlik.DefaultExt = "xlsx";
             zapiszPlik.FileName = "Dane";
             zapiszPlik.Filter = "Pliki Excel (*.xlsx)|*.xlsx";
-            if (zapiszPlik.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (zapiszPlik.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -235,5 +235,80 @@ namespace ProductionReportWF
             }
 
         }
+
+        private void removeDocumentInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                this,
+                "Na pewno chcesz zresetować status wysyłki?",
+                "Potwierdź",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            if (SelectedIndex == null)
+            {
+                MessageBox.Show(this, $"Wybierz pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if ((bool)dgReport.Rows[(int)SelectedIndex].Cells[3].Value
+                && dgReport.Rows[(int)SelectedIndex].Cells[3].Value != null
+                && (int)dgReport.Rows[(int)SelectedIndex].Cells[6].Value > 0)
+            {
+                ClearDocumentStatus((int)SelectedIndex);
+            }
+            else
+            {
+                MessageBox.Show(this, $"Pozycje jeszcze nie była przesłana do LSI", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+        }
+
+        private void ClearDocumentStatus(int selectedIndex)
+        {
+            var positionsToClear = new List<ProductionView>();
+
+            using (var db = new DbGastroTransfer(ConnectionString()))
+            {
+                var id = (int)dgReport.Rows[(int)SelectedIndex].Cells[6].Value;
+                var packageNumber = db.Productions.FirstOrDefault(p => p.ProductionItemId == id).PackageNumber;
+
+                var query = from p in db.Productions
+                            join product in db.Products on p.ProducedItemId equals product.ProducedItemId
+                            where p.ProducedItemId > 0 && p.PackageNumber == packageNumber
+                            orderby p.Registered descending
+                            select new ProductionView
+                            {
+                                Nazwa = product.Name,
+                                Ilosc = p.Quantity,
+                                JM = product.UnitOfMesure,
+                                Wyslany = p.IsSentToExternalSystem,
+                                DataProdukcji = p.Registered,
+                                DataWyslaniaDoLSI = p.SentToExternalSystem,
+                                Id = p.ProductionItemId
+                            };
+                positionsToClear = query.ToList();
+            }
+
+            if (positionsToClear.Count > 0)
+            {
+                using (var db = new DbGastroTransfer(ConnectionString()))
+                {
+                    var prod = db.Productions
+                        .Where(p => positionsToClear.Select(r => r.Id).Contains(p.ProductionItemId))
+                        .Set(p => p.IsSentToExternalSystem, false)
+                        .Set(p => p.PackageNumber, (int?)null)
+                        .Set(p => p.DocumentType, (int?)null)
+                        .Set(p => p.SentToExternalSystem, (p => p.Registered))
+                        .Update();
+                }
+            }
+            btnSubmit_Click(null, null);
+            dgReport.FirstDisplayedScrollingRowIndex = selectedIndex;
+            dgReport.Rows[selectedIndex].Selected = true;
+        }
+
     }
 }

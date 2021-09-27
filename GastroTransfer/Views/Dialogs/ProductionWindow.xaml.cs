@@ -70,7 +70,7 @@ namespace GastroTransfer.Views.Dialogs
                     products.Add(new LsiService.UtworzDokumentRozchodowyRequestProduktObject { Ilosc = product.Q, ProduktID = product.Index, Cena = 0 });
                 else if (product.Q < 0)
                     if ((bool)SwapProduction.IsChecked)
-                        productsToSwap.Add(new ProductionItem { ProducedItemId = product.Id, Quantity = product.Q, TransferType = 5 });
+                        productsToSwap.Add(new ProductionItem { ProducedItemId = product.Id, Quantity = product.Q, TransferType = -2 });
             }
 
             if (products.Count == 0)
@@ -89,10 +89,14 @@ namespace GastroTransfer.Views.Dialogs
             {
                 if (docResp.ID > 0)
                 {
-                    productionService.ChangeTransferStatus(
-                        currentProduction.Select(i => i.ProductionItem.ProductionItemId).ToArray(),
-                        docResp.ID,
-                        documentType.DocumentTypeId);
+                    await productionService.ChangeTransferStatus(
+                          currentProduction.Select(i => i.ProductionItem.ProductionItemId).ToArray(),
+                          docResp.ID,
+                          documentType.DocumentTypeId,
+                          (bool)SwapProduction.IsChecked);
+
+                    if ((bool)SwapProduction.IsChecked)
+                        await productionService.ChangeSwapStatus(docResp.ID);
                     lsiDbService.AddDocumentInfo(docResp.ID, $"Produkcja, Ilość razem: {sum.Sum(x => x.Q)}", (DateTime)ProductionDate.SelectedDate);
                 }
 

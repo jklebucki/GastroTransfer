@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProductionReportWF.Common
@@ -301,10 +299,11 @@ namespace ProductionReportWF.Common
                         {
                             var val = prop.GetValue(item, null);
                             val = val == null ? 0 : val;
-                            Cell newCell = new Cell() { 
+                            Cell newCell = new Cell()
+                            {
                                 CellReference = cellAdr,
                                 DataType = CellValues.Number,
-                                CellValue = new CellValue(val.ToString().Replace(',','.'))
+                                CellValue = new CellValue(val.ToString().Replace(',', '.'))
                             };
                             row.InsertBefore(newCell, refCell);
                         }

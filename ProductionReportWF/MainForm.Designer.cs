@@ -42,10 +42,11 @@
             this.btnSubmit = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.infoLab = new System.Windows.Forms.Label();
+            this.btnReport = new System.Windows.Forms.Button();
             this.dgReport = new System.Windows.Forms.DataGridView();
             this.contextMenuRowEdit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editQuantityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnReport = new System.Windows.Forms.Button();
+            this.removeDocumentInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -216,6 +217,17 @@
             this.infoLab.Size = new System.Drawing.Size(0, 13);
             this.infoLab.TabIndex = 9;
             // 
+            // btnReport
+            // 
+            this.btnReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReport.Location = new System.Drawing.Point(513, 69);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(134, 22);
+            this.btnReport.TabIndex = 10;
+            this.btnReport.Text = "Podsumowanie do Excel";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // dgReport
             // 
             this.dgReport.AllowUserToAddRows = false;
@@ -234,27 +246,24 @@
             // contextMenuRowEdit
             // 
             this.contextMenuRowEdit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editQuantityToolStripMenuItem});
+            this.editQuantityToolStripMenuItem,
+            this.removeDocumentInfoToolStripMenuItem});
             this.contextMenuRowEdit.Name = "contextMenuRowEdit";
-            this.contextMenuRowEdit.Size = new System.Drawing.Size(135, 26);
+            this.contextMenuRowEdit.Size = new System.Drawing.Size(176, 48);
             // 
             // editQuantityToolStripMenuItem
             // 
             this.editQuantityToolStripMenuItem.Name = "editQuantityToolStripMenuItem";
-            this.editQuantityToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.editQuantityToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.editQuantityToolStripMenuItem.Text = "Edytuj ilość";
             this.editQuantityToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
-            // btnReport
+            // removeDocumentInfoToolStripMenuItem
             // 
-            this.btnReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnReport.Location = new System.Drawing.Point(513, 69);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(134, 22);
-            this.btnReport.TabIndex = 10;
-            this.btnReport.Text = "Podsumowanie do Excel";
-            this.btnReport.UseVisualStyleBackColor = true;
-            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            this.removeDocumentInfoToolStripMenuItem.Name = "removeDocumentInfoToolStripMenuItem";
+            this.removeDocumentInfoToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.removeDocumentInfoToolStripMenuItem.Text = "Wycofaj dokument";
+            this.removeDocumentInfoToolStripMenuItem.Click += new System.EventHandler(this.removeDocumentInfoToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -297,6 +306,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label infoLab;
         private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.ToolStripMenuItem removeDocumentInfoToolStripMenuItem;
     }
 }
 

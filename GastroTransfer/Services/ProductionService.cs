@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
@@ -28,6 +29,7 @@ namespace GastroTransfer.Services
                 model.ProductionItem.SentToExternalSystem = DateTime.Now;
                 model.ProductionItem.ProducedItemId = model.ProducedItem.ProducedItemId;
                 model.ProductionItem.IsSentToExternalSystem = false;
+                model.ProductionItem.TransferType = -1;
                 dbContext.TransferredItems.Add(model.ProductionItem);
                 dbContext.SaveChanges();
                 message.IsError = false;
@@ -106,21 +108,46 @@ namespace GastroTransfer.Services
         /// <param name="packageNumber"></param>
         /// <param name="documentType"></param>
         /// <returns></returns>
-        public ServiceMessage ChangeTransferStatus(int[] productionIds, int packageNumber, int documentType)
+        public async Task<ServiceMessage> ChangeTransferStatus(int[] productionIds, int packageNumber, int documentType, bool swapStatus)
         {
             try
             {
-                dbContext.TransferredItems
-                    .Where(i => productionIds.Contains(i.ProductionItemId))
-                    .ForEachAsync(n =>
-                    {
-                        n.IsSentToExternalSystem = true;
-                        n.SentToExternalSystem = DateTime.Now;
-                        n.DocumentType = documentType;
-                        n.PackageNumber = packageNumber;
-                    }).Wait();
+                await dbContext.TransferredItems
+                      .Where(i => productionIds.Contains(i.ProductionItemId))
+                      .ForEachAsync(n =>
+                      {
+                          n.IsSentToExternalSystem = true;
+                          n.SentToExternalSystem = DateTime.Now;
+                          n.DocumentType = n.TransferType > 0 ? n.TransferType : documentType;
+                          n.PackageNumber = packageNumber;
+                          n.TransferType = !swapStatus ? -3 : n.TransferType;
+                      }).ConfigureAwait(false);
                 dbContext.SaveChanges();
                 return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status zmieniony" };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceMessage { IsError = true, ItemId = 0, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// Change swap status
+        /// </summary>
+        /// <param name="packageNumber"></param>
+        /// <returns></returns>
+        public async Task<ServiceMessage> ChangeSwapStatus(int packageNumber)
+        {
+            try
+            {
+                await dbContext.TransferredItems
+                      .Where(i => i.TransferType == -2)
+                      .ForEachAsync(n =>
+                      {
+                          n.TransferType = packageNumber;
+                      }).ConfigureAwait(false);
+                dbContext.SaveChanges();
+                return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status przeniesienia zmieniony" };
             }
             catch (Exception ex)
             {

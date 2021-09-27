@@ -1,6 +1,7 @@
 ﻿
 using GastroTransfer.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
@@ -10,6 +11,6 @@ namespace GastroTransfer.Services
         ServiceMessage AddProduction(ProductionItem item);
         List<ProductionViewModel> GetProduction(bool fullData);
         ServiceMessage RemoveProduction(int productionId);
-        ServiceMessage ChangeTransferStatus(int[] productionIds, int packageNumber, int documentType);
+        Task<ServiceMessage> ChangeTransferStatus(int[] productionIds, int packageNumber, int documentType, bool swapStatus);
     }
 }
