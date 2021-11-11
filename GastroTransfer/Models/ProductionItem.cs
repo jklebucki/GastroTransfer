@@ -13,5 +13,6 @@ namespace GastroTransfer.Models
         public DateTime SentToExternalSystem { get; set; }
         public int? PackageNumber { get; set; }
         public int? DocumentType { get; set; }
+        public int? OperationType { get; set; }
     }
 }

@@ -39,6 +39,14 @@ namespace GastroTransfer.Data
 
             modelBuilder.Entity<ProductionItem>()
                 .Property(x => x.Quantity).HasPrecision(18, 4);
+            modelBuilder.Entity<ProductionItem>()
+                .HasIndex(i => i.IsSentToExternalSystem).HasName("idx_isSent");
+            modelBuilder.Entity<ProductionItem>()
+                .HasIndex(i => i.ProducedItemId).HasName("idx_product");
+            modelBuilder.Entity<ProductionItem>()
+                .HasIndex(i => i.Registered).HasName("idx_registerDate");
+            modelBuilder.Entity<ProductionItem>()
+                .HasIndex(i => i.SentToExternalSystem).HasName("idx_sentDate");
 
             modelBuilder.Entity<ProductGroup>()
                 .Property(x => x.GroupName).HasMaxLength(50);

@@ -104,9 +104,17 @@ namespace GastroTransfer
         /// </summary>
         private void GetCurrentProduction()
         {
-            var production = productionService.GetProduction(false);
+            List<ProductionViewModel> productionView = new List<ProductionViewModel>();
+            if ((bool)ToggleIn.IsChecked || (bool)ToggleOut.IsChecked)
+            {
+                productionView = productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType == null || o.ProductionItem.OperationType == 1).ToList();
+            }
+            else
+            {
+                productionView = productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType != null && o.ProductionItem.OperationType == 2).ToList();
+            }
             productionViewItems.Clear();
-            foreach (var product in production)
+            foreach (var product in productionView)
                 productionViewItems.Add(product);
         }
 
@@ -152,7 +160,8 @@ namespace GastroTransfer
                         ProductionItem = new ProductionItem
                         {
                             Quantity = !(bool)ToggleIn.IsChecked ? measurementWindow.Quantity : measurementWindow.Quantity * -1,
-                            Registered = DateTime.Now
+                            Registered = DateTime.Now,
+                            OperationType = (bool)ToggleTrash.IsChecked ? (int)OperationType.Trash : (int)OperationType.Production
                         }
                     };
 
@@ -161,9 +170,7 @@ namespace GastroTransfer
                     {
                         productionViewModel.ProductionItem.ProductionItemId = message.ItemId;
                         productionViewItems.Add(productionViewModel);
-                        PositionsListGrid.Items.Refresh();
-                        PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
-                        PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+                        RefreshView();
                     }
                     else
                     {
@@ -177,6 +184,15 @@ namespace GastroTransfer
             }
         }
 
+        private void RefreshView()
+        {
+            PositionsListGrid.Items.Refresh();
+            if (PositionsListGrid.Items.Count > 0)
+            {
+                PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
+                PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
+            }
+        }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
@@ -199,11 +215,7 @@ namespace GastroTransfer
                     if (!messsge.IsError)
                     {
                         productionViewItems.Remove(productToRemove);
-                        if (productionViewItems.Count > 0)
-                        {
-                            PositionsListGrid.SelectedItem = PositionsListGrid.Items[PositionsListGrid.Items.Count - 1];
-                            PositionsListGrid.ScrollIntoView(PositionsListGrid.Items[PositionsListGrid.Items.Count - 1]);
-                        }
+                        RefreshView();
                     }
                     else
                     {
@@ -352,5 +364,10 @@ namespace GastroTransfer
             GetData();
         }
 
+        private void Toggle_Click(object sender, RoutedEventArgs e)
+        {
+            GetCurrentProduction();
+            RefreshView();
+        }
     }
 }

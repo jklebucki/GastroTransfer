@@ -244,6 +244,12 @@
                     <Viewbox Grid.Column="1" Grid.Row="2" Stretch="Uniform" HorizontalAlignment="Stretch">
                         <TextBox x:Name="DocumentTypeSymbol"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="320"></TextBox>
                     </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="3" Stretch="Uniform" >
+                        <TextBlock Text="Typ dokumentu straty" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="DocumentTypeSymbolTrash"  Text="" HorizontalAlignment="Stretch" Margin="5" Width="320"></TextBox>
+                    </Viewbox>
                 </Grid>
             </GroupBox>
             <GroupBox  Grid.Row="3" Grid.Column="1" Margin="5" BorderBrush="Black" FontSize="18">

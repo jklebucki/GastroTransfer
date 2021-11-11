@@ -305,9 +305,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <RadioButton FontSize="20" Grid.Column="0" x:Name="ToggleOut" Content="Wydanie" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="True"/>
-                    <RadioButton FontSize="20" Grid.Column="1" x:Name="ToggleIn" Content="Zwrot" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}"/>
+                    <RadioButton FontSize="20" Grid.Column="0" x:Name="ToggleOut" Click="Toggle_Click" Content="Wydanie" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}" IsChecked="True"/>
+                    <RadioButton FontSize="20" Grid.Column="1" x:Name="ToggleIn" Click="Toggle_Click" Content="Zwrot" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}"/>
+                    <RadioButton FontSize="20" Grid.Column="3" x:Name="ToggleTrash" Click="Toggle_Click" Content="Strata" GroupName="ToggleGroup" Style="{StaticResource {x:Type ToggleButton}}"/>
                 </Grid>
             </Grid>
         </Border>

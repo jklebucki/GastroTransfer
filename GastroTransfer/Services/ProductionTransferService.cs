@@ -4,7 +4,6 @@ using LsiEndpointSupport;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
@@ -44,7 +43,9 @@ namespace GastroTransfer.Services
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania." };
 
                 var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
-                var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId).Select(r => new { Id = r.First().ProducedItem.ProducedItemId, Index = r.First().ProducedItem.ExternalId, Q = r.Sum(q => q.ProductionItem.Quantity) }).ToList();
+                var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId)
+                    .Select(r => new { Id = r.First().ProducedItem.ProducedItemId, Index = r.First().ProducedItem.ExternalId, Q = r.Sum(q => q.ProductionItem.Quantity) })
+                    .ToList();
                 //return;
                 var productsToSwap = new List<ProductionItem>();
                 foreach (var product in sum)

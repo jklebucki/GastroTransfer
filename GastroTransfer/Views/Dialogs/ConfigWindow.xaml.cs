@@ -65,6 +65,7 @@ namespace GastroTransfer.Views.Dialogs
             WeightComStopBits.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.StopBits)).GetValue(config.WeightComStopBits);
             WeightComParity.SelectedItem = Enum.GetValues(typeof(System.IO.Ports.Parity)).GetValue(config.WeightComParity);
             DocumentTypeSymbol.Text = config.ProductionDocumentSymbol;
+            DocumentTypeSymbolTrash.Text = config.TrashDocumentSymbol;
             WarehouseId.Text = config.WarehouseSymbol;
             EndpointUrl.Text = config.EndpointUrl;
             SystemPassword.Password = config.SystemPassword;
@@ -101,6 +102,7 @@ namespace GastroTransfer.Views.Dialogs
                     EndpointUrl = EndpointUrl.Text,
                     WarehouseSymbol = WarehouseId.Text,
                     ProductionDocumentSymbol = DocumentTypeSymbol.Text,
+                    TrashDocumentSymbol = DocumentTypeSymbolTrash.Text,
                     SystemPassword = SystemPassword.Password,
                     ProductionPassword = ProductionPassword.Password,
                     OnPasswordProduction = (bool)OnPasswordProduction.IsChecked,
