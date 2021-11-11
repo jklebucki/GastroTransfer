@@ -7,19 +7,30 @@ namespace LsiEndpointSupport
     public class LsiEndpointService
     {
         private CWSSoapClient lsiService { get; set; }
+        public string ErrorMessage { get; protected set; }
         public LsiEndpointService(string endpointUrl)
         {
-            lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
+            InitService(endpointUrl);
+        }
+
+        private void InitService(string endpointUrl)
+        {
+            try
+            {
+                lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
         }
 
         public async Task<ArrayOfPobierzProduktyProduktObject> GetProducts(int groupId, string magazynId)
         {
-            var getProducsGroups = await GetProductsGroups();
-            var getWarehouses = await GetWarehouses();
-            PobierzProduktyResponse response = new PobierzProduktyResponse();
+            ArrayOfPobierzProduktyProduktObject pobierzProduktyProduktObjects = new ArrayOfPobierzProduktyProduktObject();
             try
             {
-                response = await lsiService.PobierzProduktyAsync(new PobierzProduktyRequest
+                var response = await lsiService.PobierzProduktyAsync(new PobierzProduktyRequest
                 {
                     Body = new PobierzProduktyRequestBody
                     {
@@ -30,23 +41,21 @@ namespace LsiEndpointSupport
                         }
                     }
                 });
+                pobierzProduktyProduktObjects = response.Body.PobierzProduktyResult.Produkty;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
-
-            return response.Body.PobierzProduktyResult.Produkty;
+            return pobierzProduktyProduktObjects;
         }
 
         public async Task<ArrayOfPobierzPotrawyProduktObject> GetMeals(int groupId, string magazynId)
         {
-            var getProducsGroups = await GetProductsGroups();
-            var getWarehouses = await GetWarehouses();
-            PobierzPotrawyResponse response = new PobierzPotrawyResponse();
+            ArrayOfPobierzPotrawyProduktObject pobierzPotrawyProduktObjects = new ArrayOfPobierzPotrawyProduktObject();
             try
             {
-                response = await lsiService.PobierzPotrawyAsync(new PobierzPotrawyRequest
+                var response = await lsiService.PobierzPotrawyAsync(new PobierzPotrawyRequest
                 {
                     Body = new PobierzPotrawyRequestBody
                     {
@@ -57,44 +66,62 @@ namespace LsiEndpointSupport
                         }
                     }
                 });
+                pobierzPotrawyProduktObjects = response.Body.PobierzPotrawyResult.Produkty;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
 
-            return response.Body.PobierzPotrawyResult.Produkty;
+            return pobierzPotrawyProduktObjects;
         }
 
         public async Task<ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject> GetProductsGroups()
         {
+            ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject pobierzGrupyTowaroweGrupaTowarowaObjects = new ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject();
             try
             {
-                var response = await lsiService.PobierzGrupyTowaroweAsync(new PobierzGrupyTowaroweRequest { Body = new PobierzGrupyTowaroweRequestBody() });
-                return response.Body.PobierzGrupyTowaroweResult.GrupyTowarowe;
+                var pobierzGrupyTowaroweResponse = await lsiService.PobierzGrupyTowaroweAsync(new PobierzGrupyTowaroweRequest { Body = new PobierzGrupyTowaroweRequestBody() });
+                pobierzGrupyTowaroweGrupaTowarowaObjects = pobierzGrupyTowaroweResponse.Body.PobierzGrupyTowaroweResult.GrupyTowarowe;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
             }
-
+            return pobierzGrupyTowaroweGrupaTowarowaObjects;
         }
 
         public async Task<ArrayOfPobierzMagazynyMagazynObject> GetWarehouses()
         {
-            var response = await lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody { } });
-            return response.Body.PobierzMagazynyResult.Magazyny;
+            ArrayOfPobierzMagazynyMagazynObject pobierzMagazynyMagazynObjects = new ArrayOfPobierzMagazynyMagazynObject();
+            try
+            {
+                var response = await lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody { } });
+                pobierzMagazynyMagazynObjects =  response.Body.PobierzMagazynyResult.Magazyny;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+            }
+            return pobierzMagazynyMagazynObjects;
         }
 
         public async Task<UtworzDokumentRozchodowyResponse> CreateDocument(int documentTypeId, string magazynID, ArrayOfUtworzDokumentRozchodowyRequestProduktObject products)
         {
-
-            var request = new UtworzDokumentRozchodowyRequestDataRequestObject { TypDokumentuID = documentTypeId, MagazynID = magazynID, Produkty = products };
-            var response = await lsiService.UtworzDokumentRozchodowyAsync(new UtworzDokumentRozchodowyRequest
+            try
             {
-                Body = new UtworzDokumentRozchodowyRequestBody { RequestData = request }
-            });
-            return response;
+                var request = new UtworzDokumentRozchodowyRequestDataRequestObject { TypDokumentuID = documentTypeId, MagazynID = magazynID, Produkty = products };
+                var response = await lsiService.UtworzDokumentRozchodowyAsync(new UtworzDokumentRozchodowyRequest
+                {
+                    Body = new UtworzDokumentRozchodowyRequestBody { RequestData = request }
+                });
+                return response;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                throw new Exception(ErrorMessage);
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 using GastroTransferManager.Data;
+using GastroTransferManager.Models;
+using GastroTransferManager.Models.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -26,6 +28,7 @@ namespace GastroTransferManager
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddSingleton<IAddressesConfig>(new AddressesConfig { LsiEndpointAddress = Configuration["AddressesConfig:LsiEndpointAddress"] });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

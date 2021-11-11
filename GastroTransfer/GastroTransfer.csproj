@@ -111,6 +111,7 @@
     <Compile Include="Services\IProductService.cs" />
     <Compile Include="Services\ProductGroupsService.cs" />
     <Compile Include="Services\ProductionService.cs" />
+    <Compile Include="Services\ProductionTransferService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="CheckConnection.xaml.cs">
       <DependentUpon>CheckConnection.xaml</DependentUpon>

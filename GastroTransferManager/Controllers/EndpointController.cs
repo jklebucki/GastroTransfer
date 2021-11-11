@@ -1,4 +1,5 @@
-﻿using LsiEndpointSupport;
+﻿using GastroTransferManager.Models.Interfaces;
+using LsiEndpointSupport;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ namespace GastroTransferManager.Controllers
     public class EndpointController : Controller
     {
         private LsiEndpointService service { get; set; }
-        public EndpointController()
+        public EndpointController(IAddressesConfig addressesConfig)
         {
-            service = new LsiEndpointService("http://192.168.81.70:8089/icws.asmx");
+            service = new LsiEndpointService(addressesConfig.LsiEndpointAddress);
         }
         public IActionResult Index()
         {
@@ -22,7 +23,7 @@ namespace GastroTransferManager.Controllers
         {
             var groups = await service.GetProductsGroups();
             var warehouses = await service.GetWarehouses();
-            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("SUROWCE KOMPLETACJA MOP")).ID;
+            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("RP")).ID;
             var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
             return Json(await service.GetProducts(groupId, warehouseId));
         }
@@ -35,6 +36,7 @@ namespace GastroTransferManager.Controllers
             var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
             return Json(await service.GetMeals(groupId, warehouseId));
         }
+
 
         public async Task<IActionResult> GetProductsGroups()
         {
