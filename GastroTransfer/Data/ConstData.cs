@@ -18,6 +18,7 @@ namespace GastroTransfer.Data
             Key.NumPad9, Key.OemComma, Key.Enter,
             Key.Escape, Key.Tab
         };
+
         public static readonly List<ProducedItem> producedItems = new List<ProducedItem>()
             {
                 new ProducedItem

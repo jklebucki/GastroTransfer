@@ -179,5 +179,6 @@ namespace GastroTransfer.Services
             return new ServiceMessage { IsError = true, ItemId = productionId, Message = "Usunięcie niemożliwe. Pozycja wysłana do systemu zewnętrnego." };
         }
 
+
     }
 }

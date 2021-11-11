@@ -1,6 +1,6 @@
 ﻿namespace GastroTransfer.Models
 {
-    class ServiceMessage
+    public class ServiceMessage
     {
         public int ItemId { get; set; }
         public string Message { get; set; }

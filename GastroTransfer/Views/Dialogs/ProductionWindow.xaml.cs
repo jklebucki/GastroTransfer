@@ -40,88 +40,12 @@ namespace GastroTransfer.Views.Dialogs
                 ProductionDate.SelectedDate = DateTime.Now;
         }
 
-        private async Task<ServiceMessage> StartProduction()
-        {
-            if (!dbService.CheckLsiConnection())
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak połączenia z bazą danych systemu LSI" };
-
-            LsiDbService lsiDbService = new LsiDbService(dbService.GetLsiConnectionString());
-            var documentType = lsiDbService.GetDocumentsTypes().FirstOrDefault(x => x.Symbol == config.ProductionDocumentSymbol);
-
-            if (documentType == null)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Niewłaściwy typ dokumentu produkcji - {config.ProductionDocumentSymbol}" };
-
-            if (string.IsNullOrEmpty(config.EndpointUrl))
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiguracji usługi LSI" };
-
-            var productionService = new ProductionService(appDbContext);
-            var selectedDate = (DateTime)ProductionDate.SelectedDate;
-            var currentProduction = productionService.GetProduction(false).Where(d => d.ProductionItem.Registered <= new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, 23, 59, 59)).ToList();
-            if (currentProduction.Count == 0)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania." };
-
-            var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
-            var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId).Select(r => new { Id = r.First().ProducedItem.ProducedItemId, Index = r.First().ProducedItem.ExternalId, Q = r.Sum(q => q.ProductionItem.Quantity) }).ToList();
-            //return;
-            var productsToSwap = new List<ProductionItem>();
-            foreach (var product in sum)
-            {
-                if (product.Q > 0)
-                    products.Add(new LsiService.UtworzDokumentRozchodowyRequestProduktObject { Ilosc = product.Q, ProduktID = product.Index, Cena = 0 });
-                else if (product.Q < 0)
-                    if ((bool)SwapProduction.IsChecked)
-                        productsToSwap.Add(new ProductionItem { ProducedItemId = product.Id, Quantity = product.Q, TransferType = -2 });
-            }
-
-            if (products.Count == 0)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji." };
-
-            LsiEndpointService service = new LsiEndpointService(config.EndpointUrl);
-            var productsGroups = await service.GetProductsGroups();
-            var warehouses = await service.GetWarehouses();
-            var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(config.WarehouseSymbol)).MagazynID;
-            if (warehouseId == null)
-                return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie odnaleziono magazynu {config.WarehouseSymbol}" };
-            var response = await service.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
-            var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
-            var respMessage = new ServiceMessage { IsError = false, ItemId = 0, Message = "" };
-            if (docResp != null)
-            {
-                if (docResp.ID > 0)
-                {
-                    await productionService.ChangeTransferStatus(
-                          currentProduction.Select(i => i.ProductionItem.ProductionItemId).ToArray(),
-                          docResp.ID,
-                          documentType.DocumentTypeId,
-                          (bool)SwapProduction.IsChecked);
-
-                    if ((bool)SwapProduction.IsChecked)
-                        await productionService.ChangeSwapStatus(docResp.ID);
-                    lsiDbService.AddDocumentInfo(docResp.ID, $"Produkcja, Ilość razem: {sum.Sum(x => x.Q)}", (DateTime)ProductionDate.SelectedDate);
-                }
-
-                if (docResp.KodBledu != 0)
-                {
-                    respMessage.IsError = true;
-                    respMessage.Message = $"Kod błędu: {docResp.KodBledu}\nOpis błędu: {docResp.OpisBledu}";
-                }
-                respMessage.Message = $"Dokument {config.ProductionDocumentSymbol} utworzony.";
-            }
-            else
-            {
-                respMessage.Message = "Totalny błąd.\nPrawdopodobne przyczyny:\n" +
-                    "1. Endpoint LSI wyłączony.\n" +
-                    "2. Endpint w niewłasciwej wersji.\n" +
-                    "Nalezy to zgłosić do LSI.";
-                respMessage.IsError = true;
-            }
-            return respMessage;
-        }
 
         private async void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
             ProductionButton.IsEnabled = false;
-            var message = await StartProduction();
+            ProductionTransferService productionTransferService = new ProductionTransferService(dbService, appDbContext, config);
+            var message = await productionTransferService.StartProduction((DateTime)ProductionDate.SelectedDate, (bool)SwapProduction.IsChecked);
             Info.Text = message.Message;
             if (message.IsError)
                 Info.Foreground = Brushes.Red;
