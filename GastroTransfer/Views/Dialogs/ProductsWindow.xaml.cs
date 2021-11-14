@@ -226,7 +226,7 @@ namespace GastroTransfer.Views.Dialogs
                     IsActive = true
                 });
             var allAddedGroups = productGroupsService.GetGroups();
-            ActivateProducts(allAddedGroups);
+            await ActivateProducts(allAddedGroups);
             ViewModel.ProductsGroups.Clear();
             foreach (var group in allAddedGroups.Where(a => a.IsActive).ToList())
                 ViewModel.ProductsGroups.Add(
@@ -258,7 +258,7 @@ namespace GastroTransfer.Views.Dialogs
                     IsActive = false
                 });
             var allAddedGroups = productGroupsService.GetGroups();
-            DeactivateProducts(allAddedGroups);
+            await DeactivateProducts(allAddedGroups);
             foreach (var group in allAddedGroups.Where(a => a.IsActive).ToList())
                 ViewModel.ProductsGroups.Add(
                     new ProductGroupView
@@ -272,14 +272,14 @@ namespace GastroTransfer.Views.Dialogs
             await FillViewModel();
         }
 
-        private void DeactivateProducts(List<ProductGroup> allAddedGroups)
+        private async Task DeactivateProducts(List<ProductGroup> allAddedGroups)
         {
-            productService.ChangeActiveStatus(allAddedGroups.Where(a => !a.IsActive).Select(i => i.ExternalGroupId).ToList(), false);
+            await productService.ChangeActiveStatus(allAddedGroups.Where(a => !a.IsActive).Select(i => i.ExternalGroupId).ToList(), false);
         }
 
-        private void ActivateProducts(List<ProductGroup> allAddedGroups)
+        private async Task ActivateProducts(List<ProductGroup> allAddedGroups)
         {
-            productService.ChangeActiveStatus(allAddedGroups.Where(a => a.IsActive).Select(i => i.ExternalGroupId).ToList(), true);
+            await productService.ChangeActiveStatus(allAddedGroups.Where(a => a.IsActive).Select(i => i.ExternalGroupId).ToList(), true);
         }
     }
 }

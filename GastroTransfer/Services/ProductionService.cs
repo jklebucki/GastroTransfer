@@ -82,7 +82,9 @@ namespace GastroTransfer.Services
             if (fullData)
                 productionItems = dbContext.TransferredItems.ToList();
             else
-                productionItems = dbContext.TransferredItems.Where(tr => !tr.IsSentToExternalSystem).ToList();
+                productionItems = dbContext.TransferredItems
+                    .Where(tr => !tr.IsSentToExternalSystem)
+                    .ToList();
             try
             {
                 if (productionItems.Count > 0)

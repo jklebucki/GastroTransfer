@@ -120,8 +120,10 @@ namespace GastroTransfer
 
         private bool LogIn(LoginType loginType)
         {
-            LoginWindow loginWindow = new LoginWindow(config, loginType);
-            loginWindow.Owner = this;
+            LoginWindow loginWindow = new LoginWindow(config, loginType)
+            {
+                Owner = this
+            };
             loginWindow.ShowDialog();
             if (!loginWindow.LoginOk)
                 return false;
@@ -132,8 +134,10 @@ namespace GastroTransfer
         {
             if (!LogIn(LoginType.System))
                 return;
-            ConfigWindow configPage = new ConfigWindow();
-            configPage.Owner = this;
+            ConfigWindow configPage = new ConfigWindow
+            {
+                Owner = this
+            };
             configPage.ShowDialog();
             if (configPage.IsSaved)
             {
@@ -204,8 +208,10 @@ namespace GastroTransfer
                     "Nie",
                     "Na pewno chcesz usunąc?" +
                     $"\n{productToRemove.ProducedItem.Name}" +
-                    $"\t{productToRemove.ProductionItem.Quantity} {productToRemove.ProducedItem.UnitOfMesure}");
-                confirmWindow.Owner = this;
+                    $"\t{productToRemove.ProductionItem.Quantity} {productToRemove.ProducedItem.UnitOfMesure}")
+                {
+                    Owner = this
+                };
                 confirmWindow.ShowDialog();
                 if (confirmWindow.IsCanacel)
                     return;
@@ -219,8 +225,10 @@ namespace GastroTransfer
                     }
                     else
                     {
-                        ConfirmWindow confirm = new ConfirmWindow("Rozumiem", messsge.Message);
-                        confirm.Owner = this;
+                        ConfirmWindow confirm = new ConfirmWindow("Rozumiem", messsge.Message)
+                        {
+                            Owner = this
+                        };
                         confirm.ShowDialog();
                     }
 
@@ -335,8 +343,10 @@ namespace GastroTransfer
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ConfirmWindow confirmWindow = new ConfirmWindow();
-            confirmWindow.Owner = this;
+            ConfirmWindow confirmWindow = new ConfirmWindow
+            {
+                Owner = this
+            };
             confirmWindow.ShowDialog();
             if (!confirmWindow.IsCanacel)
                 Close();
@@ -347,8 +357,10 @@ namespace GastroTransfer
             if (config.OnPasswordProduction)
                 if (!LogIn(LoginType.Production))
                     return;
-            ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config);
-            productionWindow.Owner = this;
+            ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config)
+            {
+                Owner = this
+            };
             productionWindow.ShowDialog();
 
             GetDataDelegateMethod.Invoke();

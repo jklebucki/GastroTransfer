@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GastroTransfer.Services
 {
-    class ProductService : IProductService
+    internal class ProductService : IProductService
     {
         private AppDbContext dbContext { get; set; }
         public ProductService(AppDbContext dbContext)
@@ -146,7 +147,7 @@ namespace GastroTransfer.Services
             return serviceMessage;
         }
 
-        public ServiceMessage ChangeActiveStatus(List<int> externalGroupsIds, bool isActive)
+        public async Task<ServiceMessage> ChangeActiveStatus(List<int> externalGroupsIds, bool isActive)
         {
             var serviceMessage = new ServiceMessage()
             {
@@ -157,7 +158,7 @@ namespace GastroTransfer.Services
 
             try
             {
-                dbContext.ProducedItems.Where(x => externalGroupsIds.Contains(x.ExternalGroupId)).ForEachAsync(x => x.IsActive = isActive).Wait();
+                await dbContext.ProducedItems.Where(x => externalGroupsIds.Contains(x.ExternalGroupId)).ForEachAsync(x => x.IsActive = isActive);
                 dbContext.SaveChanges();
 
                 return serviceMessage;
