@@ -1,4 +1,5 @@
 ﻿using GastroTransferManager.Models;
+using GastroTransferManager.Models.Interfaces;
 using LsiEndpointSupport;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,11 @@ namespace GastroTransferManager.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly string lsiEndpoinAddress;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IAddressesConfig addressesConfig)
         {
+            lsiEndpoinAddress = addressesConfig.LsiEndpointAddress;
             _logger = logger;
         }
 
@@ -23,7 +26,7 @@ namespace GastroTransferManager.Controllers
 
         public async Task<IActionResult> SystemInfo()
         {
-            Info info = new Info("http://192.168.81.70:8089/icws.asmx");
+            Info info = new Info(lsiEndpoinAddress);
             ViewBag.Message = await info.GetInfo();
             return View();
         }

@@ -18,14 +18,14 @@
         </div>
     </div>
 </div>
+<div id="result" class="row justify-content-center"></div>
 
 @section scripts{
     <script>
         $('#get-products').click(function () {
             axios.get('/Endpoint/GetProducts')
                 .then(function (response) {
-                    console.log(response);
-                    alert(response.data);
+                    showResult(response.data)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -38,7 +38,7 @@
         $('#get-meals').click(function () {
             axios.get('/Endpoint/GetMeals')
                 .then(function (response) {
-                    console.log(response);
+                    showResult(response.data)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -51,11 +51,7 @@
         $('#get-products-groups').click(function () {
             axios.get('/Endpoint/GetProductsGroups')
                 .then(function (response) {
-                    console.log(response);
-                    let responseMsg = "";
-                    alert(response.data.map(function (item) {
-                        return item.nazwa
-                    }));
+                    showResult(response.data)
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -65,5 +61,13 @@
                 });
         }
         );
+        function showResult(data) {
+            $('#result').html(() => {
+                return data.map(function (item, i) {
+                    return (i+1)+ ': ' + item.nazwa + '<br>'
+                })
+            
+            })
+        }
     </script>
 }

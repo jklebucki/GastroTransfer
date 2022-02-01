@@ -23,7 +23,7 @@ namespace GastroTransferManager.Controllers
         {
             var groups = await service.GetProductsGroups();
             var warehouses = await service.GetWarehouses();
-            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("RP")).ID;
+            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("TOWARY MOP")).ID;
             var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
             return Json(await service.GetProducts(groupId, warehouseId));
         }
@@ -32,7 +32,7 @@ namespace GastroTransferManager.Controllers
         {
             var groups = await service.GetProductsGroups();
             var warehouses = await service.GetWarehouses();
-            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("RECEPTURY")).ID;
+            var groupId = groups.FirstOrDefault(x => x.Nazwa.Contains("RP")).ID;
             var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains("MT")).MagazynID;
             return Json(await service.GetMeals(groupId, warehouseId));
         }
