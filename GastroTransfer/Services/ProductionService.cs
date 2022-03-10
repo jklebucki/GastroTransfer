@@ -148,7 +148,7 @@ namespace GastroTransfer.Services
                       {
                           n.TransferType = packageNumber;
                       }).ConfigureAwait(false);
-                dbContext.SaveChanges();
+                await dbContext.SaveChangesAsync();
                 return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status przeniesienia zmieniony" };
             }
             catch (Exception ex)
@@ -178,7 +178,7 @@ namespace GastroTransfer.Services
             {
                 return new ServiceMessage { IsError = true, ItemId = productionId, Message = ex.Message };
             }
-            return new ServiceMessage { IsError = true, ItemId = productionId, Message = "Usunięcie niemożliwe. Pozycja wysłana do systemu zewnętrnego." };
+            return new ServiceMessage { IsError = true, ItemId = productionId, Message = "Usunięcie niemożliwe. Pozycja wysłana do systemu zewnętrznego." };
         }
 
 
