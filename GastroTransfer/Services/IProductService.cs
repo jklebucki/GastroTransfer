@@ -9,6 +9,6 @@ namespace GastroTransfer.Services
         ServiceMessage CreateProduct(ProducedItem producedItem);
         ServiceMessage RemoveProduct(ProducedItem producedItem);
         ServiceMessage UpdateProduct(ProducedItem producedItem);
-        Task<ServiceMessage> ChangeActiveStatus(List<int> producedItemId, bool isActive);
+        Task<ServiceMessage> ChangeActiveStatus(int producedItemId, bool isActive);
     }
 }

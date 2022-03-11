@@ -242,11 +242,11 @@ namespace GastroTransfer
             var btn = (Button)sender;
             var groupId = int.Parse(btn.Tag.ToString());// btn.Name.Split('_')[1]);
             GetData();
-            var items = producedItems.Where(x => x.ExternalGroupId == groupId).OrderBy(n => n.Name).ToList();
+            var items = producedItems.Where(x => x.IsActive).OrderBy(n => n.Name);
             if (groupId == 0)
-                AddButtons(producedItems);
+                AddButtons(items.ToList());
             else
-                AddButtons(items);
+                AddButtons(items.Where(x => x.ExternalGroupId == groupId).ToList());
         }
 
         private Button CreateProductButton(ProducedItem item)

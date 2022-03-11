@@ -37,8 +37,7 @@ namespace GastroTransfer.Services
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiguracji usługi LSI" };
 
                 var productionService = new ProductionService(appDbContext);
-                var selectedDate = productionDate;
-                var dateTo = new DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, 23, 59, 59);
+                var dateTo = new DateTime(productionDate.Year, productionDate.Month, productionDate.Day, 23, 59, 59);
                 var currentProduction = productionService
                     .GetProduction(false)
                     .Where(d => d.ProductionItem.Registered <= dateTo && (d.ProductionItem.OperationType == null || d.ProductionItem.OperationType == 1))
@@ -46,11 +45,12 @@ namespace GastroTransfer.Services
                 if (currentProduction.Count == 0)
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania." };
 
-                var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
+
                 var sum = currentProduction.GroupBy(i => i.ProductionItem.ProducedItemId)
                     .Select(r => new { Id = r.First().ProducedItem.ProducedItemId, Index = r.First().ProducedItem.ExternalId, Q = r.Sum(q => q.ProductionItem.Quantity) })
                     .ToList();
 
+                var products = new LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject();
                 var productsToSwap = new List<ProductionItem>();
                 foreach (var product in sum)
                 {

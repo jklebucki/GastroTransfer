@@ -147,7 +147,7 @@ namespace GastroTransfer.Services
             return serviceMessage;
         }
 
-        public async Task<ServiceMessage> ChangeActiveStatus(List<int> externalGroupsIds, bool isActive)
+        public async Task<ServiceMessage> ChangeActiveStatus(int externalGroupsId, bool isActive)
         {
             var serviceMessage = new ServiceMessage()
             {
@@ -158,7 +158,7 @@ namespace GastroTransfer.Services
 
             try
             {
-                await dbContext.ProducedItems.Where(x => externalGroupsIds.Contains(x.ExternalGroupId)).ForEachAsync(x => x.IsActive = isActive);
+                await dbContext.ProducedItems.Where(x => x.ExternalGroupId == externalGroupsId).ForEachAsync(x => x.IsActive = isActive);
                 dbContext.SaveChanges();
 
                 return serviceMessage;
