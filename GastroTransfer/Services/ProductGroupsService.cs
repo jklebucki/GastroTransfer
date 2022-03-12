@@ -8,27 +8,27 @@ namespace GastroTransfer.Services
 {
     class ProductGroupsService : IProductGroupsService
     {
-        private AppDbContext appDbContext { get; set; }
+        private AppDbContext _appDbContext { get; set; }
         public ProductGroupsService(AppDbContext appDbContext)
         {
-            this.appDbContext = appDbContext;
+            _appDbContext = appDbContext;
         }
         public List<ProductGroup> GetGroups()
         {
-            return appDbContext.ProductGroups.ToList();
+            return _appDbContext.ProductGroups.ToList();
         }
 
         public void AddGroup(ProductGroup group)
         {
             if (group != null)
             {
-                var groupPresent = appDbContext.ProductGroups.FirstOrDefault(i => i.ExternalGroupId == group.ExternalGroupId);
+                var groupPresent = _appDbContext.ProductGroups.FirstOrDefault(i => i.ExternalGroupId == group.ExternalGroupId);
                 if (groupPresent == null)
                 {
                     try
                     {
-                        appDbContext.ProductGroups.Add(group);
-                        appDbContext.SaveChanges();
+                        _appDbContext.ProductGroups.Add(group);
+                        _appDbContext.SaveChanges();
                     }
                     catch (Exception ex)
                     {
@@ -50,15 +50,15 @@ namespace GastroTransfer.Services
         {
             if (group != null)
             {
-                var groupToUpdate = appDbContext.ProductGroups.FirstOrDefault(id => id.ExternalGroupId == group.ExternalGroupId);
+                var groupToUpdate = _appDbContext.ProductGroups.FirstOrDefault(id => id.ExternalGroupId == group.ExternalGroupId);
                 if (groupToUpdate != null)
                 {
                     try
                     {
                         groupToUpdate.GroupName = group.GroupName;
                         groupToUpdate.IsActive = group.IsActive;
-                        appDbContext.Entry(groupToUpdate).State = System.Data.Entity.EntityState.Modified;
-                        appDbContext.SaveChanges();
+                        _appDbContext.Entry(groupToUpdate).State = System.Data.Entity.EntityState.Modified;
+                        _appDbContext.SaveChanges();
                     }
                     catch (Exception ex)
                     {

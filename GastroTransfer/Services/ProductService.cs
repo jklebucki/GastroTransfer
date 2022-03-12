@@ -1,7 +1,6 @@
 ﻿using GastroTransfer.Data;
 using GastroTransfer.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -11,10 +10,10 @@ namespace GastroTransfer.Services
 {
     internal class ProductService : IProductService
     {
-        private AppDbContext dbContext { get; set; }
+        private AppDbContext _dbContext { get; set; }
         public ProductService(AppDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public ServiceMessage CreateProduct(ProducedItem producedItem)
@@ -28,8 +27,8 @@ namespace GastroTransfer.Services
 
             try
             {
-                dbContext.ProducedItems.Add(producedItem);
-                serviceMessage.ItemId = dbContext.SaveChanges();
+                _dbContext.ProducedItems.Add(producedItem);
+                serviceMessage.ItemId = _dbContext.SaveChanges();
                 return serviceMessage;
             }
             catch (DbUpdateException ex)
@@ -67,8 +66,8 @@ namespace GastroTransfer.Services
 
             try
             {
-                dbContext.ProducedItems.Remove(producedItem);
-                serviceMessage.ItemId = dbContext.SaveChanges();
+                _dbContext.ProducedItems.Remove(producedItem);
+                serviceMessage.ItemId = _dbContext.SaveChanges();
                 return serviceMessage;
             }
             catch (DbUpdateException ex)
@@ -106,7 +105,7 @@ namespace GastroTransfer.Services
 
             try
             {
-                var itemToChange = dbContext.ProducedItems.FirstOrDefault(x => x.ExternalId == producedItem.ExternalId);
+                var itemToChange = _dbContext.ProducedItems.FirstOrDefault(x => x.ExternalId == producedItem.ExternalId);
                 if (itemToChange != null)
                 {
                     itemToChange.Name = producedItem.Name;
@@ -118,8 +117,8 @@ namespace GastroTransfer.Services
                     itemToChange.ExternalName = producedItem.ExternalName;
                     itemToChange.ExternalUnitOfMesure = producedItem.ExternalUnitOfMesure;
                     itemToChange.ExternalGroupId = producedItem.ExternalGroupId;
-                    dbContext.Entry(itemToChange).State = EntityState.Modified;
-                    serviceMessage.ItemId = dbContext.SaveChanges();
+                    _dbContext.Entry(itemToChange).State = EntityState.Modified;
+                    serviceMessage.ItemId = _dbContext.SaveChanges();
                 }
                 return serviceMessage;
             }
@@ -158,8 +157,8 @@ namespace GastroTransfer.Services
 
             try
             {
-                await dbContext.ProducedItems.Where(x => x.ExternalGroupId == externalGroupsId).ForEachAsync(x => x.IsActive = isActive);
-                dbContext.SaveChanges();
+                await _dbContext.ProducedItems.Where(x => x.ExternalGroupId == externalGroupsId).ForEachAsync(x => x.IsActive = isActive);
+                _dbContext.SaveChanges();
 
                 return serviceMessage;
             }

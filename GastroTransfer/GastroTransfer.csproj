@@ -123,6 +123,7 @@
     <Compile Include="CheckConnection.xaml.cs">
       <DependentUpon>CheckConnection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\TrashDocumentTransferService.cs" />
     <Compile Include="Views\Dialogs\ConfigWindow.xaml.cs">
       <DependentUpon>ConfigWindow.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ProductsWindow.xaml.cs">
       <DependentUpon>ProductsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\TrashDocumentWindow.xaml.cs">
+      <DependentUpon>TrashDocumentWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -179,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ProductsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\TrashDocumentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

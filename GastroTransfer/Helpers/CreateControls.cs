@@ -1,14 +1,14 @@
 ﻿using GastroTransfer.Models;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace GastroTransfer.Helpers
 {
     public static class CreateControls
     {
-        public static Button CreateProductButton(Dictionary<string,Style> style, RoutedEventHandler routedEventHandler, ProducedItem item)
+        public static Button CreateProductButton(Dictionary<string, Style> style, RoutedEventHandler routedEventHandler, ProducedItem item)
         {
             Viewbox box = new Viewbox
             {

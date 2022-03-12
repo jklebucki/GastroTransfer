@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace GastroTransfer
 {
@@ -18,88 +17,94 @@ namespace GastroTransfer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Config config { get; set; }
-        private ConfigService configService { get; set; }
-        private AppDbContext appDbContext { get; set; }
-        private DbService dbService { get; set; }
-        private List<ProducedItem> producedItems { get; set; }
-        private List<ProductGroup> productGroups { get; set; }
-        private ProductionService productionService { get; set; }
-        private ObservableCollection<ProductionViewModel> productionViewItems { get; set; }
+        private Config _config { get; set; }
+        private ConfigService _configService { get; set; }
+        private AppDbContext _appDbContext { get; set; }
+        private DbService _dbService { get; set; }
+        private List<ProducedItem> _producedItems { get; set; }
+        private List<ProductGroup> _productGroups { get; set; }
+        private ProductionService _productionService { get; set; }
+        private ObservableCollection<ProductionViewModel> _productionViewItems { get; set; }
         private delegate void GetDataDelegate();
         private readonly GetDataDelegate GetDataDelegateMethod;
-        private Dictionary<string, Style> style;
+        private Dictionary<string, Style> _style;
         public MainWindow()
         {
             GetDataDelegateMethod = GetData;
             InitializeComponent();
-            style = new Dictionary<string, Style>();
+            _style = new Dictionary<string, Style>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            style.Add("roundedButton", FindResource("RoundCorner") as Style);
-
-            configService = new ConfigService(new CryptoService());
-            if (configService.Message != null && configService.Message.Contains("Error"))
+            CollectStyle();
+            _configService = new ConfigService(new CryptoService());
+            if (_configService.Message != null && _configService.Message.Contains("Error"))
             {
-                MessageBox.Show(configService.Message, "Błąd krytyczny", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(_configService.Message, "Błąd krytyczny", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(999);
             }
             InitializeSystem();
             CheckingConnection(true);
-            productionService = new ProductionService(appDbContext);
-
-            productionViewItems = new ObservableCollection<ProductionViewModel>();
-            //Getting products and products groups data  
+            InitializeView();
             GetData();
-            PositionsListGrid.DataContext = productionViewItems;
-            PositionsListGrid.ItemsSource = productionViewItems;
+            AddButtons(_producedItems);
+            AddGroupButtons(_productGroups);
+        }
+
+        private void InitializeView()
+        {
+            _productionService = new ProductionService(_appDbContext);
+            _productionViewItems = new ObservableCollection<ProductionViewModel>();
+            PositionsListGrid.DataContext = _productionViewItems;
+            PositionsListGrid.ItemsSource = _productionViewItems;
             float scale = (float)SystemParameters.PrimaryScreenWidth / 1920f;
             ProductName.FontSize = 22 * scale;
             UnitOfMesure.FontSize = 22 * scale;
             Quantity.FontSize = 22 * scale;
+        }
 
-            AddButtons(producedItems);
-            AddGroupButtons(productGroups);
+        private void CollectStyle()
+        {
+            _style.Add("roundedButton", FindResource("RoundCorner") as Style);
         }
 
         private void InitializeSystem()
         {
             //read or initialize config
-            config = configService.GetConfig();
-            if (config == null)
+            _config = _configService.GetConfig();
+            if (_config == null)
             {
-                configService.InitializeConfig();
-                config = configService.GetConfig();
+                _configService.InitializeConfig();
+                _config = _configService.GetConfig();
             }
         }
 
         private void CheckingConnection(bool systemStart)
         {
-            CheckConnection checkConnection = new CheckConnection(dbService, configService, systemStart);
+            CheckConnection checkConnection = new CheckConnection(_dbService, _configService, systemStart);
             checkConnection.ShowDialog();
             RenewConfiguration();
         }
 
         private void RenewConfiguration()
         {
-            config = configService.GetConfig();
-            dbService = new DbService(config);
-            appDbContext = new AppDbContext(dbService.GetConnectionString());
+            _config = _configService.GetConfig();
+            _dbService = new DbService(_config);
+            _appDbContext = new AppDbContext(_dbService.GetConnectionString());
         }
 
         private void GetData()
         {
-            if (appDbContext.ProductGroups.Count() == 0)
+            if (_appDbContext.ProductGroups.Count() == 0)
             {
-                appDbContext.ProductGroups.AddRange(ConstData.productGroups);
-                appDbContext.SaveChanges();
+                _appDbContext.ProductGroups.AddRange(ConstData.productGroups);
+                _appDbContext.SaveChanges();
             }
-            producedItems = appDbContext.ProducedItems.Where(x => x.IsActive).OrderBy(x => x.Name).ToList();
-            productGroups = appDbContext.ProductGroups.Where(x => x.IsActive || x.ProductGroupId == 1).ToList();
-            AddButtons(producedItems);
-            AddGroupButtons(productGroups);
+            _producedItems = _appDbContext.ProducedItems.Where(x => x.IsActive).OrderBy(x => x.Name).ToList();
+            _productGroups = _appDbContext.ProductGroups.Where(x => x.IsActive || x.ProductGroupId == 1).ToList();
+            AddButtons(_producedItems);
+            AddGroupButtons(_productGroups);
             GetCurrentProduction();
         }
 
@@ -111,20 +116,20 @@ namespace GastroTransfer
             List<ProductionViewModel> productionView = new List<ProductionViewModel>();
             if ((bool)ToggleIn.IsChecked || (bool)ToggleOut.IsChecked)
             {
-                productionView = productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType == null || o.ProductionItem.OperationType == 1).ToList();
+                productionView = _productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType == null || o.ProductionItem.OperationType == 1).ToList();
             }
             else
             {
-                productionView = productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType != null && o.ProductionItem.OperationType == 2).ToList();
+                productionView = _productionService.GetProduction(false).Where(o => o.ProductionItem.OperationType != null && o.ProductionItem.OperationType == 2).ToList();
             }
-            productionViewItems.Clear();
+            _productionViewItems.Clear();
             foreach (var product in productionView)
-                productionViewItems.Add(product);
+                _productionViewItems.Add(product);
         }
 
         private bool LogIn(LoginType loginType)
         {
-            LoginWindow loginWindow = new LoginWindow(config, loginType)
+            LoginWindow loginWindow = new LoginWindow(_config, loginType)
             {
                 Owner = this
             };
@@ -145,7 +150,7 @@ namespace GastroTransfer
             configPage.ShowDialog();
             if (configPage.IsSaved)
             {
-                config = configService.GetConfig();
+                _config = _configService.GetConfig();
                 RenewConfiguration();
                 CheckingConnection(false);
             }
@@ -155,8 +160,8 @@ namespace GastroTransfer
         {
             var btn = (Button)sender;
             var productId = int.Parse(btn.Name.Split('_')[1]);
-            var item = producedItems.FirstOrDefault(x => x.ProducedItemId == productId);
-            var measurementWindow = new MeasurementWindow(item.Name, config);
+            var item = _producedItems.FirstOrDefault(x => x.ProducedItemId == productId);
+            var measurementWindow = new MeasurementWindow(item.Name, _config);
             measurementWindow.ShowDialog();
             if (!measurementWindow.IsCanceled)
             {
@@ -173,11 +178,11 @@ namespace GastroTransfer
                         }
                     };
 
-                    var message = productionService.AddProduction(productionViewModel);
+                    var message = _productionService.AddProduction(productionViewModel);
                     if (!message.IsError)
                     {
                         productionViewModel.ProductionItem.ProductionItemId = message.ItemId;
-                        productionViewItems.Add(productionViewModel);
+                        _productionViewItems.Add(productionViewModel);
                         RefreshView();
                     }
                     else
@@ -202,11 +207,11 @@ namespace GastroTransfer
             }
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void RemoveLastProductionEntry_Click(object sender, RoutedEventArgs e)
         {
-            if (productionViewItems.Count > 0)
+            if (_productionViewItems.Count > 0)
             {
-                var productToRemove = productionViewItems.Last();
+                var productToRemove = _productionViewItems.Last();
                 ConfirmWindow confirmWindow = new ConfirmWindow(
                     "Tak",
                     "Nie",
@@ -221,10 +226,10 @@ namespace GastroTransfer
                     return;
                 if (productToRemove != null)
                 {
-                    var messsge = productionService.RemoveProduction(productToRemove.ProductionItem.ProductionItemId);
+                    var messsge = _productionService.RemoveProduction(productToRemove.ProductionItem.ProductionItemId);
                     if (!messsge.IsError)
                     {
-                        productionViewItems.Remove(productToRemove);
+                        _productionViewItems.Remove(productToRemove);
                         RefreshView();
                     }
                     else
@@ -246,7 +251,7 @@ namespace GastroTransfer
             var btn = (Button)sender;
             var groupId = int.Parse(btn.Tag.ToString());// btn.Name.Split('_')[1]);
             GetData();
-            var items = producedItems.Where(x => x.IsActive).OrderBy(n => n.Name);
+            var items = _producedItems.Where(x => x.IsActive).OrderBy(n => n.Name);
             if (groupId == 0)
                 AddButtons(items.ToList());
             else
@@ -258,7 +263,7 @@ namespace GastroTransfer
             WrapButtons.Children.Clear();
             foreach (var item in producedItems)
             {
-                WrapButtons.Children.Add(CreateControls.CreateProductButton(style, Production_Button_Click, item));
+                WrapButtons.Children.Add(CreateControls.CreateProductButton(_style, Production_Button_Click, item));
             }
         }
 
@@ -267,7 +272,7 @@ namespace GastroTransfer
             GroupButtons.Children.Clear();
             foreach (var item in productGroups)
             {
-                GroupButtons.Children.Add(CreateControls.CreateFilterButton(style, Button_Click_Filter, item));
+                GroupButtons.Children.Add(CreateControls.CreateFilterButton(_style, Button_Click_Filter, item));
             }
         }
 
@@ -284,24 +289,33 @@ namespace GastroTransfer
 
         private void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
-            if (config.OnPasswordProduction)
+            if (_config.OnPasswordProduction)
                 if (!LogIn(LoginType.Production))
                     return;
-            ProductionWindow productionWindow = new ProductionWindow(dbService, appDbContext, config)
+            ProductionWindow productionWindow = new ProductionWindow(_dbService, _appDbContext, _config)
             {
                 Owner = this
             };
             productionWindow.ShowDialog();
+            GetDataDelegateMethod.Invoke();
+        }
 
+        private void GenerateTrashDocumentButton_Click(object sender, RoutedEventArgs e)
+        {
+            TrashDocumentWindow trashDocumentWindow = new TrashDocumentWindow(_dbService, _appDbContext, _config)
+            {
+                Owner = this
+            };
+            trashDocumentWindow.ShowDialog();
             GetDataDelegateMethod.Invoke();
         }
 
         private void GetProductsFromEndpoint_Click(object sender, RoutedEventArgs e)
         {
-            if (config.OnPasswordProductsImport)
+            if (_config.OnPasswordProductsImport)
                 if (!LogIn(LoginType.System))
                     return;
-            ProductsWindow productsWindow = new ProductsWindow(this, appDbContext, config);
+            ProductsWindow productsWindow = new ProductsWindow(this, _appDbContext, _config);
             productsWindow.ShowDialog();
             GetData();
         }

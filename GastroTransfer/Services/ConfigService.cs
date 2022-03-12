@@ -15,7 +15,7 @@ namespace GastroTransfer.Services
     public class ConfigService : IConfigService
     {
         public string ConfigPath { get; protected set; }
-        private ICryptoService cryptoService { get; set; }
+        private ICryptoService _cryptoService { get; set; }
         public string Message { get; protected set; }
         public List<Endpoint> Endpoints { get; protected set; }
 
@@ -26,7 +26,7 @@ namespace GastroTransfer.Services
         public ConfigService(ICryptoService cryptoService)
         {
             CreateConfigDirectory();
-            this.cryptoService = cryptoService;
+            _cryptoService = cryptoService;
         }
 
         /// <summary>
@@ -77,10 +77,10 @@ namespace GastroTransfer.Services
                 using (StreamReader sr = new StreamReader(ConfigPath))
                 {
                     var config = JsonConvert.DeserializeObject<Config>(sr.ReadToEnd());
-                    config.Password = cryptoService.DecodePassword(config.Password);
-                    config.SystemPassword = cryptoService.DecodePassword(config.SystemPassword);
-                    config.ExternalDbPassword = cryptoService.DecodePassword(config.ExternalDbPassword);
-                    config.ProductionPassword = cryptoService.DecodePassword(config.ProductionPassword);
+                    config.Password = _cryptoService.DecodePassword(config.Password);
+                    config.SystemPassword = _cryptoService.DecodePassword(config.SystemPassword);
+                    config.ExternalDbPassword = _cryptoService.DecodePassword(config.ExternalDbPassword);
+                    config.ProductionPassword = _cryptoService.DecodePassword(config.ProductionPassword);
                     return config;
                 }
             }
@@ -101,10 +101,10 @@ namespace GastroTransfer.Services
             {
                 try
                 {
-                    config.Password = cryptoService.EncodePassword(config.Password);
-                    config.SystemPassword = cryptoService.EncodePassword(config.SystemPassword);
-                    config.ExternalDbPassword = cryptoService.EncodePassword(config.ExternalDbPassword);
-                    config.ProductionPassword = cryptoService.EncodePassword(config.ProductionPassword);
+                    config.Password = _cryptoService.EncodePassword(config.Password);
+                    config.SystemPassword = _cryptoService.EncodePassword(config.SystemPassword);
+                    config.ExternalDbPassword = _cryptoService.EncodePassword(config.ExternalDbPassword);
+                    config.ProductionPassword = _cryptoService.EncodePassword(config.ProductionPassword);
                     sw.Write(JsonConvert.SerializeObject(config, Formatting.Indented));
                     return true;
                 }
@@ -131,10 +131,10 @@ namespace GastroTransfer.Services
                         ServerAddress = ".",
                         DatabaseName = "GastroTransfer",
                         UserName = "sa",
-                        Password = cryptoService.EncodePassword("#Password123!"),
-                        SystemPassword = cryptoService.EncodePassword("admin"),
+                        Password = _cryptoService.EncodePassword("#Password123!"),
+                        SystemPassword = _cryptoService.EncodePassword("admin"),
                         IsTrustedConnection = false,
-                        ExternalDbPassword = cryptoService.EncodePassword("#Password123!"),
+                        ExternalDbPassword = _cryptoService.EncodePassword("#Password123!"),
                         WeightComBaudRate = 9600,
                         WeightComDataBits = 8,
                         WeightComStopBits = (int)(System.IO.Ports.StopBits.One),

@@ -10,33 +10,33 @@ namespace GastroTransfer.Services
 {
     public class ProductionTransferService
     {
-        private DbService dbService { get; set; }
-        private AppDbContext appDbContext { get; set; }
-        private Config config { get; set; }
+        private DbService _dbService { get; set; }
+        private AppDbContext _appDbContext { get; set; }
+        private Config _config { get; set; }
         public ProductionTransferService(DbService dbService, AppDbContext appDbContext, Config config)
         {
-            this.dbService = dbService;
-            this.appDbContext = appDbContext;
-            this.config = config;
+            _dbService = dbService;
+            _appDbContext = appDbContext;
+            _config = config;
         }
         public async Task<ServiceMessage> StartProduction(DateTime productionDate, bool swapProduction)
         {
             var respMessage = new ServiceMessage { IsError = false, ItemId = 0, Message = "" };
             try
             {
-                if (!dbService.CheckLsiConnection())
+                if (!_dbService.CheckLsiConnection())
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak połączenia z bazą danych systemu LSI" };
 
-                LsiDbService lsiDbService = new LsiDbService(dbService.GetLsiConnectionString());
-                var documentType = lsiDbService.GetDocumentsTypes().FirstOrDefault(x => x.Symbol == config.ProductionDocumentSymbol);
+                LsiDbService lsiDbService = new LsiDbService(_dbService.GetLsiConnectionString());
+                var documentType = lsiDbService.GetDocumentsTypes().FirstOrDefault(x => x.Symbol == _config.ProductionDocumentSymbol);
 
                 if (documentType == null)
-                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Niewłaściwy typ dokumentu produkcji - {config.ProductionDocumentSymbol}" };
+                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Niewłaściwy typ dokumentu produkcji - {_config.ProductionDocumentSymbol}" };
 
-                if (string.IsNullOrEmpty(config.EndpointUrl))
+                if (string.IsNullOrEmpty(_config.EndpointUrl))
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiguracji usługi LSI" };
 
-                var productionService = new ProductionService(appDbContext);
+                var productionService = new ProductionService(_appDbContext);
                 var dateTo = new DateTime(productionDate.Year, productionDate.Month, productionDate.Day, 23, 59, 59);
                 var currentProduction = productionService
                     .GetProduction(false)
@@ -65,12 +65,12 @@ namespace GastroTransfer.Services
                 if (products.Count == 0)
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji." };
 
-                var lsiEndpointService = new LsiEndpointService(config.EndpointUrl);
+                var lsiEndpointService = new LsiEndpointService(_config.EndpointUrl);
                 var productsGroups = await lsiEndpointService.GetProductsGroups();
                 var warehouses = await lsiEndpointService.GetWarehouses();
-                var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(config.WarehouseSymbol)).MagazynID;
+                var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(_config.WarehouseSymbol)).MagazynID;
                 if (warehouseId == null)
-                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie odnaleziono magazynu {config.WarehouseSymbol}" };
+                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie odnaleziono magazynu {_config.WarehouseSymbol}" };
                 var response = await lsiEndpointService.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
                 var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
 
@@ -94,7 +94,7 @@ namespace GastroTransfer.Services
                         respMessage.IsError = true;
                         respMessage.Message = $"Kod błędu: {docResp.KodBledu}\nOpis błędu: {docResp.OpisBledu}";
                     }
-                    respMessage.Message = $"Dokument {config.ProductionDocumentSymbol} utworzony.";
+                    respMessage.Message = $"Dokument {_config.ProductionDocumentSymbol} utworzony.";
                 }
                 else
                 {

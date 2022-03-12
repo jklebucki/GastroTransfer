@@ -10,10 +10,10 @@ namespace GastroTransfer.Services
 {
     class ProductionService : IProductionService
     {
-        private AppDbContext dbContext { get; set; }
+        private AppDbContext _dbContext { get; set; }
         public ProductionService(AppDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace GastroTransfer.Services
                 model.ProductionItem.ProducedItemId = model.ProducedItem.ProducedItemId;
                 model.ProductionItem.IsSentToExternalSystem = false;
                 model.ProductionItem.TransferType = -1;
-                dbContext.TransferredItems.Add(model.ProductionItem);
-                dbContext.SaveChanges();
+                _dbContext.TransferredItems.Add(model.ProductionItem);
+                _dbContext.SaveChanges();
                 message.IsError = false;
                 message.ItemId = model.ProductionItem.ProductionItemId;
                 message.Message = "Added";
@@ -54,8 +54,8 @@ namespace GastroTransfer.Services
                 productionItem.IsSentToExternalSystem = false;
                 productionItem.Registered = DateTime.Now;
                 productionItem.TransferType = -1;
-                dbContext.TransferredItems.Add(productionItem);
-                dbContext.SaveChanges();
+                _dbContext.TransferredItems.Add(productionItem);
+                _dbContext.SaveChanges();
                 message.IsError = false;
                 message.ItemId = productionItem.ProductionItemId;
                 message.Message = "Added";
@@ -77,12 +77,12 @@ namespace GastroTransfer.Services
         public List<ProductionViewModel> GetProduction(bool fullData)
         {
             List<ProductionViewModel> production = new List<ProductionViewModel>();
-            var allItems = dbContext.ProducedItems.ToList();
+            var allItems = _dbContext.ProducedItems.ToList();
             List<ProductionItem> productionItems = new List<ProductionItem>();
             if (fullData)
-                productionItems = dbContext.TransferredItems.ToList();
+                productionItems = _dbContext.TransferredItems.ToList();
             else
-                productionItems = dbContext.TransferredItems
+                productionItems = _dbContext.TransferredItems
                     .Where(tr => !tr.IsSentToExternalSystem)
                     .ToList();
             try
@@ -114,7 +114,7 @@ namespace GastroTransfer.Services
         {
             try
             {
-                await dbContext.TransferredItems
+                await _dbContext.TransferredItems
                       .Where(i => productionIds.Contains(i.ProductionItemId))
                       .ForEachAsync(n =>
                       {
@@ -124,7 +124,7 @@ namespace GastroTransfer.Services
                           n.PackageNumber = packageNumber;
                           n.TransferType = !swapStatus ? -3 : n.TransferType;
                       }).ConfigureAwait(false);
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
                 return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status zmieniony" };
             }
             catch (Exception ex)
@@ -142,13 +142,13 @@ namespace GastroTransfer.Services
         {
             try
             {
-                await dbContext.TransferredItems
+                await _dbContext.TransferredItems
                       .Where(i => i.TransferType == -2)
                       .ForEachAsync(n =>
                       {
                           n.TransferType = packageNumber;
                       }).ConfigureAwait(false);
-                await dbContext.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
                 return new ServiceMessage { IsError = false, ItemId = 0, Message = "Status przeniesienia zmieniony" };
             }
             catch (Exception ex)
@@ -166,11 +166,11 @@ namespace GastroTransfer.Services
         {
             try
             {
-                var entitytoRemove = dbContext.TransferredItems.Find(productionId);
+                var entitytoRemove = _dbContext.TransferredItems.Find(productionId);
                 if (!entitytoRemove.IsSentToExternalSystem)
                 {
-                    dbContext.TransferredItems.Remove(entitytoRemove);
-                    dbContext.SaveChanges();
+                    _dbContext.TransferredItems.Remove(entitytoRemove);
+                    _dbContext.SaveChanges();
                     return new ServiceMessage { IsError = false, ItemId = productionId, Message = "Removed" };
                 }
             }
