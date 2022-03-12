@@ -12,7 +12,8 @@ namespace UnitTests
         [TestMethod]
         public void CreateFilterButtonTest()
         {
-            var obj = new PrivateObject(typeof(MainWindow));
+            var mainWindow = typeof(MainWindow);
+            var obj = new PrivateObject(mainWindow);
             var retVal = obj.Invoke("CreateFilterButton", new ProductGroup());
             Assert.AreEqual(typeof(Button), retVal.GetType());
         }
@@ -20,7 +21,8 @@ namespace UnitTests
         [TestMethod]
         public void CreateProductButtonTest()
         {
-            var obj = new PrivateObject(typeof(MainWindow));
+            MainWindow mainWindow = new MainWindow();
+            var obj = new PrivateObject(mainWindow);
             var retVal = obj.Invoke("CreateProductButton", new ProducedItem());
             Assert.AreEqual(typeof(Button), retVal.GetType());
         }

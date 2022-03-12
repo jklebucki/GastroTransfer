@@ -90,6 +90,7 @@
     <Compile Include="Data\ConstData.cs" />
     <Compile Include="Data\DbContextFactory.cs" />
     <Compile Include="Data\DbInitializer.cs" />
+    <Compile Include="Helpers\CreateControls.cs" />
     <Compile Include="Migrations\202003301329167_Initial.cs" />
     <Compile Include="Migrations\202003301329167_Initial.designer.cs">
       <DependentUpon>202003301329167_Initial.cs</DependentUpon>

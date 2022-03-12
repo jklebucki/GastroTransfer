@@ -1,9 +1,6 @@
 ﻿using AngelProtocol;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Diagnostics;
-using System.IO.Ports;
-using System.Reflection;
 
 namespace UnitTests
 {
@@ -11,7 +8,7 @@ namespace UnitTests
     public class UnitTestAngelProtocol
     {
         [TestMethod]
-        public void InitializeSerialPortTest()
+        public void ParseWeightResultTest()
         {
             WeightCommonObject weight = new WeightCommonObject(new ComPortSettings
             {
@@ -21,17 +18,16 @@ namespace UnitTests
                 DataBits = 8,
                 Parity = 0
             });
-
             var obj = new PrivateObject(weight);
             var testNumber = "NNNN0025,0";
             var arg = new object[1] { testNumber };
-            var retVal = obj.Invoke("ParseResponseApProt", arg);
+            var retVal = obj.Invoke("ParseWeightResultAngelProtocol", arg);
             Trace.WriteLine(retVal);
             Assert.IsTrue(typeof(decimal) == retVal.GetType() && (decimal)retVal == 25);
 
         }
         [TestMethod]
-        public void GetWeightTest()
+        public void GetWeightAngelProtocolTest()
         {
             WeightCommonObject weight = new WeightCommonObject(new ComPortSettings
             {
@@ -42,7 +38,7 @@ namespace UnitTests
                 Parity = 0
             });
 
-            var test = weight.GetWeihgtApProt();
+            var test = weight.GetWeihgtAngelProtocol();
             Assert.IsTrue(test == 0);
 
         }
