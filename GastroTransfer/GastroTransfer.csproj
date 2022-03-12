@@ -228,7 +228,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AngelProtocol\AngelProtocol.csproj">
+    <ProjectReference Include="..\AngelProtocol\AngelProtocol.csproj">
       <Project>{de6b7c60-8f38-4da0-9cdd-5827cbf465cb}</Project>
       <Name>AngelProtocol</Name>
     </ProjectReference>

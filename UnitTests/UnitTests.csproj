@@ -61,10 +61,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\AngelProtocol\AngelProtocol.csproj">
-      <Project>{de6b7c60-8f38-4da0-9cdd-5827cbf465cb}</Project>
-      <Name>AngelProtocol</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GastroTransfer\GastroTransfer.csproj">
       <Project>{cfd9cee6-2422-4c1c-a5a7-e11e376b0755}</Project>
       <Name>GastroTransfer</Name>

@@ -10,7 +10,7 @@ namespace UnitTests
     {
 
         [TestMethod]
-        public void CreateFilterButton()
+        public void CreateFilterButtonTest()
         {
             var obj = new PrivateObject(typeof(MainWindow));
             var retVal = obj.Invoke("CreateFilterButton", new ProductGroup());
@@ -18,7 +18,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void CreateProductButton()
+        public void CreateProductButtonTest()
         {
             var obj = new PrivateObject(typeof(MainWindow));
             var retVal = obj.Invoke("CreateProductButton", new ProducedItem());

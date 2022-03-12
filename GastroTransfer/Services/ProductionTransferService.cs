@@ -65,13 +65,13 @@ namespace GastroTransfer.Services
                 if (products.Count == 0)
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji." };
 
-                LsiEndpointService service = new LsiEndpointService(config.EndpointUrl);
-                var productsGroups = await service.GetProductsGroups();
-                var warehouses = await service.GetWarehouses();
+                var lsiEndpointService = new LsiEndpointService(config.EndpointUrl);
+                var productsGroups = await lsiEndpointService.GetProductsGroups();
+                var warehouses = await lsiEndpointService.GetWarehouses();
                 var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(config.WarehouseSymbol)).MagazynID;
                 if (warehouseId == null)
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie odnaleziono magazynu {config.WarehouseSymbol}" };
-                var response = await service.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
+                var response = await lsiEndpointService.CreateDocument(documentType.DocumentTypeId, warehouseId, products);
                 var docResp = response.Body.UtworzDokumentRozchodowyResult.Dokument;
 
                 if (docResp != null)

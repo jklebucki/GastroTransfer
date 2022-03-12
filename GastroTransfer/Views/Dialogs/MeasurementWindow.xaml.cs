@@ -27,7 +27,7 @@ namespace GastroTransfer.Views.Dialogs
             Quantity = 0;
             QuantityTextBox.Text = "0";
             ProductName.Text = productName;
-            WeightCommonInterface weight = new WeightCommonInterface(new ComPortSettings
+            WeightCommonObject weight = new WeightCommonObject(new ComPortSettings
             {
                 BaudRate = config.WeightComBaudRate,
                 PortName = config.WeightComPortName,
