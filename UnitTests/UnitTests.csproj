@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\GastroTransfer\GastroTransfer.csproj">
       <Project>{cfd9cee6-2422-4c1c-a5a7-e11e376b0755}</Project>
       <Name>GastroTransfer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LsiEndpointSupport\LsiEndpointSupport.csproj">
+      <Project>{b7fa7f91-2d79-450c-afb7-e278a70a35ad}</Project>
+      <Name>LsiEndpointSupport</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

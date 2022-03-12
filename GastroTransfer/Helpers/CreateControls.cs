@@ -1,18 +1,14 @@
 ﻿using GastroTransfer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace GastroTransfer.Helpers
 {
     public static class CreateControls
     {
-        public static Button CreateProductButton(Window window, RoutedEventHandler routedEventHandler, ProducedItem item)
+        public static Button CreateProductButton(Dictionary<string,Style> style, RoutedEventHandler routedEventHandler, ProducedItem item)
         {
             Viewbox box = new Viewbox
             {
@@ -43,13 +39,13 @@ namespace GastroTransfer.Helpers
                 Width = 180,
                 Margin = new Thickness(5, 5, 5, 5),
                 FontSize = 24,
-                Style = window.FindResource("RoundCorner") as Style
+                Style =  style["roundedButton"]
             };
             button.Click += new RoutedEventHandler(routedEventHandler);// Production_Button_Click);
             return button;
         }
 
-        public static Button CreateFilterButton(Window window, RoutedEventHandler routedEventHandler, ProductGroup item)
+        public static Button CreateFilterButton(Dictionary<string, Style> style, RoutedEventHandler routedEventHandler, ProductGroup item)
         {
             Viewbox box = new Viewbox
             {
@@ -80,7 +76,7 @@ namespace GastroTransfer.Helpers
                 Width = 180,
                 Margin = new Thickness(5, 5, 5, 5),
                 FontSize = 24,
-                Style = window.FindResource("RoundCorner") as Style
+                Style = style["roundedButton"]
             };
             button.Click += new RoutedEventHandler(routedEventHandler);
             return button;

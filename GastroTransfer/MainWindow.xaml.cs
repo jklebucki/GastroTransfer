@@ -28,14 +28,18 @@ namespace GastroTransfer
         private ObservableCollection<ProductionViewModel> productionViewItems { get; set; }
         private delegate void GetDataDelegate();
         private readonly GetDataDelegate GetDataDelegateMethod;
+        private Dictionary<string, Style> style;
         public MainWindow()
         {
             GetDataDelegateMethod = GetData;
             InitializeComponent();
+            style = new Dictionary<string, Style>();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            style.Add("roundedButton", FindResource("RoundCorner") as Style);
+
             configService = new ConfigService(new CryptoService());
             if (configService.Message != null && configService.Message.Contains("Error"))
             {
@@ -254,7 +258,7 @@ namespace GastroTransfer
             WrapButtons.Children.Clear();
             foreach (var item in producedItems)
             {
-                WrapButtons.Children.Add(CreateControls.CreateProductButton(this, Production_Button_Click, item));
+                WrapButtons.Children.Add(CreateControls.CreateProductButton(style, Production_Button_Click, item));
             }
         }
 
@@ -263,7 +267,7 @@ namespace GastroTransfer
             GroupButtons.Children.Clear();
             foreach (var item in productGroups)
             {
-                GroupButtons.Children.Add(CreateControls.CreateFilterButton(this, Button_Click_Filter, item));
+                GroupButtons.Children.Add(CreateControls.CreateFilterButton(style, Button_Click_Filter, item));
             }
         }
 
