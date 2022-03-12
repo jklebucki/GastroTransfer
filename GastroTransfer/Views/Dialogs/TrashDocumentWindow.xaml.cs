@@ -38,9 +38,10 @@ namespace GastroTransfer.Views.Dialogs
             if (selectedDate.SelectedDate == null || selectedDate.SelectedDate > DateTime.Now)
                 ProductionDate.SelectedDate = DateTime.Now;
         }
-        private void GenerateTrashDocumentButton_Click(object sender, RoutedEventArgs e)
+        private async void GenerateTrashDocumentButton_Click(object sender, RoutedEventArgs e)
         {
-            var message = new ServiceMessage() { Message = "Funkcjonalność jeszcze nie gotowa", IsError = true};
+            TrashDocumentTransferService trashDocumentTransferService = new TrashDocumentTransferService(_dbService, _appDbContext, _config);
+            var message = await trashDocumentTransferService.TransferTrashDocument((DateTime)ProductionDate.SelectedDate);
             Info.Text = message.Message;
             if (message.IsError)
                 Info.Foreground = Brushes.Red;

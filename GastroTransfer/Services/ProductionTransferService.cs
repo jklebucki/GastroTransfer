@@ -66,7 +66,6 @@ namespace GastroTransfer.Services
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Nie ma nic do wyprodukowania.\nZerowy lub ujemny bilans pozycji." };
 
                 var lsiEndpointService = new LsiEndpointService(_config.EndpointUrl);
-                var productsGroups = await lsiEndpointService.GetProductsGroups();
                 var warehouses = await lsiEndpointService.GetWarehouses();
                 var warehouseId = warehouses.FirstOrDefault(x => x.Symbol.Contains(_config.WarehouseSymbol)).MagazynID;
                 if (warehouseId == null)
