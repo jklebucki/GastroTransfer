@@ -6,7 +6,7 @@ namespace LsiEndpointSupport
 {
     public class LsiEndpointService
     {
-        private CWSSoapClient lsiService { get; set; }
+        private CWSSoapClient _lsiService;
         public string ErrorMessage { get; protected set; }
         public LsiEndpointService(string endpointUrl)
         {
@@ -17,7 +17,7 @@ namespace LsiEndpointSupport
         {
             try
             {
-                lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
+                _lsiService = new CWSSoapClient(CWSSoapClient.EndpointConfiguration.ICWSSoap, endpointUrl);
             }
             catch (Exception ex)
             {
@@ -30,7 +30,7 @@ namespace LsiEndpointSupport
             ArrayOfPobierzProduktyProduktObject pobierzProduktyProduktObjects = new ArrayOfPobierzProduktyProduktObject();
             try
             {
-                var response = await lsiService.PobierzProduktyAsync(new PobierzProduktyRequest
+                var response = await _lsiService.PobierzProduktyAsync(new PobierzProduktyRequest
                 {
                     Body = new PobierzProduktyRequestBody
                     {
@@ -55,7 +55,7 @@ namespace LsiEndpointSupport
             ArrayOfPobierzPotrawyProduktObject pobierzPotrawyProduktObjects = new ArrayOfPobierzPotrawyProduktObject();
             try
             {
-                var response = await lsiService.PobierzPotrawyAsync(new PobierzPotrawyRequest
+                var response = await _lsiService.PobierzPotrawyAsync(new PobierzPotrawyRequest
                 {
                     Body = new PobierzPotrawyRequestBody
                     {
@@ -81,7 +81,7 @@ namespace LsiEndpointSupport
             ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject pobierzGrupyTowaroweGrupaTowarowaObjects = new ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject();
             try
             {
-                var pobierzGrupyTowaroweResponse = await lsiService.PobierzGrupyTowaroweAsync(new PobierzGrupyTowaroweRequest { Body = new PobierzGrupyTowaroweRequestBody() });
+                var pobierzGrupyTowaroweResponse = await _lsiService.PobierzGrupyTowaroweAsync(new PobierzGrupyTowaroweRequest { Body = new PobierzGrupyTowaroweRequestBody() });
                 pobierzGrupyTowaroweGrupaTowarowaObjects = pobierzGrupyTowaroweResponse.Body.PobierzGrupyTowaroweResult.GrupyTowarowe;
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace LsiEndpointSupport
             ArrayOfPobierzMagazynyMagazynObject pobierzMagazynyMagazynObjects = new ArrayOfPobierzMagazynyMagazynObject();
             try
             {
-                var response = await lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody { } });
+                var response = await _lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody { } });
                 pobierzMagazynyMagazynObjects =  response.Body.PobierzMagazynyResult.Magazyny;
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace LsiEndpointSupport
             try
             {
                 var request = new UtworzDokumentRozchodowyRequestDataRequestObject { TypDokumentuID = documentTypeId, MagazynID = magazynID, Produkty = products };
-                var response = await lsiService.UtworzDokumentRozchodowyAsync(new UtworzDokumentRozchodowyRequest
+                var response = await _lsiService.UtworzDokumentRozchodowyAsync(new UtworzDokumentRozchodowyRequest
                 {
                     Body = new UtworzDokumentRozchodowyRequestBody { RequestData = request }
                 });

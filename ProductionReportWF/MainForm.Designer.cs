@@ -38,11 +38,11 @@
             this.timeTo = new System.Windows.Forms.DateTimePicker();
             this.labDate = new System.Windows.Forms.Label();
             this.labTime = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnExportToExcelRaw = new System.Windows.Forms.Button();
             this.infoLab = new System.Windows.Forms.Label();
-            this.btnReport = new System.Windows.Forms.Button();
+            this.btnExportToExcel = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
-            this.btnSubmit = new System.Windows.Forms.Button();
+            this.btnGetReport = new System.Windows.Forms.Button();
             this.btnTrashReport = new System.Windows.Forms.Button();
             this.dgReport = new System.Windows.Forms.DataGridView();
             this.contextMenuRowEdit = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -96,11 +96,11 @@
             this.tableLayoutPanel1.Controls.Add(this.timeTo, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.labDate, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.labTime, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnExportToExcelRaw, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.infoLab, 5, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btnReport, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnExportToExcel, 4, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnSettings, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btnSubmit, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnGetReport, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnTrashReport, 2, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
@@ -177,17 +177,17 @@
             this.labTime.TabIndex = 5;
             this.labTime.Text = "Zakres godzin";
             // 
-            // button1
+            // btnExportToExcelRaw
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(524, 84);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(152, 26);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Eksport do Excela";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.exportToExcelBtn_Click);
+            this.btnExportToExcelRaw.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExportToExcelRaw.Location = new System.Drawing.Point(524, 84);
+            this.btnExportToExcelRaw.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExportToExcelRaw.Name = "btnExportToExcelRaw";
+            this.btnExportToExcelRaw.Size = new System.Drawing.Size(152, 26);
+            this.btnExportToExcelRaw.TabIndex = 8;
+            this.btnExportToExcelRaw.Text = "Eksport do Excela";
+            this.btnExportToExcelRaw.UseVisualStyleBackColor = true;
+            this.btnExportToExcelRaw.Click += new System.EventHandler(this.BtnExportToExcelRaw_Click);
             // 
             // infoLab
             // 
@@ -198,17 +198,17 @@
             this.infoLab.Size = new System.Drawing.Size(0, 17);
             this.infoLab.TabIndex = 9;
             // 
-            // btnReport
+            // btnExportToExcel
             // 
-            this.btnReport.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnReport.Location = new System.Drawing.Point(684, 84);
-            this.btnReport.Margin = new System.Windows.Forms.Padding(4);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(179, 26);
-            this.btnReport.TabIndex = 10;
-            this.btnReport.Text = "Podsumowanie do Excel";
-            this.btnReport.UseVisualStyleBackColor = true;
-            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            this.btnExportToExcel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExportToExcel.Location = new System.Drawing.Point(684, 84);
+            this.btnExportToExcel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExportToExcel.Name = "btnExportToExcel";
+            this.btnExportToExcel.Size = new System.Drawing.Size(179, 26);
+            this.btnExportToExcel.TabIndex = 10;
+            this.btnExportToExcel.Text = "Podsumowanie do Excel";
+            this.btnExportToExcel.UseVisualStyleBackColor = true;
+            this.btnExportToExcel.Click += new System.EventHandler(this.BtnExportToExcel_Click);
             // 
             // btnSettings
             // 
@@ -220,19 +220,19 @@
             this.btnSettings.TabIndex = 6;
             this.btnSettings.Text = "Ustawienia";
             this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            this.btnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
             // 
-            // btnSubmit
+            // btnGetReport
             // 
-            this.btnSubmit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSubmit.Location = new System.Drawing.Point(203, 82);
-            this.btnSubmit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnSubmit.Name = "btnSubmit";
-            this.btnSubmit.Size = new System.Drawing.Size(154, 30);
-            this.btnSubmit.TabIndex = 7;
-            this.btnSubmit.Text = "Raport produkcji";
-            this.btnSubmit.UseVisualStyleBackColor = true;
-            this.btnSubmit.Click += new System.EventHandler(this.btnProductionReport_Click);
+            this.btnGetReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGetReport.Location = new System.Drawing.Point(203, 82);
+            this.btnGetReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnGetReport.Name = "btnGetReport";
+            this.btnGetReport.Size = new System.Drawing.Size(154, 30);
+            this.btnGetReport.TabIndex = 7;
+            this.btnGetReport.Text = "Raport produkcji";
+            this.btnGetReport.UseVisualStyleBackColor = true;
+            this.btnGetReport.Click += new System.EventHandler(this.BtnProductionReport_Click);
             // 
             // btnTrashReport
             // 
@@ -243,7 +243,7 @@
             this.btnTrashReport.TabIndex = 11;
             this.btnTrashReport.Text = "Raport strat";
             this.btnTrashReport.UseVisualStyleBackColor = true;
-            this.btnTrashReport.Click += new System.EventHandler(this.btnTrashReport_Click);
+            this.btnTrashReport.Click += new System.EventHandler(this.BtnTrashReport_Click);
             // 
             // dgReport
             // 
@@ -260,7 +260,7 @@
             this.dgReport.RowHeadersWidth = 51;
             this.dgReport.Size = new System.Drawing.Size(1059, 425);
             this.dgReport.TabIndex = 0;
-            this.dgReport.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgReport_RowEnter);
+            this.dgReport.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgReport_RowEnter);
             // 
             // contextMenuRowEdit
             // 
@@ -276,14 +276,14 @@
             this.editQuantityToolStripMenuItem.Name = "editQuantityToolStripMenuItem";
             this.editQuantityToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
             this.editQuantityToolStripMenuItem.Text = "Edytuj ilość";
-            this.editQuantityToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            this.editQuantityToolStripMenuItem.Click += new System.EventHandler(this.EditToolStripMenuItem_Click);
             // 
             // removeDocumentInfoToolStripMenuItem
             // 
             this.removeDocumentInfoToolStripMenuItem.Name = "removeDocumentInfoToolStripMenuItem";
             this.removeDocumentInfoToolStripMenuItem.Size = new System.Drawing.Size(203, 24);
             this.removeDocumentInfoToolStripMenuItem.Text = "Wycofaj dokument";
-            this.removeDocumentInfoToolStripMenuItem.Click += new System.EventHandler(this.removeDocumentInfoToolStripMenuItem_Click);
+            this.removeDocumentInfoToolStripMenuItem.Click += new System.EventHandler(this.RemoveDocumentInfoToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -320,12 +320,12 @@
         private System.Windows.Forms.DateTimePicker timeTo;
         private System.Windows.Forms.Label labDate;
         private System.Windows.Forms.Label labTime;
-        private System.Windows.Forms.Button btnSubmit;
+        private System.Windows.Forms.Button btnGetReport;
         private System.Windows.Forms.ContextMenuStrip contextMenuRowEdit;
         private System.Windows.Forms.ToolStripMenuItem editQuantityToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnExportToExcelRaw;
         private System.Windows.Forms.Label infoLab;
-        private System.Windows.Forms.Button btnReport;
+        private System.Windows.Forms.Button btnExportToExcel;
         private System.Windows.Forms.ToolStripMenuItem removeDocumentInfoToolStripMenuItem;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnTrashReport;

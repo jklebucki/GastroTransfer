@@ -15,7 +15,7 @@ namespace ProductionReportWF
 {
     public partial class MainForm : Form
     {
-        private int? SelectedIndex { get; set; }
+        private int? _selectedIndex;
         public MainForm()
         {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace ProductionReportWF
             return new SystemSettingsService(new CryptoService()).GetSystemSettings().ConnStr();
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void BtnSettings_Click(object sender, EventArgs e)
         {
             SettingsForm settings = new SettingsForm();
             settings.ShowDialog();
@@ -37,11 +37,11 @@ namespace ProductionReportWF
             }
         }
 
-        private void btnProductionReport_Click(object sender, EventArgs e)
+        private void BtnProductionReport_Click(object sender, EventArgs e)
         {
             GetReport(1);
         }
-        private void btnTrashReport_Click(object sender, EventArgs e)
+        private void BtnTrashReport_Click(object sender, EventArgs e)
         {
             GetReport(2);
         }
@@ -131,34 +131,34 @@ namespace ProductionReportWF
             }
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EditToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if ((bool)dgReport.Rows[(int)SelectedIndex].Cells[3].Value)
+            if ((bool)dgReport.Rows[(int)_selectedIndex].Cells[3].Value)
             {
                 MessageBox.Show(this, $"Edycja niedozwolona - pozycja przesłana do LSI", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (SelectedIndex == null)
+            if (_selectedIndex == null)
             {
                 MessageBox.Show(this, $"Wybierz pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                var selectedRow = dgReport.Rows[(int)SelectedIndex];
+                var selectedRow = dgReport.Rows[(int)_selectedIndex];
                 EditForm editForm = new EditForm(selectedRow);
                 editForm.ShowDialog(this);
                 if (editForm.IsChanged)
                 {
-                    dgReport.Rows[(int)SelectedIndex].Cells[2].Value = string.Format("{0:0.0000}", editForm.Quantity);
+                    dgReport.Rows[(int)_selectedIndex].Cells[2].Value = string.Format("{0:0.0000}", editForm.Quantity);
                     UpdateQuantityDb((int)selectedRow.Cells[6].Value, editForm.Quantity);
                 }
             }
         }
 
-        private void dgReport_RowEnter(object sender, DataGridViewCellEventArgs e)
+        private void DgReport_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            SelectedIndex = e.RowIndex;
+            _selectedIndex = e.RowIndex;
         }
 
         private void UpdateQuantityDb(int id, decimal quantity)
@@ -170,7 +170,18 @@ namespace ProductionReportWF
                 db.Update(productionItem);
             }
         }
-        private void exportToExcelBtn_Click(object sender, EventArgs e)
+
+        private SaveFileDialog InitSaveFileDialog(string fileName = "Dane")
+        {
+            return new SaveFileDialog
+            {
+                DefaultExt = "xlsx",
+                FileName = fileName,
+                Filter = "Pliki Excel (*.xlsx)|*.xlsx"
+            };
+        }
+
+        private void BtnExportToExcelRaw_Click(object sender, EventArgs e)
         {
             if (dgReport.Rows.Count == 0)
             {
@@ -178,17 +189,14 @@ namespace ProductionReportWF
                 return;
             }
 
-            SaveFileDialog zapiszPlik = new SaveFileDialog();
-            zapiszPlik.DefaultExt = "xlsx";
-            zapiszPlik.FileName = "Dane";
-            zapiszPlik.Filter = "Pliki Excel (*.xlsx)|*.xlsx";
-            if (zapiszPlik.ShowDialog() == DialogResult.OK)
+            var saveFileDialog = InitSaveFileDialog("DaneProdukcji");
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     infoLab.Text = "Eksportuję dane...";
                     Refresh();
-                    ExportToExcel.dataGridToExcel(zapiszPlik.FileName, false, dgReport, "Produkcja");
+                    ExportToExcel.dataGridToExcel(saveFileDialog.FileName, false, dgReport, "Produkcja");
                     MessageBox.Show(this, "Eksport do pliku zakończony", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     infoLab.Text = "";
                     Refresh();
@@ -200,10 +208,10 @@ namespace ProductionReportWF
             }
         }
 
-        private void btnReport_Click(object sender, EventArgs e)
+        private List<ReportRow> AggregateReportData(DataGridViewRowCollection viewRowCollection)
         {
             List<ReportRow> report = new List<ReportRow>();
-            foreach (DataGridViewRow row in dgReport.Rows)
+            foreach (DataGridViewRow row in viewRowCollection)
             {
                 report.Add(new ReportRow
                 {
@@ -223,24 +231,25 @@ namespace ProductionReportWF
                 Year = d.Key.Year,
                 Quantity = d.Sum(s => s.Quantity)
             }).ToList();
+            return report;
+        }
 
+        private void BtnExportToExcel_Click(object sender, EventArgs e)
+        {
             if (dgReport.Rows.Count == 0)
             {
                 MessageBox.Show(this, "Brak danych do eksportu", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            SaveFileDialog zapiszPlik = new SaveFileDialog();
-            zapiszPlik.DefaultExt = "xlsx";
-            zapiszPlik.FileName = "Dane";
-            zapiszPlik.Filter = "Pliki Excel (*.xlsx)|*.xlsx";
-            if (zapiszPlik.ShowDialog() == DialogResult.OK)
+            var report = AggregateReportData(dgReport.Rows);
+            var saveFileDialog = InitSaveFileDialog("DaneProdukcjiZagregowane");
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     infoLab.Text = "Eksportuję dane...";
                     Refresh();
-                    ExportToExcel.listToExcel(zapiszPlik.FileName, false, report, "Dane");
+                    ExportToExcel.listToExcel(saveFileDialog.FileName, false, report, "Dane");
                     MessageBox.Show(this, "Eksport do pliku zakończony", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     infoLab.Text = "";
                     Refresh();
@@ -250,10 +259,9 @@ namespace ProductionReportWF
                     MessageBox.Show(ex.Message + "\nError 3", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
-        private void removeDocumentInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveDocumentInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(
                 this,
@@ -263,24 +271,23 @@ namespace ProductionReportWF
                 MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            if (SelectedIndex == null)
+            if (_selectedIndex == null)
             {
                 MessageBox.Show(this, $"Wybierz pozycję", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            if ((bool)dgReport.Rows[(int)SelectedIndex].Cells[3].Value
-                && dgReport.Rows[(int)SelectedIndex].Cells[3].Value != null
-                && (int)dgReport.Rows[(int)SelectedIndex].Cells[6].Value > 0)
+            if ((bool)dgReport.Rows[(int)_selectedIndex].Cells[3].Value
+                && dgReport.Rows[(int)_selectedIndex].Cells[3].Value != null
+                && (int)dgReport.Rows[(int)_selectedIndex].Cells[6].Value > 0)
             {
-                ClearDocumentStatus((int)SelectedIndex);
+                ClearDocumentStatus((int)_selectedIndex);
             }
             else
             {
                 MessageBox.Show(this, $"Pozycje jeszcze nie była przesłana do LSI", "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
         }
 
         private void ClearDocumentStatus(int selectedIndex)
@@ -289,7 +296,7 @@ namespace ProductionReportWF
 
             using (var db = new DbGastroTransfer(ConnectionString()))
             {
-                var id = (int)dgReport.Rows[(int)SelectedIndex].Cells[6].Value;
+                var id = (int)dgReport.Rows[(int)_selectedIndex].Cells[6].Value;
                 var packageNumber = db.Productions.FirstOrDefault(p => p.ProductionItemId == id).PackageNumber;
 
                 var query = from p in db.Productions
@@ -322,7 +329,7 @@ namespace ProductionReportWF
                         .Update();
                 }
             }
-            btnProductionReport_Click(null, null);
+            BtnProductionReport_Click(null, null);
             dgReport.FirstDisplayedScrollingRowIndex = selectedIndex;
             dgReport.Rows[selectedIndex].Selected = true;
         }

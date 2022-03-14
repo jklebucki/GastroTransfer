@@ -10,9 +10,9 @@ namespace GastroTransfer.Services
 {
     public class ProductionTransferService
     {
-        private DbService _dbService { get; set; }
-        private AppDbContext _appDbContext { get; set; }
-        private Config _config { get; set; }
+        private readonly DbService _dbService;
+        private readonly AppDbContext _appDbContext;
+        private readonly Config _config;
         public ProductionTransferService(DbService dbService, AppDbContext appDbContext, Config config)
         {
             _dbService = dbService;
