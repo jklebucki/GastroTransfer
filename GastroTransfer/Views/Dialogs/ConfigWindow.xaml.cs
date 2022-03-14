@@ -72,6 +72,7 @@ namespace GastroTransfer.Views.Dialogs
             ProductionPassword.Password = config.ProductionPassword;
             OnPasswordProduction.IsChecked = config.OnPasswordProduction;
             OnPasswordProductsImport.IsChecked = config.OnPasswordProductsImport;
+            OnPasswordTrashDocument.IsChecked = config.OnPasswordTrashDocument;
         }
 
         private void SaveConfigButton_Click(object sender, RoutedEventArgs e)
@@ -106,7 +107,8 @@ namespace GastroTransfer.Views.Dialogs
                     SystemPassword = SystemPassword.Password,
                     ProductionPassword = ProductionPassword.Password,
                     OnPasswordProduction = (bool)OnPasswordProduction.IsChecked,
-                    OnPasswordProductsImport = (bool)OnPasswordProductsImport.IsChecked
+                    OnPasswordProductsImport = (bool)OnPasswordProductsImport.IsChecked,
+                    OnPasswordTrashDocument = (bool)OnPasswordTrashDocument.IsChecked
                 };
                 var isSaved = configService.SaveConfig(cfg);
                 if (isSaved)

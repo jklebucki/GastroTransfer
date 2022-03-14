@@ -293,6 +293,12 @@
                     <Viewbox Grid.Column="1" Grid.Row="3" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
                         <CheckBox x:Name="OnPasswordProduction" />
                     </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="4" Stretch="Uniform" >
+                        <TextBlock Text="Straty z hasłem" FontSize="10" Margin="5" />
+                    </Viewbox>
+                    <Viewbox Grid.Column="1" Grid.Row="4" Stretch="Uniform" HorizontalAlignment="Stretch" Margin="7">
+                        <CheckBox x:Name="OnPasswordTrashDocument" />
+                    </Viewbox>
                 </Grid>
             </GroupBox>
             <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">

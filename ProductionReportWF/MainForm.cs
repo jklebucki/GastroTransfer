@@ -37,11 +37,20 @@ namespace ProductionReportWF
             }
         }
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+        private void btnProductionReport_Click(object sender, EventArgs e)
+        {
+            GetReport(1);
+        }
+        private void btnTrashReport_Click(object sender, EventArgs e)
+        {
+            GetReport(2);
+        }
+
+        private void GetReport(int? reportType)
         {
             dgReport.Rows.Clear();
             dgReport.Refresh();
-            var prod = GetReportData();
+            var prod = GetReportData(reportType);
             if (prod != null)
             {
                 var viewData = new BindingList<ProductionView>(prod);
@@ -52,9 +61,15 @@ namespace ProductionReportWF
                 }
             }
         }
-
-        private List<ProductionView> GetReportData()
+        /// <summary>
+        /// Operation type: 1 production, 2 trash
+        /// </summary>
+        /// <param name="operationType"></param>
+        /// <returns></returns>
+        private List<ProductionView> GetReportData(int? operationType)
         {
+            int? operationTypeFirstCondition = operationType == 1 ? null : operationType;
+            int? operationTypeSecondCondition = operationType;
             var dateFrom = new DateTime(dtFrom.Value.Year, dtFrom.Value.Month, dtFrom.Value.Day,
                 timeFrom.Value.TimeOfDay.Hours, timeFrom.Value.TimeOfDay.Minutes, timeFrom.Value.TimeOfDay.Seconds);
             var dateTo = new DateTime(dtTo.Value.Year, dtTo.Value.Month, dtTo.Value.Day,
@@ -65,7 +80,9 @@ namespace ProductionReportWF
                 {
                     var query = from p in db.Productions
                                 join product in db.Products on p.ProducedItemId equals product.ProducedItemId
-                                where p.ProducedItemId > 0 && (p.Registered >= dateFrom && p.Registered <= dateTo)
+                                where p.ProducedItemId > 0
+                                    && (p.Registered >= dateFrom && p.Registered <= dateTo)
+                                    && (p.OperationType == operationTypeFirstCondition || p.OperationType == operationType)
                                 orderby p.Registered descending
                                 select new ProductionView
                                 {
@@ -305,7 +322,7 @@ namespace ProductionReportWF
                         .Update();
                 }
             }
-            btnSubmit_Click(null, null);
+            btnProductionReport_Click(null, null);
             dgReport.FirstDisplayedScrollingRowIndex = selectedIndex;
             dgReport.Rows[selectedIndex].Selected = true;
         }
