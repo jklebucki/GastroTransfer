@@ -18,7 +18,7 @@ namespace GastroTransfer
     public partial class MainWindow : Window
     {
         private Config _config;
-        private ConfigService _configService;
+        private readonly ConfigService _configService;
         private AppDbContext _appDbContext;
         private DbService _dbService;
         private List<ProducedItem> _producedItems;
@@ -33,12 +33,12 @@ namespace GastroTransfer
             GetDataDelegateMethod = GetData;
             InitializeComponent();
             _style = new Dictionary<string, Style>();
+            _configService = new ConfigService(new CryptoService());
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectStyle();
-            _configService = new ConfigService(new CryptoService());
             if (_configService.Message != null && _configService.Message.Contains("Error"))
             {
                 MessageBox.Show(_configService.Message, "Błąd krytyczny", MessageBoxButton.OK, MessageBoxImage.Error);
