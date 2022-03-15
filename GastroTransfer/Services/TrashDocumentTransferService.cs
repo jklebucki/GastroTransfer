@@ -9,9 +9,9 @@ namespace GastroTransfer.Services
 {
     public class TrashDocumentTransferService
     {
-        private DbService _dbService { get; set; }
-        private AppDbContext _appDbContext { get; set; }
-        private Config _config { get; set; }
+        private readonly DbService _dbService;
+        private readonly AppDbContext _appDbContext;
+        private readonly Config _config;
         public TrashDocumentTransferService(DbService dbService, AppDbContext appDbContext, Config config)
         {
             _dbService = dbService;
@@ -32,7 +32,7 @@ namespace GastroTransfer.Services
                 var documentType = docTypes.FirstOrDefault(x => x.Symbol == _config.TrashDocumentSymbol);
 
                 if (documentType == null)
-                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Niewłaściwy typ dokumentu produkcji - {_config.TrashDocumentSymbol}" };
+                    return new ServiceMessage { IsError = true, ItemId = 0, Message = $"Nie znalazłem dokumentu {_config.ProductionDocumentSymbol} w systemie LSI." };
 
                 if (string.IsNullOrEmpty(_config.EndpointUrl))
                     return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak konfiguracji usługi LSI" };

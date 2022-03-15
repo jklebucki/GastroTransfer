@@ -7,24 +7,24 @@ namespace LsiEndpointSupport
 {
     public class LsiDbService
     {
-        public SqlConnection sqlConnection { get; set; }
+        public readonly SqlConnection _sqlConnection;
         public bool IsError { get; set; }
         public string Message { get; set; }
 
         public LsiDbService(string connectionString)
         {
             IsError = false;
-            this.sqlConnection = new SqlConnection(connectionString);
+            _sqlConnection = new SqlConnection(connectionString);
         }
 
         public List<DocumentType> GetDocumentsTypes()
         {
             var documents = new List<DocumentType>();
             string sqlCommandText = "select DMID, SYMBOL from dok_mag_typ where ROZCHOD = 1 and ukryty = 0 and korekta = 0 and automatyczny = 0 and zewnetrzny = 0 and ZEJSCIE_MINUS = 1";
-            var sqlCommand = new SqlCommand(sqlCommandText, sqlConnection);
+            var sqlCommand = new SqlCommand(sqlCommandText, _sqlConnection);
             try
             {
-                sqlConnection.Open();
+                _sqlConnection.Open();
                 var sqlReader = sqlCommand.ExecuteReader();
                 while (sqlReader.Read())
                 {
@@ -42,7 +42,7 @@ namespace LsiEndpointSupport
             }
             finally
             {
-                sqlConnection.Close();
+                _sqlConnection.Close();
             }
 
             return documents;
@@ -50,13 +50,13 @@ namespace LsiEndpointSupport
 
         public bool AddDocumentInfo(int documentId, string documentDescription, DateTime documentDate)
         {
-            var sqlCommand = new SqlCommand("update LSIdok_mag_oczek_nagl set UWAGI = @DocDesc, Data = @DocDate where DCID = @DocId", sqlConnection);
+            var sqlCommand = new SqlCommand("update LSIdok_mag_oczek_nagl set UWAGI = @DocDesc, Data = @DocDate where DCID = @DocId", _sqlConnection);
             sqlCommand.Parameters.Add("@DocDesc", System.Data.SqlDbType.NVarChar).Value = documentDescription;
             sqlCommand.Parameters.Add("@DocId", System.Data.SqlDbType.Int).Value = documentId;
             sqlCommand.Parameters.Add("@DocDate", System.Data.SqlDbType.DateTime).Value = new DateTime(documentDate.Year, documentDate.Month, documentDate.Day, 23, 59, 59);
             try
             {
-                sqlConnection.Open();
+                _sqlConnection.Open();
                 var sqlResponse = sqlCommand.ExecuteNonQuery();
                 IsError = false;
             }
@@ -67,9 +67,9 @@ namespace LsiEndpointSupport
             }
             finally
             {
-                sqlConnection.Close();
+                _sqlConnection.Close();
             }
-            return IsError ? false : true;
+            return !IsError;
         }
     }
 }

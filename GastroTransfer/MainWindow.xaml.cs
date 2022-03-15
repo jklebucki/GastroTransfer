@@ -301,6 +301,9 @@ namespace GastroTransfer
 
         private void GenerateTrashDocumentButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_config.OnPasswordTrashDocument)
+                if (!LogIn(LoginType.Production))
+                    return;
             TrashDocumentWindow trashDocumentWindow = new TrashDocumentWindow(_dbService, _appDbContext, _config)
             {
                 Owner = this

@@ -24,5 +24,7 @@ namespace ProductionReportWF.DbSettings.Models
         public int? PackageNumber { get; set; }
         [Column(Name = "DocumentType"), Nullable]
         public int? DocumentType { get; set; }
+        [Column(Name = "OperationType"), Nullable]
+        public int? OperationType { get; set; }
     }
 }

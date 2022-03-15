@@ -28,6 +28,7 @@ namespace GastroTransfer.Models
         public string SystemPassword { get; set; }
         public string ProductionPassword { get; set; }
         public bool OnPasswordProduction { get; set; }
+        public bool OnPasswordTrashDocument { get; set; }
         public bool OnPasswordProductsImport { get; set; }
     }
 }

@@ -140,7 +140,8 @@ namespace GastroTransfer.Services
                         WeightComStopBits = (int)(System.IO.Ports.StopBits.One),
                         WeightComParity = (int)(System.IO.Ports.Parity.None),
                         OnPasswordProduction = true,
-                        OnPasswordProductsImport = true
+                        OnPasswordProductsImport = true,
+                        OnPasswordTrashDocument = true
                     }, Formatting.Indented));
                     return true;
                 }
