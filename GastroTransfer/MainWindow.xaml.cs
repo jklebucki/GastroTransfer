@@ -17,17 +17,17 @@ namespace GastroTransfer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Config _config { get; set; }
-        private ConfigService _configService { get; set; }
-        private AppDbContext _appDbContext { get; set; }
-        private DbService _dbService { get; set; }
-        private List<ProducedItem> _producedItems { get; set; }
-        private List<ProductGroup> _productGroups { get; set; }
-        private ProductionService _productionService { get; set; }
-        private ObservableCollection<ProductionViewModel> _productionViewItems { get; set; }
+        private Config _config;
+        private ConfigService _configService;
+        private AppDbContext _appDbContext;
+        private DbService _dbService;
+        private List<ProducedItem> _producedItems;
+        private List<ProductGroup> _productGroups;
+        private ProductionService _productionService;
+        private ObservableCollection<ProductionViewModel> _productionViewItems;
         private delegate void GetDataDelegate();
         private readonly GetDataDelegate GetDataDelegateMethod;
-        private Dictionary<string, Style> _style;
+        private readonly Dictionary<string, Style> _style;
         public MainWindow()
         {
             GetDataDelegateMethod = GetData;
@@ -71,7 +71,6 @@ namespace GastroTransfer
 
         private void InitializeSystem()
         {
-            //read or initialize config
             _config = _configService.GetConfig();
             if (_config == null)
             {
