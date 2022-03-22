@@ -1,6 +1,7 @@
 ﻿using GastroTransfer.Data;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
+using NLog;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,14 +14,16 @@ namespace GastroTransfer.Views.Dialogs
     /// </summary>
     public partial class ProductionWindow : Window
     {
-        private DbService dbService { get; set; }
-        private AppDbContext appDbContext { get; set; }
-        private Config config { get; set; }
-        public ProductionWindow(DbService dbService, AppDbContext appDbContext, Config config)
+        private readonly DbService _dbService;
+        private readonly AppDbContext _appDbContext;
+        private readonly Config _config;
+        private readonly Logger _logger;
+        public ProductionWindow(DbService dbService, AppDbContext appDbContext, Config config, Logger logger)
         {
-            this.dbService = dbService;
-            this.appDbContext = appDbContext;
-            this.config = config;
+            _dbService = dbService;
+            _appDbContext = appDbContext;
+            _config = config;
+            _logger = logger;
             InitializeComponent();
             DocumentType.Text += config.ProductionDocumentSymbol;
             WarehouseSymbol.Text += config.WarehouseSymbol;
@@ -40,7 +43,7 @@ namespace GastroTransfer.Views.Dialogs
         private async void ProductionButton_Click(object sender, RoutedEventArgs e)
         {
             ProductionButton.IsEnabled = false;
-            ProductionTransferService productionTransferService = new ProductionTransferService(dbService, appDbContext, config);
+            ProductionTransferService productionTransferService = new ProductionTransferService(_dbService, _appDbContext, _config, _logger);
             var message = await productionTransferService.StartProduction((DateTime)ProductionDate.SelectedDate, (bool)SwapProduction.IsChecked);
             Info.Text = message.Message;
             if (message.IsError)

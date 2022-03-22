@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using NLog;
 
 namespace GastroTransfer
 {
@@ -28,10 +29,13 @@ namespace GastroTransfer
         private delegate void GetDataDelegate();
         private readonly GetDataDelegate GetDataDelegateMethod;
         private readonly Dictionary<string, Style> _style;
+        private readonly Logger _logger;
         public MainWindow()
         {
             GetDataDelegateMethod = GetData;
             InitializeComponent();
+            _logger = NLog.LogManager.GetCurrentClassLogger();
+            _logger.Info("System started");
             _style = new Dictionary<string, Style>();
             _configService = new ConfigService(new CryptoService());
         }
@@ -42,6 +46,7 @@ namespace GastroTransfer
             if (_configService.Message != null && _configService.Message.Contains("Error"))
             {
                 MessageBox.Show(_configService.Message, "Błąd krytyczny", MessageBoxButton.OK, MessageBoxImage.Error);
+                _logger.Error(_configService.Message);
                 Environment.Exit(999);
             }
             InitializeSystem();

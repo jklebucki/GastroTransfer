@@ -1,6 +1,7 @@
 ﻿using GastroTransfer.Data;
 using GastroTransfer.Models;
 using LsiEndpointSupport;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,13 @@ namespace GastroTransfer.Services
         private readonly DbService _dbService;
         private readonly AppDbContext _appDbContext;
         private readonly Config _config;
-        public ProductionTransferService(DbService dbService, AppDbContext appDbContext, Config config)
+        private readonly Logger _logger;
+        public ProductionTransferService(DbService dbService, AppDbContext appDbContext, Config config, Logger logger)
         {
             _dbService = dbService;
             _appDbContext = appDbContext;
             _config = config;
+            _logger = logger;
         }
         public async Task<ServiceMessage> StartProduction(DateTime productionDate, bool swapProduction)
         {
@@ -25,7 +28,12 @@ namespace GastroTransfer.Services
             try
             {
                 if (!_dbService.CheckLsiConnection())
-                    return new ServiceMessage { IsError = true, ItemId = 0, Message = "Brak połączenia z bazą danych systemu LSI" };
+                {
+                    var message = "Brak połączenia z bazą danych systemu LSI";
+                    _logger.Error(message);
+                    return new ServiceMessage { IsError = true, ItemId = 0, Message = message };
+                }
+
 
                 LsiDbService lsiDbService = new LsiDbService(_dbService.GetLsiConnectionString());
                 var documentType = lsiDbService.GetDocumentsTypes().FirstOrDefault(x => x.Symbol == _config.ProductionDocumentSymbol);
@@ -106,8 +114,10 @@ namespace GastroTransfer.Services
             }
             catch (Exception ex)
             {
+                var message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                _logger.Error(message);
                 respMessage.IsError = true;
-                respMessage.Message = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                respMessage.Message = message;
             }
 
             return respMessage;
