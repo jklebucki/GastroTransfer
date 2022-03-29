@@ -3,13 +3,13 @@ using GastroTransfer.Helpers;
 using GastroTransfer.Models;
 using GastroTransfer.Services;
 using GastroTransfer.Views.Dialogs;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using NLog;
 
 namespace GastroTransfer
 {
@@ -296,7 +296,7 @@ namespace GastroTransfer
             if (_config.OnPasswordProduction)
                 if (!LogIn(LoginType.Production))
                     return;
-            ProductionWindow productionWindow = new ProductionWindow(_dbService, _appDbContext, _config)
+            ProductionWindow productionWindow = new ProductionWindow(_dbService, _appDbContext, _config, _logger)
             {
                 Owner = this
             };
