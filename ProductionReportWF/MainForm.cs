@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -19,6 +20,14 @@ namespace ProductionReportWF
         public MainForm()
         {
             InitializeComponent();
+            SetContextMenu();
+        }
+
+        private void SetContextMenu()
+        {
+            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "data.txt")))
+                if (contextMenuRowEdit.Items.Count >=2)
+                    contextMenuRowEdit.Items.RemoveAt(1);
         }
 
         private string ConnectionString()
@@ -333,6 +342,5 @@ namespace ProductionReportWF
             dgReport.FirstDisplayedScrollingRowIndex = selectedIndex;
             dgReport.Rows[selectedIndex].Selected = true;
         }
-
     }
 }

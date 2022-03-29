@@ -86,7 +86,7 @@ namespace GastroTransfer.Services
                         respMessage.IsError = true;
                         respMessage.Message = $"Kod błędu: {docResp.KodBledu}\nOpis błędu: {docResp.OpisBledu}";
                     }
-                    respMessage.Message = $"Dokument {_config.ProductionDocumentSymbol} utworzony.";
+                    respMessage.Message = $"Dokument {_config.TrashDocumentSymbol} utworzony.";
                 }
                 else
                 {
