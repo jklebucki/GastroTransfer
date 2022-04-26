@@ -39,7 +39,7 @@ namespace GastroTransfer.Helpers
                 Width = 180,
                 Margin = new Thickness(5, 5, 5, 5),
                 FontSize = 24,
-                Style =  style["roundedButton"]
+                Style = style["roundedButton"]
             };
             button.Click += new RoutedEventHandler(routedEventHandler);// Production_Button_Click);
             return button;

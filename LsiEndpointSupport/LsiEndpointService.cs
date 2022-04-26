@@ -97,7 +97,7 @@ namespace LsiEndpointSupport
             try
             {
                 var response = await _lsiService.PobierzMagazynyAsync(new PobierzMagazynyRequest { Body = new PobierzMagazynyRequestBody { } });
-                pobierzMagazynyMagazynObjects =  response.Body.PobierzMagazynyResult.Magazyny;
+                pobierzMagazynyMagazynObjects = response.Body.PobierzMagazynyResult.Magazyny;
             }
             catch (Exception ex)
             {

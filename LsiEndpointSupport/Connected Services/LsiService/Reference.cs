@@ -10,19 +10,19 @@
 namespace LsiService
 {
     using System.Runtime.Serialization;
-    
-    
+
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzProduktyRequestDataRequestObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzProduktyRequestDataRequestObject", Namespace = "ICWS")]
     public partial class PobierzProduktyRequestDataRequestObject : object
     {
-        
+
         private int GrupaTowIDField;
-        
+
         private string MagazynIDField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int GrupaTowID
         {
             get
@@ -34,8 +34,8 @@ namespace LsiService
                 this.GrupaTowIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string MagazynID
         {
             get
@@ -48,16 +48,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzProduktyResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzProduktyResult", Namespace = "ICWS")]
     public partial class PobierzProduktyResult : object
     {
-        
+
         private LsiService.ArrayOfPobierzProduktyProduktObject ProduktyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.ArrayOfPobierzProduktyProduktObject Produkty
         {
             get
@@ -70,35 +70,35 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfPobierzProduktyProduktObject", Namespace="ICWS", ItemName="Produkt")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfPobierzProduktyProduktObject", Namespace = "ICWS", ItemName = "Produkt")]
     public class ArrayOfPobierzProduktyProduktObject : System.Collections.Generic.List<LsiService.PobierzProduktyProduktObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzProduktyProduktObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzProduktyProduktObject", Namespace = "ICWS")]
     public partial class PobierzProduktyProduktObject : object
     {
-        
+
         private string ProduktIDField;
-        
+
         private string IndeksField;
-        
+
         private string NazwaField;
-        
+
         private string NazwaSkroconaField;
-        
+
         private string JMField;
-        
+
         private int DokladnoscField;
-        
+
         private decimal StanField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string ProduktID
         {
             get
@@ -110,8 +110,8 @@ namespace LsiService
                 this.ProduktIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
         public string Indeks
         {
             get
@@ -123,8 +123,8 @@ namespace LsiService
                 this.IndeksField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public string Nazwa
         {
             get
@@ -136,8 +136,8 @@ namespace LsiService
                 this.NazwaField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 3)]
         public string NazwaSkrocona
         {
             get
@@ -149,8 +149,8 @@ namespace LsiService
                 this.NazwaSkroconaField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 4)]
         public string JM
         {
             get
@@ -162,8 +162,8 @@ namespace LsiService
                 this.JMField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 5)]
         public int Dokladnosc
         {
             get
@@ -175,8 +175,8 @@ namespace LsiService
                 this.DokladnoscField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 6)]
         public decimal Stan
         {
             get
@@ -189,20 +189,20 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentProdukcjiRequestDataRequestObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentProdukcjiRequestDataRequestObject", Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiRequestDataRequestObject : object
     {
-        
+
         private int TypDokumentuIDField;
-        
+
         private string MagazynIDField;
-        
+
         private LsiService.ArrayOfUtworzDokumentProdukcjiRequestProduktObject ProduktyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int TypDokumentuID
         {
             get
@@ -214,8 +214,8 @@ namespace LsiService
                 this.TypDokumentuIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
         public string MagazynID
         {
             get
@@ -227,8 +227,8 @@ namespace LsiService
                 this.MagazynIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public LsiService.ArrayOfUtworzDokumentProdukcjiRequestProduktObject Produkty
         {
             get
@@ -241,27 +241,27 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfUtworzDokumentProdukcjiRequestProduktObject", Namespace="ICWS", ItemName="Produkt")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfUtworzDokumentProdukcjiRequestProduktObject", Namespace = "ICWS", ItemName = "Produkt")]
     public class ArrayOfUtworzDokumentProdukcjiRequestProduktObject : System.Collections.Generic.List<LsiService.UtworzDokumentProdukcjiRequestProduktObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentProdukcjiRequestProduktObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentProdukcjiRequestProduktObject", Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiRequestProduktObject : object
     {
-        
+
         private string ProduktIDField;
-        
+
         private decimal IloscField;
-        
+
         private decimal CenaField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string ProduktID
         {
             get
@@ -273,8 +273,8 @@ namespace LsiService
                 this.ProduktIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 1)]
         public decimal Ilosc
         {
             get
@@ -286,8 +286,8 @@ namespace LsiService
                 this.IloscField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 2)]
         public decimal Cena
         {
             get
@@ -300,16 +300,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentProdukcjiResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentProdukcjiResult", Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiResult : object
     {
-        
+
         private LsiService.UtworzDokumentProdukcjiDokumentObject DokumentField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.UtworzDokumentProdukcjiDokumentObject Dokument
         {
             get
@@ -322,22 +322,22 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentProdukcjiDokumentObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentProdukcjiDokumentObject", Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiDokumentObject : object
     {
-        
+
         private int IDField;
-        
+
         private string NumerField;
-        
+
         private int KodBleduField;
-        
+
         private string OpisBleduField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int ID
         {
             get
@@ -349,8 +349,8 @@ namespace LsiService
                 this.IDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string Numer
         {
             get
@@ -362,8 +362,8 @@ namespace LsiService
                 this.NumerField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 2)]
         public int KodBledu
         {
             get
@@ -375,8 +375,8 @@ namespace LsiService
                 this.KodBleduField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 3)]
         public string OpisBledu
         {
             get
@@ -389,20 +389,20 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject", Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject : object
     {
-        
+
         private string MagazynZrodlowyIDField;
-        
+
         private string MagazynDocelowyIDField;
-        
+
         private LsiService.ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject ProduktyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string MagazynZrodlowyID
         {
             get
@@ -414,8 +414,8 @@ namespace LsiService
                 this.MagazynZrodlowyIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
         public string MagazynDocelowyID
         {
             get
@@ -427,8 +427,8 @@ namespace LsiService
                 this.MagazynDocelowyIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public LsiService.ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject Produkty
         {
             get
@@ -441,25 +441,25 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject", Namespace="ICWS", ItemName="Produkt")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject", Namespace = "ICWS", ItemName = "Produkt")]
     public class ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject : System.Collections.Generic.List<LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject", Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoRequestProduktObject : object
     {
-        
+
         private string ProduktIDField;
-        
+
         private decimal IloscField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string ProduktID
         {
             get
@@ -471,8 +471,8 @@ namespace LsiService
                 this.ProduktIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 1)]
         public decimal Ilosc
         {
             get
@@ -485,16 +485,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowegoResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowegoResult", Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoResult : object
     {
-        
+
         private LsiService.ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject DokumentyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject Dokumenty
         {
             get
@@ -507,29 +507,29 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject", Namespace="ICWS", ItemName="Dokument")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject", Namespace = "ICWS", ItemName = "Dokument")]
     public class ArrayOfUtworzDokumentyPrzesunieciaMagazynowegoDokumentObject : System.Collections.Generic.List<LsiService.UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject", Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoDokumentObject : object
     {
-        
+
         private int IDField;
-        
+
         private string NumerField;
-        
+
         private int KodBleduField;
-        
+
         private string OpisBleduField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int ID
         {
             get
@@ -541,8 +541,8 @@ namespace LsiService
                 this.IDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string Numer
         {
             get
@@ -554,8 +554,8 @@ namespace LsiService
                 this.NumerField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 2)]
         public int KodBledu
         {
             get
@@ -567,8 +567,8 @@ namespace LsiService
                 this.KodBleduField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 3)]
         public string OpisBledu
         {
             get
@@ -581,16 +581,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzMagazynyResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzMagazynyResult", Namespace = "ICWS")]
     public partial class PobierzMagazynyResult : object
     {
-        
+
         private LsiService.ArrayOfPobierzMagazynyMagazynObject MagazynyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.ArrayOfPobierzMagazynyMagazynObject Magazyny
         {
             get
@@ -603,27 +603,27 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfPobierzMagazynyMagazynObject", Namespace="ICWS", ItemName="Magazyn")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfPobierzMagazynyMagazynObject", Namespace = "ICWS", ItemName = "Magazyn")]
     public class ArrayOfPobierzMagazynyMagazynObject : System.Collections.Generic.List<LsiService.PobierzMagazynyMagazynObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzMagazynyMagazynObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzMagazynyMagazynObject", Namespace = "ICWS")]
     public partial class PobierzMagazynyMagazynObject : object
     {
-        
+
         private string MagazynIDField;
-        
+
         private string SymbolField;
-        
+
         private string OpisField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string MagazynID
         {
             get
@@ -635,8 +635,8 @@ namespace LsiService
                 this.MagazynIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string Symbol
         {
             get
@@ -648,8 +648,8 @@ namespace LsiService
                 this.SymbolField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public string Opis
         {
             get
@@ -662,16 +662,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzGrupyTowaroweResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzGrupyTowaroweResult", Namespace = "ICWS")]
     public partial class PobierzGrupyTowaroweResult : object
     {
-        
+
         private LsiService.ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject GrupyTowaroweField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject GrupyTowarowe
         {
             get
@@ -684,25 +684,25 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject", Namespace="ICWS", ItemName="GrupaTowarowa")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject", Namespace = "ICWS", ItemName = "GrupaTowarowa")]
     public class ArrayOfPobierzGrupyTowaroweGrupaTowarowaObject : System.Collections.Generic.List<LsiService.PobierzGrupyTowaroweGrupaTowarowaObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzGrupyTowaroweGrupaTowarowaObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzGrupyTowaroweGrupaTowarowaObject", Namespace = "ICWS")]
     public partial class PobierzGrupyTowaroweGrupaTowarowaObject : object
     {
-        
+
         private int IDField;
-        
+
         private string NazwaField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int ID
         {
             get
@@ -714,8 +714,8 @@ namespace LsiService
                 this.IDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string Nazwa
         {
             get
@@ -728,18 +728,18 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzPotrawyRequestDataRequestObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzPotrawyRequestDataRequestObject", Namespace = "ICWS")]
     public partial class PobierzPotrawyRequestDataRequestObject : object
     {
-        
+
         private int GrupaTowIDField;
-        
+
         private string MagazynIDField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int GrupaTowID
         {
             get
@@ -751,8 +751,8 @@ namespace LsiService
                 this.GrupaTowIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string MagazynID
         {
             get
@@ -765,16 +765,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzPotrawyResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzPotrawyResult", Namespace = "ICWS")]
     public partial class PobierzPotrawyResult : object
     {
-        
+
         private LsiService.ArrayOfPobierzPotrawyProduktObject ProduktyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.ArrayOfPobierzPotrawyProduktObject Produkty
         {
             get
@@ -787,33 +787,33 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfPobierzPotrawyProduktObject", Namespace="ICWS", ItemName="Produkt")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfPobierzPotrawyProduktObject", Namespace = "ICWS", ItemName = "Produkt")]
     public class ArrayOfPobierzPotrawyProduktObject : System.Collections.Generic.List<LsiService.PobierzPotrawyProduktObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PobierzPotrawyProduktObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "PobierzPotrawyProduktObject", Namespace = "ICWS")]
     public partial class PobierzPotrawyProduktObject : object
     {
-        
+
         private string ProduktIDField;
-        
+
         private string IndeksField;
-        
+
         private string NazwaField;
-        
+
         private string NazwaSkroconaField;
-        
+
         private string JMField;
-        
+
         private int DokladnoscField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string ProduktID
         {
             get
@@ -825,8 +825,8 @@ namespace LsiService
                 this.ProduktIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
         public string Indeks
         {
             get
@@ -838,8 +838,8 @@ namespace LsiService
                 this.IndeksField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public string Nazwa
         {
             get
@@ -851,8 +851,8 @@ namespace LsiService
                 this.NazwaField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 3)]
         public string NazwaSkrocona
         {
             get
@@ -864,8 +864,8 @@ namespace LsiService
                 this.NazwaSkroconaField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 4)]
         public string JM
         {
             get
@@ -877,8 +877,8 @@ namespace LsiService
                 this.JMField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 5)]
         public int Dokladnosc
         {
             get
@@ -891,20 +891,20 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentRozchodowyRequestDataRequestObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentRozchodowyRequestDataRequestObject", Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyRequestDataRequestObject : object
     {
-        
+
         private int TypDokumentuIDField;
-        
+
         private string MagazynIDField;
-        
+
         private LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject ProduktyField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int TypDokumentuID
         {
             get
@@ -916,8 +916,8 @@ namespace LsiService
                 this.TypDokumentuIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
         public string MagazynID
         {
             get
@@ -929,8 +929,8 @@ namespace LsiService
                 this.MagazynIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 2)]
         public LsiService.ArrayOfUtworzDokumentRozchodowyRequestProduktObject Produkty
         {
             get
@@ -943,27 +943,27 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfUtworzDokumentRozchodowyRequestProduktObject", Namespace="ICWS", ItemName="Produkt")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name = "ArrayOfUtworzDokumentRozchodowyRequestProduktObject", Namespace = "ICWS", ItemName = "Produkt")]
     public class ArrayOfUtworzDokumentRozchodowyRequestProduktObject : System.Collections.Generic.List<LsiService.UtworzDokumentRozchodowyRequestProduktObject>
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentRozchodowyRequestProduktObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentRozchodowyRequestProduktObject", Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyRequestProduktObject : object
     {
-        
+
         private string ProduktIDField;
-        
+
         private decimal IloscField;
-        
+
         private decimal CenaField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string ProduktID
         {
             get
@@ -975,8 +975,8 @@ namespace LsiService
                 this.ProduktIDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 1)]
         public decimal Ilosc
         {
             get
@@ -988,8 +988,8 @@ namespace LsiService
                 this.IloscField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 2)]
         public decimal Cena
         {
             get
@@ -1002,16 +1002,16 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentRozchodowyResult", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentRozchodowyResult", Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyResult : object
     {
-        
+
         private LsiService.UtworzDokumentRozchodowyDokumentObject DokumentField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public LsiService.UtworzDokumentRozchodowyDokumentObject Dokument
         {
             get
@@ -1024,22 +1024,22 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UtworzDokumentRozchodowyDokumentObject", Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Name = "UtworzDokumentRozchodowyDokumentObject", Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyDokumentObject : object
     {
-        
+
         private int IDField;
-        
+
         private string NumerField;
-        
+
         private int KodBleduField;
-        
+
         private string OpisBleduField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true)]
         public int ID
         {
             get
@@ -1051,8 +1051,8 @@ namespace LsiService
                 this.IDField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false)]
         public string Numer
         {
             get
@@ -1064,8 +1064,8 @@ namespace LsiService
                 this.NumerField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired = true, Order = 2)]
         public int KodBledu
         {
             get
@@ -1077,8 +1077,8 @@ namespace LsiService
                 this.KodBleduField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 3)]
         public string OpisBledu
         {
             get
@@ -1091,694 +1091,694 @@ namespace LsiService
             }
         }
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="ICWS", ConfigurationName="LsiService.ICWSSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace = "ICWS", ConfigurationName = "LsiService.ICWSSoap")]
     public interface ICWSSoap
     {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzProdukty", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzProdukty", ReplyAction = "*")]
         LsiService.PobierzProduktyResponse PobierzProdukty(LsiService.PobierzProduktyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzProdukty", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzProdukty", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.PobierzProduktyResponse> PobierzProduktyAsync(LsiService.PobierzProduktyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentProdukcji", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentProdukcji", ReplyAction = "*")]
         LsiService.UtworzDokumentProdukcjiResponse UtworzDokumentProdukcji(LsiService.UtworzDokumentProdukcjiRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentProdukcji", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentProdukcji", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.UtworzDokumentProdukcjiResponse> UtworzDokumentProdukcjiAsync(LsiService.UtworzDokumentProdukcjiRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentyPrzesunieciaMagazynowego", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentyPrzesunieciaMagazynowego", ReplyAction = "*")]
         LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponse UtworzDokumentyPrzesunieciaMagazynowego(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentyPrzesunieciaMagazynowego", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentyPrzesunieciaMagazynowego", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponse> UtworzDokumentyPrzesunieciaMagazynowegoAsync(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzMagazyny", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzMagazyny", ReplyAction = "*")]
         LsiService.PobierzMagazynyResponse PobierzMagazyny(LsiService.PobierzMagazynyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzMagazyny", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzMagazyny", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.PobierzMagazynyResponse> PobierzMagazynyAsync(LsiService.PobierzMagazynyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzGrupyTowarowe", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzGrupyTowarowe", ReplyAction = "*")]
         LsiService.PobierzGrupyTowaroweResponse PobierzGrupyTowarowe(LsiService.PobierzGrupyTowaroweRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzGrupyTowarowe", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzGrupyTowarowe", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.PobierzGrupyTowaroweResponse> PobierzGrupyTowaroweAsync(LsiService.PobierzGrupyTowaroweRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzPotrawy", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzPotrawy", ReplyAction = "*")]
         LsiService.PobierzPotrawyResponse PobierzPotrawy(LsiService.PobierzPotrawyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSPobierzPotrawy", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSPobierzPotrawy", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.PobierzPotrawyResponse> PobierzPotrawyAsync(LsiService.PobierzPotrawyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentRozchodowy", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentRozchodowy", ReplyAction = "*")]
         LsiService.UtworzDokumentRozchodowyResponse UtworzDokumentRozchodowy(LsiService.UtworzDokumentRozchodowyRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="ICWSUtworzDokumentRozchodowy", ReplyAction="*")]
+
+        [System.ServiceModel.OperationContractAttribute(Action = "ICWSUtworzDokumentRozchodowy", ReplyAction = "*")]
         System.Threading.Tasks.Task<LsiService.UtworzDokumentRozchodowyResponse> UtworzDokumentRozchodowyAsync(LsiService.UtworzDokumentRozchodowyRequest request);
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzProduktyRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzProdukty", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzProdukty", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzProduktyRequestBody Body;
-        
+
         public PobierzProduktyRequest()
         {
         }
-        
+
         public PobierzProduktyRequest(LsiService.PobierzProduktyRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzProduktyRequestBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzProduktyRequestDataRequestObject RequestData;
-        
+
         public PobierzProduktyRequestBody()
         {
         }
-        
+
         public PobierzProduktyRequestBody(LsiService.PobierzProduktyRequestDataRequestObject RequestData)
         {
             this.RequestData = RequestData;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzProduktyResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzProduktyResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzProduktyResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzProduktyResponseBody Body;
-        
+
         public PobierzProduktyResponse()
         {
         }
-        
+
         public PobierzProduktyResponse(LsiService.PobierzProduktyResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzProduktyResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzProduktyResult PobierzProduktyResult;
-        
+
         public PobierzProduktyResponseBody()
         {
         }
-        
+
         public PobierzProduktyResponseBody(LsiService.PobierzProduktyResult PobierzProduktyResult)
         {
             this.PobierzProduktyResult = PobierzProduktyResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentProdukcjiRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentProdukcji", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentProdukcji", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentProdukcjiRequestBody Body;
-        
+
         public UtworzDokumentProdukcjiRequest()
         {
         }
-        
+
         public UtworzDokumentProdukcjiRequest(LsiService.UtworzDokumentProdukcjiRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiRequestBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentProdukcjiRequestDataRequestObject RequestData;
-        
+
         public UtworzDokumentProdukcjiRequestBody()
         {
         }
-        
+
         public UtworzDokumentProdukcjiRequestBody(LsiService.UtworzDokumentProdukcjiRequestDataRequestObject RequestData)
         {
             this.RequestData = RequestData;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentProdukcjiResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentProdukcjiResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentProdukcjiResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentProdukcjiResponseBody Body;
-        
+
         public UtworzDokumentProdukcjiResponse()
         {
         }
-        
+
         public UtworzDokumentProdukcjiResponse(LsiService.UtworzDokumentProdukcjiResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentProdukcjiResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentProdukcjiResult UtworzDokumentProdukcjiResult;
-        
+
         public UtworzDokumentProdukcjiResponseBody()
         {
         }
-        
+
         public UtworzDokumentProdukcjiResponseBody(LsiService.UtworzDokumentProdukcjiResult UtworzDokumentProdukcjiResult)
         {
             this.UtworzDokumentProdukcjiResult = UtworzDokumentProdukcjiResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowego", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowego", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequestBody Body;
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoRequest()
         {
         }
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoRequest(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoRequestBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject RequestData;
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoRequestBody()
         {
         }
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoRequestBody(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequestDataRequestObject RequestData)
         {
             this.RequestData = RequestData;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentyPrzesunieciaMagazynowegoResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentyPrzesunieciaMagazynowegoResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponseBody Body;
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoResponse()
         {
         }
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoResponse(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentyPrzesunieciaMagazynowegoResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResult UtworzDokumentyPrzesunieciaMagazynowegoResult;
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoResponseBody()
         {
         }
-        
+
         public UtworzDokumentyPrzesunieciaMagazynowegoResponseBody(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResult UtworzDokumentyPrzesunieciaMagazynowegoResult)
         {
             this.UtworzDokumentyPrzesunieciaMagazynowegoResult = UtworzDokumentyPrzesunieciaMagazynowegoResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzMagazynyRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzMagazyny", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzMagazyny", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzMagazynyRequestBody Body;
-        
+
         public PobierzMagazynyRequest()
         {
         }
-        
+
         public PobierzMagazynyRequest(LsiService.PobierzMagazynyRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Runtime.Serialization.DataContractAttribute()]
     public partial class PobierzMagazynyRequestBody
     {
-        
+
         public PobierzMagazynyRequestBody()
         {
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzMagazynyResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzMagazynyResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzMagazynyResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzMagazynyResponseBody Body;
-        
+
         public PobierzMagazynyResponse()
         {
         }
-        
+
         public PobierzMagazynyResponse(LsiService.PobierzMagazynyResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzMagazynyResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzMagazynyResult PobierzMagazynyResult;
-        
+
         public PobierzMagazynyResponseBody()
         {
         }
-        
+
         public PobierzMagazynyResponseBody(LsiService.PobierzMagazynyResult PobierzMagazynyResult)
         {
             this.PobierzMagazynyResult = PobierzMagazynyResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzGrupyTowaroweRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzGrupyTowarowe", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzGrupyTowarowe", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzGrupyTowaroweRequestBody Body;
-        
+
         public PobierzGrupyTowaroweRequest()
         {
         }
-        
+
         public PobierzGrupyTowaroweRequest(LsiService.PobierzGrupyTowaroweRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Runtime.Serialization.DataContractAttribute()]
     public partial class PobierzGrupyTowaroweRequestBody
     {
-        
+
         public PobierzGrupyTowaroweRequestBody()
         {
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzGrupyTowaroweResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzGrupyTowaroweResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzGrupyTowaroweResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzGrupyTowaroweResponseBody Body;
-        
+
         public PobierzGrupyTowaroweResponse()
         {
         }
-        
+
         public PobierzGrupyTowaroweResponse(LsiService.PobierzGrupyTowaroweResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzGrupyTowaroweResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzGrupyTowaroweResult PobierzGrupyTowaroweResult;
-        
+
         public PobierzGrupyTowaroweResponseBody()
         {
         }
-        
+
         public PobierzGrupyTowaroweResponseBody(LsiService.PobierzGrupyTowaroweResult PobierzGrupyTowaroweResult)
         {
             this.PobierzGrupyTowaroweResult = PobierzGrupyTowaroweResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzPotrawyRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzPotrawy", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzPotrawy", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzPotrawyRequestBody Body;
-        
+
         public PobierzPotrawyRequest()
         {
         }
-        
+
         public PobierzPotrawyRequest(LsiService.PobierzPotrawyRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzPotrawyRequestBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzPotrawyRequestDataRequestObject RequestData;
-        
+
         public PobierzPotrawyRequestBody()
         {
         }
-        
+
         public PobierzPotrawyRequestBody(LsiService.PobierzPotrawyRequestDataRequestObject RequestData)
         {
             this.RequestData = RequestData;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class PobierzPotrawyResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzPotrawyResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "PobierzPotrawyResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.PobierzPotrawyResponseBody Body;
-        
+
         public PobierzPotrawyResponse()
         {
         }
-        
+
         public PobierzPotrawyResponse(LsiService.PobierzPotrawyResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class PobierzPotrawyResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.PobierzPotrawyResult PobierzPotrawyResult;
-        
+
         public PobierzPotrawyResponseBody()
         {
         }
-        
+
         public PobierzPotrawyResponseBody(LsiService.PobierzPotrawyResult PobierzPotrawyResult)
         {
             this.PobierzPotrawyResult = PobierzPotrawyResult;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentRozchodowyRequest
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentRozchodowy", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentRozchodowy", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentRozchodowyRequestBody Body;
-        
+
         public UtworzDokumentRozchodowyRequest()
         {
         }
-        
+
         public UtworzDokumentRozchodowyRequest(LsiService.UtworzDokumentRozchodowyRequestBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyRequestBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentRozchodowyRequestDataRequestObject RequestData;
-        
+
         public UtworzDokumentRozchodowyRequestBody()
         {
         }
-        
+
         public UtworzDokumentRozchodowyRequestBody(LsiService.UtworzDokumentRozchodowyRequestDataRequestObject RequestData)
         {
             this.RequestData = RequestData;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped = false)]
     public partial class UtworzDokumentRozchodowyResponse
     {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="UtworzDokumentRozchodowyResponse", Namespace="ICWS", Order=0)]
+
+        [System.ServiceModel.MessageBodyMemberAttribute(Name = "UtworzDokumentRozchodowyResponse", Namespace = "ICWS", Order = 0)]
         public LsiService.UtworzDokumentRozchodowyResponseBody Body;
-        
+
         public UtworzDokumentRozchodowyResponse()
         {
         }
-        
+
         public UtworzDokumentRozchodowyResponse(LsiService.UtworzDokumentRozchodowyResponseBody Body)
         {
             this.Body = Body;
         }
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="ICWS")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace = "ICWS")]
     public partial class UtworzDokumentRozchodowyResponseBody
     {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 0)]
         public LsiService.UtworzDokumentRozchodowyResult UtworzDokumentRozchodowyResult;
-        
+
         public UtworzDokumentRozchodowyResponseBody()
         {
         }
-        
+
         public UtworzDokumentRozchodowyResponseBody(LsiService.UtworzDokumentRozchodowyResult UtworzDokumentRozchodowyResult)
         {
             this.UtworzDokumentRozchodowyResult = UtworzDokumentRozchodowyResult;
         }
     }
-    
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public interface ICWSSoapChannel : LsiService.ICWSSoap, System.ServiceModel.IClientChannel
     {
     }
-    
+
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     public partial class CWSSoapClient : System.ServiceModel.ClientBase<LsiService.ICWSSoap>, LsiService.ICWSSoap
     {
-        
+
         /// <summary>
         /// Implement this partial method to configure the service endpoint.
         /// </summary>
         /// <param name="serviceEndpoint">The endpoint to configure</param>
         /// <param name="clientCredentials">The client credentials</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
-        
-        public CWSSoapClient(EndpointConfiguration endpointConfiguration) : 
+
+        public CWSSoapClient(EndpointConfiguration endpointConfiguration) :
                 base(CWSSoapClient.GetBindingForEndpoint(endpointConfiguration), CWSSoapClient.GetEndpointAddress(endpointConfiguration))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
-        
-        public CWSSoapClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+
+        public CWSSoapClient(EndpointConfiguration endpointConfiguration, string remoteAddress) :
                 base(CWSSoapClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
-        
-        public CWSSoapClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+
+        public CWSSoapClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) :
                 base(CWSSoapClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
-        
-        public CWSSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+
+        public CWSSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
                 base(binding, remoteAddress)
         {
         }
-        
+
         public LsiService.PobierzProduktyResponse PobierzProdukty(LsiService.PobierzProduktyRequest request)
         {
             return base.Channel.PobierzProdukty(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.PobierzProduktyResponse> PobierzProduktyAsync(LsiService.PobierzProduktyRequest request)
         {
             return base.Channel.PobierzProduktyAsync(request);
         }
-        
+
         public LsiService.UtworzDokumentProdukcjiResponse UtworzDokumentProdukcji(LsiService.UtworzDokumentProdukcjiRequest request)
         {
             return base.Channel.UtworzDokumentProdukcji(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.UtworzDokumentProdukcjiResponse> UtworzDokumentProdukcjiAsync(LsiService.UtworzDokumentProdukcjiRequest request)
         {
             return base.Channel.UtworzDokumentProdukcjiAsync(request);
         }
-        
+
         public LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponse UtworzDokumentyPrzesunieciaMagazynowego(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequest request)
         {
             return base.Channel.UtworzDokumentyPrzesunieciaMagazynowego(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.UtworzDokumentyPrzesunieciaMagazynowegoResponse> UtworzDokumentyPrzesunieciaMagazynowegoAsync(LsiService.UtworzDokumentyPrzesunieciaMagazynowegoRequest request)
         {
             return base.Channel.UtworzDokumentyPrzesunieciaMagazynowegoAsync(request);
         }
-        
+
         public LsiService.PobierzMagazynyResponse PobierzMagazyny(LsiService.PobierzMagazynyRequest request)
         {
             return base.Channel.PobierzMagazyny(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.PobierzMagazynyResponse> PobierzMagazynyAsync(LsiService.PobierzMagazynyRequest request)
         {
             return base.Channel.PobierzMagazynyAsync(request);
         }
-        
+
         public LsiService.PobierzGrupyTowaroweResponse PobierzGrupyTowarowe(LsiService.PobierzGrupyTowaroweRequest request)
         {
             return base.Channel.PobierzGrupyTowarowe(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.PobierzGrupyTowaroweResponse> PobierzGrupyTowaroweAsync(LsiService.PobierzGrupyTowaroweRequest request)
         {
             return base.Channel.PobierzGrupyTowaroweAsync(request);
         }
-        
+
         public LsiService.PobierzPotrawyResponse PobierzPotrawy(LsiService.PobierzPotrawyRequest request)
         {
             return base.Channel.PobierzPotrawy(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.PobierzPotrawyResponse> PobierzPotrawyAsync(LsiService.PobierzPotrawyRequest request)
         {
             return base.Channel.PobierzPotrawyAsync(request);
         }
-        
+
         public LsiService.UtworzDokumentRozchodowyResponse UtworzDokumentRozchodowy(LsiService.UtworzDokumentRozchodowyRequest request)
         {
             return base.Channel.UtworzDokumentRozchodowy(request);
         }
-        
+
         public System.Threading.Tasks.Task<LsiService.UtworzDokumentRozchodowyResponse> UtworzDokumentRozchodowyAsync(LsiService.UtworzDokumentRozchodowyRequest request)
         {
             return base.Channel.UtworzDokumentRozchodowyAsync(request);
         }
-        
+
         public virtual System.Threading.Tasks.Task OpenAsync()
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndOpen));
         }
-        
+
         public virtual System.Threading.Tasks.Task CloseAsync()
         {
             return System.Threading.Tasks.Task.Factory.FromAsync(((System.ServiceModel.ICommunicationObject)(this)).BeginClose(null, null), new System.Action<System.IAsyncResult>(((System.ServiceModel.ICommunicationObject)(this)).EndClose));
         }
-        
+
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
             if ((endpointConfiguration == EndpointConfiguration.ICWSSoap))
@@ -1788,6 +1788,10 @@ namespace LsiService
                 result.ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max;
                 result.MaxReceivedMessageSize = int.MaxValue;
                 result.AllowCookies = true;
+                result.SendTimeout = new System.TimeSpan(0, 5, 0);
+                result.ReceiveTimeout = new System.TimeSpan(0, 5, 0);
+                result.OpenTimeout = new System.TimeSpan(0, 5, 0);
+                result.CloseTimeout = new System.TimeSpan(0, 5, 0);
                 return result;
             }
             if ((endpointConfiguration == EndpointConfiguration.ICWSSoap12))
@@ -1801,11 +1805,15 @@ namespace LsiService
                 httpBindingElement.MaxBufferSize = int.MaxValue;
                 httpBindingElement.MaxReceivedMessageSize = int.MaxValue;
                 result.Elements.Add(httpBindingElement);
+                result.SendTimeout = new System.TimeSpan(0, 5, 0);
+                result.ReceiveTimeout = new System.TimeSpan(0, 5, 0);
+                result.OpenTimeout = new System.TimeSpan(0, 5, 0);
+                result.CloseTimeout = new System.TimeSpan(0, 5, 0);
                 return result;
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
-        
+
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
             if ((endpointConfiguration == EndpointConfiguration.ICWSSoap))
@@ -1818,12 +1826,12 @@ namespace LsiService
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
-        
+
         public enum EndpointConfiguration
         {
-            
+
             ICWSSoap,
-            
+
             ICWSSoap12,
         }
     }

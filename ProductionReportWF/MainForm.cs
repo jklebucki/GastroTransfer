@@ -26,7 +26,7 @@ namespace ProductionReportWF
         private void SetContextMenu()
         {
             if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "superuser")))
-                if (contextMenuRowEdit.Items.Count >=2)
+                if (contextMenuRowEdit.Items.Count >= 2)
                     contextMenuRowEdit.Items.RemoveAt(1);
         }
 
